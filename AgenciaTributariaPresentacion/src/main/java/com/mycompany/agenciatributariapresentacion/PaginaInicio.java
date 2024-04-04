@@ -1,6 +1,6 @@
 package com.mycompany.agenciatributariapresentacion;
 
-import com.mycompany.agenciatributarianegocio.control.Icontrol;
+import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 
 /**
  *
@@ -47,7 +47,7 @@ public class PaginaInicio extends javax.swing.JFrame {
         lbl_tramites.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lbl_tramites.setText("Tramites");
 
-        btnAgregarPersonas.setText("20 changos");
+        btnAgregarPersonas.setText("Agregar personas");
         btnAgregarPersonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarPersonasActionPerformed(evt);

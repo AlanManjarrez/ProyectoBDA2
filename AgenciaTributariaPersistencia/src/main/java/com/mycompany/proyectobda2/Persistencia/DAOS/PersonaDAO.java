@@ -95,12 +95,12 @@ public class PersonaDAO implements IPersonaDAO {
 
             entityManager.getTransaction().commit();
 
-            entityManager.close();
-            entityManagerFactory.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        entityManager.close();
-        entityManagerFactory.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                entityManager.getTransaction().rollback(); 
+            } finally {
+                entityManager.close(); 
+                entityManagerFactory.close(); 
+            }
     }
 }

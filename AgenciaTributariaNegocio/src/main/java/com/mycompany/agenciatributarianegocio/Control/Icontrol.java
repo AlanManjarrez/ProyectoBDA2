@@ -4,13 +4,15 @@
  */
 package com.mycompany.agenciatributarianegocio.Control;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author JESUS
  */
 public interface Icontrol {
     
-    public void inicioSesion(String usuario, String contraseña, Icontrol control);
+    public boolean inicioSesion(String usuario, String contraseña, Icontrol control);
 
     public void agregaPersonas();
 

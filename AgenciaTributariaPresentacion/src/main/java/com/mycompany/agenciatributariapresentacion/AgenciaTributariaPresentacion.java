@@ -1,5 +1,7 @@
 package com.mycompany.agenciatributariapresentacion;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author TeLesheo

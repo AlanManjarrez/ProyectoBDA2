@@ -1,6 +1,6 @@
 package com.mycompany.agenciatributariapresentacion;
 
-import com.mycompany.agenciatributarianegocio.control.Icontrol;
+//import com.mycompany.agenciatributarianegocio.control.Icontrol;
 import javax.swing.JOptionPane;
 
 /**

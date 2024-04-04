@@ -1,7 +1,8 @@
 package com.mycompany.agenciatributariapresentacion;
 
-import com.mycompany.agenciatributarianegocio.control.Icontrol;
-import com.mycompany.agenciatributarianegocio.control.control;
+import com.mycompany.agenciatributarianegocio.Control.Icontrol;
+import com.mycompany.agenciatributarianegocio.Control.Control;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,12 +12,13 @@ import javax.swing.JOptionPane;
 public class LogIn extends javax.swing.JFrame {
 
     Icontrol control;
-
+    
     /**
      * Creates new form LogIn
      */
     public LogIn() {
-        control = new control();
+        control = new Control();
+       
         initComponents();
     }
 
@@ -105,8 +107,9 @@ public class LogIn extends javax.swing.JFrame {
         } else if (txt_contraseña.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese la contraseña", "!! ALERTA ¡¡", JOptionPane.WARNING_MESSAGE);
         } else {
-            control.inicioSesion(txt_usuario.getText(), txt_contraseña.getText(), control);
-            this.dispose();
+            if (control.inicioSesion(txt_usuario.getText(), txt_contraseña.getText(), control)) {
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_btn_ingresarActionPerformed
 

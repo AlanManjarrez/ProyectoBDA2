@@ -1,0 +1,17 @@
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\EstadoVehiculo.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Licencia.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Licencia_.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Automovil_.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Tramite_.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\EstadoPlaca.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Automovil.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Vehiculo.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Persona.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Placa.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Persona_.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Placa_.class
+com\mycompany\proyectobda2\ProyectoBDA2.class
+com\mycompany\proyectobda2\Persistencia\DAOS\IPersonaDAO.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Tramite.class
+com\mycompany\proyectobda2\Persistencia\EntidadesJPA\Vehiculo_.class
+com\mycompany\proyectobda2\Persistencia\DAOS\PersonaDAO.class

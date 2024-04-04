@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="conexionPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo</class>
+    <class>com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite</class>
+    <class>com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Placa</class>
+    <class>com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona</class>
+    <class>com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil</class>
+    <class>com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Licencia</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/placas_licencias?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="0990"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+</persistence>

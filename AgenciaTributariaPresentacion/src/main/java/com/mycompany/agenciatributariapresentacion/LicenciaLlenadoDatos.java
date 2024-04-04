@@ -2,18 +2,19 @@ package com.mycompany.agenciatributariapresentacion;
 
 //import com.mycompany.agenciatributarianegocio.control.Icontrol;
 import javax.swing.JOptionPane;
+import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 
 /**
  *
  * @author TeLesheo
  */
 public class LicenciaLlenadoDatos extends javax.swing.JFrame {
-
+    Icontrol control;
     /**
      * Creates new form LicenciaLlenadoDatos
      */
-    public LicenciaLlenadoDatos() {
-
+    public LicenciaLlenadoDatos(Icontrol control) {
+        this.control=control;
         initComponents();
     }
 
@@ -48,7 +49,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txt_rfc = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         lbl_datos_personales1 = new javax.swing.JLabel();
 
         jMenu1.setText("File");
@@ -99,7 +100,12 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
 
         jLabel6.setText("RFC");
 
-        jButton1.setText("Buscar");
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,7 +132,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txt_apellido_paterno, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jButton1)
+                                            .addComponent(btnBuscar)
                                             .addComponent(lbl_apellido_paterno, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addComponent(jLabel5)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -153,7 +159,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_rfc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnBuscar))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_nombres)
@@ -218,8 +224,17 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void brn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brn_regresarActionPerformed
+        txt_rfc.setText("");
+        txt_nombres.setText("");
+        txt_apellido_paterno.setText("");
+        txt_apellido_materno.setText("");
+        txt_fecha_nacimiento.setText("");
         this.dispose();
     }//GEN-LAST:event_brn_regresarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -266,11 +281,11 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brn_regresar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

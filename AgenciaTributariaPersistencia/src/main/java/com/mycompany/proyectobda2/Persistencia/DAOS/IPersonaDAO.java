@@ -5,16 +5,14 @@
 package com.mycompany.proyectobda2.Persistencia.DAOS;
 
 import java.util.List;
-
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 /**
  *
  * @author uirtis
  */
 public interface IPersonaDAO {
     
-    public void agregarPersona(PersonaDAO persona);
-    
-    public PersonaDAO consultarPersonaRFC(String RFC);
+    public PersonaDTO consultarPersonaRFC(String RFC);
     
     public void insercionPersonas();
     

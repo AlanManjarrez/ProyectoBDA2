@@ -4,32 +4,36 @@
  */
 package com.mycompany.agenciatributarianegocio.DTO;
 
+import java.util.Calendar;
+
 /**
  *
  * @author JESUS
  */
 public class PersonaDTO {
-    private Integer id;
+    private Long id;
     private String rfc;
     private String nombres;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private String fechaNacimiento;
+    private Calendar fechaNacimiento;
     private String telefono;
+    private boolean discapacidad;
 
     public PersonaDTO() {
     }
 
-    public PersonaDTO(String rfc, String nombres, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento, String telefono) {
+    public PersonaDTO(String rfc, String nombres, String apellidoPaterno, String apellidoMaterno, Calendar fechaNacimiento, String telefono,boolean discapacidad) {
         this.rfc = rfc;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
+        this.discapacidad=discapacidad;
     }
 
-    public PersonaDTO(Integer id, String rfc, String nombres, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento, String telefono) {
+    public PersonaDTO(Long id, String rfc, String nombres, String apellidoPaterno, String apellidoMaterno, Calendar fechaNacimiento, String telefono,boolean discapacidad) {
         this.id = id;
         this.rfc = rfc;
         this.nombres = nombres;
@@ -37,13 +41,14 @@ public class PersonaDTO {
         this.apellidoMaterno = apellidoMaterno;
         this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
+        this.discapacidad=discapacidad;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -79,11 +84,11 @@ public class PersonaDTO {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getFechaNacimiento() {
+    public Calendar getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Calendar fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -94,4 +99,14 @@ public class PersonaDTO {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    public boolean isDiscapacidad() {
+        return discapacidad;
+    }
+
+    public void setDiscapacidad(boolean discapacidad) {
+        this.discapacidad = discapacidad;
+    }
+    
+    
 }

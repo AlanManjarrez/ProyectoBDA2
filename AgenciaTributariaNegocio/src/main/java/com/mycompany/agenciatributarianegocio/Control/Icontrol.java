@@ -4,7 +4,8 @@
  */
 package com.mycompany.agenciatributarianegocio.Control;
 
-import javax.swing.JFrame;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+
 
 /**
  *
@@ -16,5 +17,5 @@ public interface Icontrol {
 
     public void agregaPersonas();
 
-    public void registrarLicencia(String rfc);
+    public PersonaDTO buscarLicencia(String rfc);
 }

@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 
 /**
  *
@@ -18,34 +19,18 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
  */
 public class PersonaDAO implements IPersonaDAO {
 
-    @Override
-    public void agregarPersona(PersonaDAO persona) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(persona);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        }
-        entityManager.close();
-        entityManagerFactory.close();
-    }
 
     @Override
-    public PersonaDAO consultarPersonaRFC(String RFC) {
+    public PersonaDTO consultarPersonaRFC(String RFC) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            PersonaDAO persona = entityManager.createQuery("SELECT P FROM personas P WHERE P.RFC = :RFC", PersonaDAO.class).getSingleResult();
+            Persona persona = entityManager.createQuery("SELECT P FROM personas P WHERE P.RFC = :RFC", Persona.class).getSingleResult();
 
             if (persona != null) {
-                return persona;
+                PersonaDTO persona1=new PersonaDTO(persona.getId(),persona.getRFC(),persona.getNombre(),persona.getApellidoPaterno(),persona.getApellidoMaterno(),persona.getFechaNacimiento(),persona.getTelefono(),persona.getDiscapacidad());     
+                return persona1;
             } else {
                 System.out.println("No se pudo encontrar la persona");
             }
@@ -95,12 +80,12 @@ public class PersonaDAO implements IPersonaDAO {
 
             entityManager.getTransaction().commit();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                entityManager.getTransaction().rollback(); 
-            } finally {
-                entityManager.close(); 
-                entityManagerFactory.close(); 
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            entityManager.getTransaction().rollback(); 
+        } finally {
+            entityManager.close(); 
+            entityManagerFactory.close(); 
+        }
     }
 }

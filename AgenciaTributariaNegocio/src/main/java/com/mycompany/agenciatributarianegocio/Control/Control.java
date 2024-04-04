@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.agenciatributarianegocio.Control;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributariapresentacion.*;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import javax.swing.JFrame;
@@ -42,8 +43,12 @@ public class Control implements Icontrol{
     }
 
     @Override
-    public void registrarLicencia(String rfc) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public PersonaDTO buscarLicencia(String rfc) {
+        personaD.consultarPersonaRFC(rfc);
+        if (personaD!=null) {
+            
+        }
+        return null;
     }
     
 }

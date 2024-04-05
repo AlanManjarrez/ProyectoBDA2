@@ -10,64 +10,40 @@ import java.util.Calendar;
  *
  * @author JESUS
  */
-public class PlacaDTO {
-    private Integer id;
-    private Double costo;
-    private Calendar vigencia;
-    private Calendar fechaEmision;
+public class PlacaDTO extends TramiteDTO{
+    private Long id;
     private Calendar fechaRecepcion;
     private String seriePlacas;
+    private String estadoPlacas;
+    private VehiculoDTO vehiculo;
 
     public PlacaDTO() {
+        super();
     }
 
-    public PlacaDTO(Double costo, Calendar vigencia, Calendar fechaEmision, Calendar fechaRecepcion, String seriePlacas) {
-        this.costo = costo;
-        this.vigencia = vigencia;
-        this.fechaEmision = fechaEmision;
+    public PlacaDTO(Calendar fechaRecepcion, String seriePlacas, String estadoPlacas, VehiculoDTO vehiculo, Calendar fechaEmision, Float costo, Calendar vigencia, PersonaDTO persona) {
+        super(fechaEmision, costo, vigencia, persona);
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;
+        this.estadoPlacas = estadoPlacas;
+        this.vehiculo = vehiculo;
     }
 
-    public PlacaDTO(Integer id, Double costo, Calendar vigencia, Calendar fechaEmision, Calendar fechaRecepcion, String seriePlacas) {
+    public PlacaDTO(Long id,Calendar fechaRecepcion, String seriePlacas, String estadoPlacas, VehiculoDTO vehiculo, Calendar fechaEmision, Float costo, Calendar vigencia, PersonaDTO persona) {
+        super(id, fechaEmision, costo, vigencia, persona);
         this.id = id;
-        this.costo = costo;
-        this.vigencia = vigencia;
-        this.fechaEmision = fechaEmision;
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;
+        this.estadoPlacas = estadoPlacas;
+        this.vehiculo = vehiculo;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(Double costo) {
-        this.costo = costo;
-    }
-
-    public Calendar getVigencia() {
-        return vigencia;
-    }
-
-    public void setVigencia(Calendar vigencia) {
-        this.vigencia = vigencia;
-    }
-
-    public Calendar getFechaEmision() {
-        return fechaEmision;
-    }
-
-    public void setFechaEmision(Calendar fechaEmision) {
-        this.fechaEmision = fechaEmision;
     }
 
     public Calendar getFechaRecepcion() {
@@ -85,4 +61,25 @@ public class PlacaDTO {
     public void setSeriePlacas(String seriePlacas) {
         this.seriePlacas = seriePlacas;
     }
+
+    public String getEstadoPlacas() {
+        return estadoPlacas;
+    }
+
+    public void setEstadoPlacas(String estadoPlacas) {
+        this.estadoPlacas = estadoPlacas;
+    }
+
+    public VehiculoDTO getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(VehiculoDTO vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+    
+    
+    
+    
+   
 }

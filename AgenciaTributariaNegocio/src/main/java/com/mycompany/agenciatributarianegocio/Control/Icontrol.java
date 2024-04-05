@@ -5,6 +5,7 @@
 package com.mycompany.agenciatributarianegocio.Control;
 
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import java.util.Calendar;
 
 
 /**
@@ -18,4 +19,6 @@ public interface Icontrol {
     public void agregaPersonas();
 
     public PersonaDTO buscarLicencia(String rfc);
+    
+    public void altaLicencia(PersonaDTO persona,Float costo,Calendar vigencia);
 }

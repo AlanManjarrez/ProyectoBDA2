@@ -8,90 +8,27 @@ package com.mycompany.agenciatributarianegocio.DTO;
  *
  * @author JESUS
  */
-public class AutomovilDTO {
-    private Integer id;
-    private String color;
-    private String linea;
-    private String modelo;
-    private String marca;
-    private String serieVehicular;
-    private String estadoVehicular;
+public class AutomovilDTO extends VehiculoDTO{
+    private Long id;
 
     public AutomovilDTO() {
+        super();
     }
 
-    public AutomovilDTO(String color, String linea, String modelo, String marca, String serieVehicular, String estadoVehicular) {
-        this.color = color;
-        this.linea = linea;
-        this.modelo = modelo;
-        this.marca = marca;
-        this.serieVehicular = serieVehicular;
-        this.estadoVehicular = estadoVehicular;
+    public AutomovilDTO(String serieVehiculo, String marca, String modelo, String linea, String color, String estadoVehiculo, PersonaDTO persona) {
+        super(serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
     }
 
-    public AutomovilDTO(Integer id, String color, String linea, String modelo, String marca, String serieVehicular, String estadoVehicular) {
+    public AutomovilDTO(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, String estadoVehiculo, PersonaDTO persona) {
+        super(id, serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
         this.id = id;
-        this.color = color;
-        this.linea = linea;
-        this.modelo = modelo;
-        this.marca = marca;
-        this.serieVehicular = serieVehicular;
-        this.estadoVehicular = estadoVehicular;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getLinea() {
-        return linea;
-    }
-
-    public void setLinea(String linea) {
-        this.linea = linea;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getSerieVehicular() {
-        return serieVehicular;
-    }
-
-    public void setSerieVehicular(String serieVehicular) {
-        this.serieVehicular = serieVehicular;
-    }
-
-    public String getEstadoVehicular() {
-        return estadoVehicular;
-    }
-
-    public void setEstadoVehicular(String estadoVehicular) {
-        this.estadoVehicular = estadoVehicular;
     }
 }

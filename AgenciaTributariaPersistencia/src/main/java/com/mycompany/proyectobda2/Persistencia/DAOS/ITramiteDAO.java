@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.mycompany.proyectobda2.Persistencia.DAOS;
+import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 
 /**
  *
@@ -10,5 +11,5 @@ package com.mycompany.proyectobda2.Persistencia.DAOS;
  */
 public interface ITramiteDAO {
 
-    public void agregarTramite(TramiteDAO tramite);
+    public void agregarTramite(TramiteDTO tramite);
 }

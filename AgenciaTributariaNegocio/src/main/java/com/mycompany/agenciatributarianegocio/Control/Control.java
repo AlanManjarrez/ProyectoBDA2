@@ -3,9 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.agenciatributarianegocio.Control;
+import com.mycompany.agenciatributarianegocio.DTO.LicenciaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributariapresentacion.*;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
+import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 /**
  *
@@ -13,6 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class Control implements Icontrol{
     PersonaDAO personaD=new PersonaDAO();
+    TramiteDAO tramiteD=new TramiteDAO();
     PersonaDTO per;
     
     @Override
@@ -52,6 +56,20 @@ public class Control implements Icontrol{
             JOptionPane.showMessageDialog(null, "No existe persona con ese rfc");
             return null;
         }
-        
     }    
+
+    @Override
+    public void altaLicencia(PersonaDTO persona,Float costo,Calendar vigencia) {
+        try {
+            Calendar fecha= Calendar.getInstance();
+            LicenciaDTO licencia =new LicenciaDTO(fecha, costo, vigencia, persona);
+            tramiteD.agregarTramite(licencia);
+            JOptionPane.showMessageDialog(null, "Se ha dado de alta la licencia");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    
+    
 }

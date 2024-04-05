@@ -234,7 +234,9 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No has realizado busqueda de la persona", "!! ALERTA ¡¡", JOptionPane.WARNING_MESSAGE);
         }else{
             if (persona.isDiscapacidad()) {
-                
+                LicenciaCostoDiscapacitado frmLicencia=new LicenciaCostoDiscapacitado(control, persona);
+                frmLicencia.setVisible(true);
+                this.dispose();
             }else{
                 LicenciaCostoNormal frmLicenciac=new LicenciaCostoNormal(control, persona);
                 frmLicenciac.setVisible(true);

@@ -1,6 +1,8 @@
 package com.mycompany.agenciatributariapresentacion;
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
 /**
  *
  * @author TeLesheo
@@ -88,6 +90,11 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,8 +199,31 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if (!radio_1.isSelected() && !radio_2.isSelected() && !radio_3.isSelected()) {
+            JOptionPane.showMessageDialog(null, "No has seleccionado ninguna vigencia","!! ADVERTENCIA ¡¡",JOptionPane.WARNING_MESSAGE);
+        }else{
+            Calendar vigencia= Calendar.getInstance();
+            if (radio_1.isSelected()) {
+                vigencia.add(Calendar.YEAR, 1);
+                control.altaLicencia(persona, 200f, vigencia);
+            }else if(radio_2.isSelected()){
+                vigencia.add(Calendar.YEAR, 2);
+                control.altaLicencia(persona, 500f, vigencia);
+            }else if(radio_3.isSelected()){
+                vigencia.add(Calendar.YEAR, 3);
+                control.altaLicencia(persona, 700f, vigencia);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        radio_1.setSelected(false);
+        radio_2.setSelected(false);
+        radio_3.setSelected(false);
+        LicenciaLlenadoDatos frmLicencia=new LicenciaLlenadoDatos(control);
+        frmLicencia.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 //    /**
 //     * @param args the command line arguments

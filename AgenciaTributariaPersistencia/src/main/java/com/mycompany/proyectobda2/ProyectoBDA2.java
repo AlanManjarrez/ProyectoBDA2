@@ -30,7 +30,7 @@ public class ProyectoBDA2 {
         System.out.println("Hello World!");
         
         
-        /*
+        
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
         Calendar fechaEmision = Calendar.getInstance();
@@ -63,7 +63,7 @@ public class ProyectoBDA2 {
 
         entityManager.close();
         entityManagerFactory.close();
-*/
+
 /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU"); // Reemplaza "tu_unidad_de_persistencia" por el nombre de tu unidad de persistencia
         EntityManager em = emf.createEntityManager();

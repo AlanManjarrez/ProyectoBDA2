@@ -10,57 +10,27 @@ import java.util.Calendar;
  *
  * @author JESUS
  */
-public class LicenciaDTO {
-     private Integer id;
-    private Double costo;
-    private Calendar vigencia;
-    private Calendar fechaEmision;
+public class LicenciaDTO extends TramiteDTO{
+    private Long id;
 
     public LicenciaDTO() {
+        super();
     }
 
-    public LicenciaDTO(Double costo, Calendar vigencia, Calendar fechaEmision) {
-        this.costo = costo;
-        this.vigencia = vigencia;
-        this.fechaEmision = fechaEmision;
-    }
-
-    public LicenciaDTO(Integer id, Double costo, Calendar vigencia, Calendar fechaEmision) {
+    public LicenciaDTO(Long id, Calendar fechaEmision, Float costo, Calendar vigencia, PersonaDTO persona) {
+        super(fechaEmision, costo, vigencia, persona);
         this.id = id;
-        this.costo = costo;
-        this.vigencia = vigencia;
-        this.fechaEmision = fechaEmision;
     }
 
-    public Integer getId() {
+    public LicenciaDTO(Calendar fechaEmision, Float costo, Calendar vigencia, PersonaDTO persona) {
+        super(fechaEmision, costo, vigencia, persona);
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(Double costo) {
-        this.costo = costo;
-    }
-
-    public Calendar getVigencia() {
-        return vigencia;
-    }
-
-    public void setVigencia(Calendar vigencia) {
-        this.vigencia = vigencia;
-    }
-
-    public Calendar getFechaEmision() {
-        return fechaEmision;
-    }
-
-    public void setFechaEmision(Calendar fechaEmision) {
-        this.fechaEmision = fechaEmision;
     }
 }

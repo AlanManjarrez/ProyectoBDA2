@@ -30,7 +30,7 @@ public class PersonaDAO implements IPersonaDAO {
             entityManager.getTransaction().begin();
             Persona persona = entityManager.createQuery("SELECT P FROM personas P WHERE P.RFC = :RFC", Persona.class).setParameter("RFC", RFC).getSingleResult();
 
-            persona1=new PersonaDTO(persona.getId(),persona.getRFC(),persona.getNombre(),persona.getApellidoPaterno(),persona.getApellidoMaterno(),persona.getFechaNacimiento(),persona.getTelefono(),persona.getDiscapacidad());     
+            persona1=new PersonaDTO(persona.getId(),persona.getRFC(),persona.getNombre(),persona.getApellidoPaterno(),persona.getApellidoMaterno(),persona.getFechaNacimiento(),persona.getTelefono(),persona.getDiscapacidad(),persona.getCURP());     
         
             entityManager.getTransaction().commit();
         } catch (NoResultException e) {

@@ -14,6 +14,7 @@ public class PersonaDTO {
     private Long id;
     private String rfc;
     private String nombres;
+    private String curp;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private Calendar fechaNacimiento;
@@ -23,7 +24,7 @@ public class PersonaDTO {
     public PersonaDTO() {
     }
 
-    public PersonaDTO(String rfc, String nombres, String apellidoPaterno, String apellidoMaterno, Calendar fechaNacimiento, String telefono,boolean discapacidad) {
+    public PersonaDTO(String rfc, String nombres, String apellidoPaterno, String apellidoMaterno, Calendar fechaNacimiento, String telefono,boolean discapacidad,String curp) {
         this.rfc = rfc;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
@@ -31,9 +32,10 @@ public class PersonaDTO {
         this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.discapacidad=discapacidad;
+        this.curp=curp;
     }
 
-    public PersonaDTO(Long id, String rfc, String nombres, String apellidoPaterno, String apellidoMaterno, Calendar fechaNacimiento, String telefono,boolean discapacidad) {
+    public PersonaDTO(Long id, String rfc, String nombres, String apellidoPaterno, String apellidoMaterno, Calendar fechaNacimiento, String telefono,boolean discapacidad,String curp) {
         this.id = id;
         this.rfc = rfc;
         this.nombres = nombres;
@@ -42,6 +44,7 @@ public class PersonaDTO {
         this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.discapacidad=discapacidad;
+        this.curp=curp;
     }
 
     public Long getId() {
@@ -106,6 +109,14 @@ public class PersonaDTO {
 
     public void setDiscapacidad(boolean discapacidad) {
         this.discapacidad = discapacidad;
+    }
+
+    public String getCurp() {
+        return curp;
+    }
+
+    public void setCurp(String curp) {
+        this.curp = curp;
     }
     
     

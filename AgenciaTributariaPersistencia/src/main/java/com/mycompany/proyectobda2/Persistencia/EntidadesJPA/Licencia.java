@@ -17,7 +17,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
  *
  * @author uirtis
  */
-@Entity(name = "licencias")
+@Entity
 @DiscriminatorValue("licencia")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Licencia extends Tramite implements Serializable {

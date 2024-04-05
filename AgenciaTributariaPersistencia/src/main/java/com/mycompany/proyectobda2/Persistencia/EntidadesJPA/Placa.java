@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  *
  * @author uirtis
  */
-@Entity(name = "placas")
+@Entity
 @DiscriminatorValue("placa")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Placa extends Tramite implements Serializable {

@@ -6,7 +6,6 @@ package com.mycompany.agenciatributarianegocio.Control;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributariapresentacion.*;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 /**
  *
@@ -14,6 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class Control implements Icontrol{
     PersonaDAO personaD=new PersonaDAO();
+    PersonaDTO per;
     
     @Override
     public boolean inicioSesion(String usuario, String contraseña, Icontrol control) {
@@ -44,11 +44,14 @@ public class Control implements Icontrol{
 
     @Override
     public PersonaDTO buscarLicencia(String rfc) {
-        personaD.consultarPersonaRFC(rfc);
-        if (personaD!=null) {
-            
+        per=new PersonaDTO();
+        per=personaD.consultarPersonaRFC(rfc);
+        if (per!=null) {
+          return per;  
+        }else{
+            JOptionPane.showMessageDialog(null, "No existe persona con ese rfc");
+            return null;
         }
-        return null;
-    }
-    
+        
+    }    
 }

@@ -1,8 +1,10 @@
 package com.mycompany.agenciatributariapresentacion;
 
-//import com.mycompany.agenciatributarianegocio.control.Icontrol;
+
 import javax.swing.JOptionPane;
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -10,6 +12,7 @@ import com.mycompany.agenciatributarianegocio.Control.Icontrol;
  */
 public class LicenciaLlenadoDatos extends javax.swing.JFrame {
     Icontrol control;
+    PersonaDTO persona;
     /**
      * Creates new form LicenciaLlenadoDatos
      */
@@ -46,7 +49,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
         btnSiguiente = new javax.swing.JButton();
         txt_fecha_nacimiento = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_telefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txt_rfc = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
@@ -96,7 +99,16 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
             }
         });
 
+        txt_fecha_nacimiento.setEditable(false);
+
         jLabel5.setText("Telefono");
+
+        txt_telefono.setEditable(false);
+        txt_telefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_telefonoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("RFC");
 
@@ -140,7 +152,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
                                     .addComponent(brn_regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lbl_datos_personales))
                         .addContainerGap(126, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -177,7 +189,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(brn_regresar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,10 +228,18 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        if (txt_nombres.getText().isEmpty() || txt_apellido_paterno.getText().isEmpty() || txt_apellido_materno.getText().isEmpty() || jTextField1.getText().isEmpty() || txt_fecha_nacimiento.getText().isEmpty()) {
+        if (txt_nombres.getText().isEmpty() || txt_apellido_paterno.getText().isEmpty() || txt_apellido_materno.getText().isEmpty() || txt_telefono.getText().isEmpty() || txt_fecha_nacimiento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No esta autorizado para sacar una licencia", "!! BLOQUEADO ¡¡", JOptionPane.INFORMATION_MESSAGE);
         } else if (txt_rfc.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No has realizado busqueda de la persona", "!! ALERTA ¡¡", JOptionPane.WARNING_MESSAGE);
+        }else{
+            if (persona.isDiscapacidad()) {
+                
+            }else{
+                LicenciaCostoNormal frmLicenciac=new LicenciaCostoNormal(control, persona);
+                frmLicenciac.setVisible(true);
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
@@ -229,12 +249,33 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
         txt_apellido_paterno.setText("");
         txt_apellido_materno.setText("");
         txt_fecha_nacimiento.setText("");
+        txt_telefono.setText("");
+        
+        Licencias frmLicencias=new Licencias(control);
+        frmLicencias.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_brn_regresarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
+        if (txt_rfc.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No has ingresado ninguna rfc","",JOptionPane.WARNING_MESSAGE);
+        }else{
+            persona=null;
+            persona= control.buscarLicencia(txt_rfc.getText());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            if (persona!=null) {
+                txt_nombres.setText(persona.getNombres());
+                txt_fecha_nacimiento.setText(sdf.format(persona.getFechaNacimiento().getTime()));
+                txt_apellido_paterno.setText(persona.getApellidoPaterno());
+                txt_apellido_materno.setText(persona.getApellidoMaterno());
+                txt_telefono.setText(persona.getTelefono());
+            }
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txt_telefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_telefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_telefonoActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -293,7 +334,6 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl_apellido_materno;
     private javax.swing.JLabel lbl_apellido_paterno;
     private javax.swing.JLabel lbl_datos_personales;
@@ -304,5 +344,6 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
     private javax.swing.JTextField txt_fecha_nacimiento;
     private javax.swing.JTextField txt_nombres;
     private javax.swing.JTextField txt_rfc;
+    private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
 }

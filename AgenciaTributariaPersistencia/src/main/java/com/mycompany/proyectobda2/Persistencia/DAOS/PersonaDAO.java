@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -22,30 +23,32 @@ public class PersonaDAO implements IPersonaDAO {
 
     @Override
     public PersonaDTO consultarPersonaRFC(String RFC) {
+        PersonaDTO persona1=null;
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            Persona persona = entityManager.createQuery("SELECT P FROM personas P WHERE P.RFC = :RFC", Persona.class).getSingleResult();
+            Persona persona = entityManager.createQuery("SELECT P FROM personas P WHERE P.RFC = :RFC", Persona.class).setParameter("RFC", RFC).getSingleResult();
 
-            if (persona != null) {
-                PersonaDTO persona1=new PersonaDTO(persona.getId(),persona.getRFC(),persona.getNombre(),persona.getApellidoPaterno(),persona.getApellidoMaterno(),persona.getFechaNacimiento(),persona.getTelefono(),persona.getDiscapacidad());     
-                return persona1;
-            } else {
-                System.out.println("No se pudo encontrar la persona");
-            }
-
+            persona1=new PersonaDTO(persona.getId(),persona.getRFC(),persona.getNombre(),persona.getApellidoPaterno(),persona.getApellidoMaterno(),persona.getFechaNacimiento(),persona.getTelefono(),persona.getDiscapacidad());     
+        
             entityManager.getTransaction().commit();
-
+        } catch (NoResultException e) {
+            // Aquí manejamos la excepción y devolvemos null
+            System.out.println("No se encontró ninguna persona con el RFC proporcionado.");
+            return null;
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
             e.printStackTrace();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
         }
-        entityManager.close();
-        entityManagerFactory.close();
-        return null;
+        return persona1;
+            
+            
     }
 
     @Override

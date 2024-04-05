@@ -16,7 +16,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
  *
  * @author uirtis
  */
-@Entity(name = "automoviles")
+@Entity
 @DiscriminatorValue("automovil")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Automovil extends Vehiculo implements Serializable {

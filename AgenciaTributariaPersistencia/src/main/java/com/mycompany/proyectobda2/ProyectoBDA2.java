@@ -11,6 +11,8 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Placa;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
+import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -26,7 +28,9 @@ public class ProyectoBDA2 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-
+        
+        
+        /*
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
         Calendar fechaEmision = Calendar.getInstance();
@@ -40,11 +44,10 @@ public class ProyectoBDA2 {
 
         Persona persona = new Persona("ABCD123456XYZ", "ABCX123456XYZ789", fechaNacimiento, "1234567890", "Juan", "Pérez", "González", false);
         Automovil automovil = new Automovil("V123456789", "Toyota", "Corolla", "Sedán", "Blanco", EstadoVehiculo.NUEVO, persona);
-        Vehiculo vehiculo = new Vehiculo();
-        vehiculo.setId(automovil.getId());
         
-        Placa placa = new Placa(fechaRecepcion, "ABC123",EstadoPlaca.ACTIVO, vehiculo, fechaEmision, 300.00f, vigencia, persona);
-        Tramite tramite = new Tramite(fechaEmision, 100.50f, vigencia, persona);
+        
+        Placa placa = new Placa(fechaRecepcion, "ABC123",EstadoPlaca.ACTIVO, automovil, fechaEmision, 300.00f, vigencia, persona);
+        
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -54,13 +57,13 @@ public class ProyectoBDA2 {
         entityManager.persist(persona);
         entityManager.persist(automovil);
         entityManager.persist(placa);
-        entityManager.persist(tramite);
+        
 
         entityManager.getTransaction().commit();
 
         entityManager.close();
         entityManagerFactory.close();
-
+*/
 /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU"); // Reemplaza "tu_unidad_de_persistencia" por el nombre de tu unidad de persistencia
         EntityManager em = emf.createEntityManager();

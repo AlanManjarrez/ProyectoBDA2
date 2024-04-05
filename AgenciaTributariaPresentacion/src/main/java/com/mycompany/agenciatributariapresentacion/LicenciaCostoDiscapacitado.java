@@ -213,6 +213,9 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
                 vigencia.add(Calendar.YEAR, 3);
                 control.altaLicencia(persona, 700f, vigencia);
             }
+            Licencias frmInLicencias = new Licencias(control);
+            frmInLicencias.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

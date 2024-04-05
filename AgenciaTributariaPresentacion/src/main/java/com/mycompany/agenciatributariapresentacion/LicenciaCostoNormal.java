@@ -227,13 +227,19 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
             if (radio_1.isSelected()) {
                 vigencia.add(Calendar.YEAR, 1);
                 control.altaLicencia(persona, 600f, vigencia);
+                
             }else if(radio_2.isSelected()){
                 vigencia.add(Calendar.YEAR, 2);
                 control.altaLicencia(persona, 900f, vigencia);
+                
             }else if(radio_3.isSelected()){
                 vigencia.add(Calendar.YEAR, 3);
                 control.altaLicencia(persona, 1100f, vigencia);
+                
             }
+            Licencias frmInLicencias = new Licencias(control);
+            frmInLicencias.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
@@ -246,6 +252,7 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_regresarActionPerformed
 
+    
 //    /**
 //     * @param args the command line arguments
 //     */

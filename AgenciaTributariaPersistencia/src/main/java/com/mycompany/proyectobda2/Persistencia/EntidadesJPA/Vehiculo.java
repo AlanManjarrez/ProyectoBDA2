@@ -46,9 +46,6 @@ public class Vehiculo implements Serializable {
     @Column(name = "color", nullable = true, length = 100)
     private String color;
 
-    @Column(name = "estado", nullable = true)
-    private EstadoVehiculo estadoVehiculo;
-
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     private Persona persona;
@@ -56,24 +53,22 @@ public class Vehiculo implements Serializable {
     public Vehiculo() {
     }
 
-    public Vehiculo(String serieVehiculo, String marca, String modelo, String linea, String color, EstadoVehiculo estadoVehiculo, Persona persona) {
+    public Vehiculo(String serieVehiculo, String marca, String modelo, String linea, String color,  Persona persona) {
         this.serieVehiculo = serieVehiculo;
         this.marca = marca;
         this.modelo = modelo;
         this.linea = linea;
         this.color = color;
-        this.estadoVehiculo = estadoVehiculo;
         this.persona = persona;
     }
 
-    public Vehiculo(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, EstadoVehiculo estadoVehiculo, Persona persona) {
+    public Vehiculo(Long id, String serieVehiculo, String marca, String modelo, String linea, String color,  Persona persona) {
         this.id = id;
         this.serieVehiculo = serieVehiculo;
         this.marca = marca;
         this.modelo = modelo;
         this.linea = linea;
         this.color = color;
-        this.estadoVehiculo = estadoVehiculo;
         this.persona = persona;
     }
 
@@ -123,14 +118,6 @@ public class Vehiculo implements Serializable {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public EstadoVehiculo getEstadoVehiculo() {
-        return estadoVehiculo;
-    }
-
-    public void setEstadoVehiculo(EstadoVehiculo estadoVehiculo) {
-        this.estadoVehiculo = estadoVehiculo;
     }
 
     public Persona getPersona() {

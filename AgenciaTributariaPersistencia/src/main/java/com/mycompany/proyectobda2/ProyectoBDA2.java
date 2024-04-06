@@ -6,7 +6,6 @@ package com.mycompany.proyectobda2;
 
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoPlaca;
-import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoVehiculo;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Placa;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
@@ -30,9 +29,8 @@ public class ProyectoBDA2 {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
-        TramiteDAO t=new TramiteDAO();
-        System.out.println(t.verificarLicencia("RFC6"));
-        /*
+        
+        
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
         Calendar fechaEmision = Calendar.getInstance();
@@ -45,7 +43,7 @@ public class ProyectoBDA2 {
         
 
         Persona persona = new Persona("ABCD123456XYZ", "ABCX123456XYZ789", fechaNacimiento, "1234567890", "Juan", "Pérez", "González", false);
-        Automovil automovil = new Automovil("V123456789", "Toyota", "Corolla", "Sedán", "Blanco", EstadoVehiculo.NUEVO, persona);
+        Automovil automovil = new Automovil("V123456789", "Toyota", "Corolla", "Sedán", "Blanco", persona);
         
         
         Placa placa = new Placa(fechaRecepcion, "ABC123",EstadoPlaca.ACTIVO, automovil, fechaEmision, 300.00f, vigencia, persona);
@@ -65,7 +63,7 @@ public class ProyectoBDA2 {
 
         entityManager.close();
         entityManagerFactory.close();
-*/
+
 /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU"); // Reemplaza "tu_unidad_de_persistencia" por el nombre de tu unidad de persistencia
         EntityManager em = emf.createEntityManager();

@@ -42,6 +42,11 @@ public class Placas extends javax.swing.JFrame {
         });
 
         btn_regresar.setText("Regresar");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,8 +97,16 @@ public class Placas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        
+        PlacaLlenadoDatos frmPlaca=new PlacaLlenadoDatos(control);
+        frmPlaca.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        PaginaInicio frmInicio=new PaginaInicio(control);
+        frmInicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_regresarActionPerformed
 
 //    /**
 //     * @param args the command line arguments

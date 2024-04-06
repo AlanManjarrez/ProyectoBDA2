@@ -12,7 +12,6 @@ import javax.persistence.Persistence;
 import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoPlaca;
-import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoVehiculo;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Licencia;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Placa;

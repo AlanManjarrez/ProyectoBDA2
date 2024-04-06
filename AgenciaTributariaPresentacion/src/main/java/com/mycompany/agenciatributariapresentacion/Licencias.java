@@ -7,12 +7,14 @@ import com.mycompany.agenciatributarianegocio.Control.Icontrol;
  * @author TeLesheo
  */
 public class Licencias extends javax.swing.JFrame {
+
     Icontrol control;
+
     /**
      * Creates new form Licencias
      */
     public Licencias(Icontrol control) {
-        this.control=control;
+        this.control = control;
         initComponents();
     }
 
@@ -84,11 +86,11 @@ public class Licencias extends javax.swing.JFrame {
         LicenciaLlenadoDatos frmLicenciaLlenadoDatos = new LicenciaLlenadoDatos(control);
         frmLicenciaLlenadoDatos.setVisible(true);
         this.dispose();
-       
+
     }//GEN-LAST:event_bnt_registrarActionPerformed
 
     private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
-        PaginaInicio frmInicio=new PaginaInicio(control);
+        PaginaInicio frmInicio = new PaginaInicio(control);
         frmInicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_regresarActionPerformed

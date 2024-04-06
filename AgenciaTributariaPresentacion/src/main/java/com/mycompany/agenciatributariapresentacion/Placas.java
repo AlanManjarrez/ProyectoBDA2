@@ -1,16 +1,20 @@
 package com.mycompany.agenciatributariapresentacion;
+
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
+
 /**
  *
  * @author TeLesheo
  */
 public class Placas extends javax.swing.JFrame {
+
     Icontrol control;
+
     /**
      * Creates new form Placas
      */
     public Placas(Icontrol control) {
-        this.control=control;
+        this.control = control;
         initComponents();
     }
 
@@ -42,6 +46,11 @@ public class Placas extends javax.swing.JFrame {
         });
 
         btn_regresar.setText("Regresar");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,8 +101,18 @@ public class Placas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        
+        PlacaLlenadoDatos frmPlacaLlenadoDatos = new PlacaLlenadoDatos(control);
+        frmPlacaLlenadoDatos.setVisible(true);
+        this.dispose();
+
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        // TODO add your handling code here:
+        PaginaInicio frmPaginaInicio = new PaginaInicio(control);
+        frmPaginaInicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_regresarActionPerformed
 
 //    /**
 //     * @param args the command line arguments

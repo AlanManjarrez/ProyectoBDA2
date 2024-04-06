@@ -1,5 +1,6 @@
 package com.mycompany.agenciatributariapresentacion;
 
+
 import javax.swing.JOptionPane;
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
@@ -10,15 +11,13 @@ import java.text.SimpleDateFormat;
  * @author TeLesheo
  */
 public class LicenciaLlenadoDatos extends javax.swing.JFrame {
-
     Icontrol control;
     PersonaDTO persona;
-
     /**
      * Creates new form LicenciaLlenadoDatos
      */
     public LicenciaLlenadoDatos(Icontrol control) {
-        this.control = control;
+        this.control=control;
         initComponents();
     }
 
@@ -233,19 +232,19 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No esta autorizado para sacar una licencia", "!! BLOQUEADO ¡¡", JOptionPane.INFORMATION_MESSAGE);
         } else if (txt_rfc.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No has realizado busqueda de la persona", "!! ALERTA ¡¡", JOptionPane.WARNING_MESSAGE);
-        } else {
+        }else{
             if (!control.verificarLicencia(txt_rfc.getText())) {
-                if (persona.isDiscapacidad()) {
-                    LicenciaCostoDiscapacitado frmLicencia = new LicenciaCostoDiscapacitado(control, persona);
+                if (persona.isDiscapacidad()) {                
+                    LicenciaCostoDiscapacitado frmLicencia=new LicenciaCostoDiscapacitado(control, persona);
                     frmLicencia.setVisible(true);
                     this.dispose();
-                } else {
-                    LicenciaCostoNormal frmLicenciac = new LicenciaCostoNormal(control, persona);
+                }else{
+                    LicenciaCostoNormal frmLicenciac=new LicenciaCostoNormal(control, persona);
                     frmLicenciac.setVisible(true);
                     this.dispose();
                 }
             }
-
+            
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
@@ -256,26 +255,26 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
         txt_apellido_materno.setText("");
         txt_fecha_nacimiento.setText("");
         txt_telefono.setText("");
-
-        Licencias frmLicencias = new Licencias(control);
+        
+        Licencias frmLicencias=new Licencias(control);
         frmLicencias.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_brn_regresarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (txt_rfc.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No has ingresado ninguna rfc", "", JOptionPane.WARNING_MESSAGE);
-        } else {
-            persona = null;
-            persona = control.buscarLicencia(txt_rfc.getText());
+            JOptionPane.showMessageDialog(null, "No has ingresado ninguna rfc","",JOptionPane.WARNING_MESSAGE);
+        }else{
+            persona=null;
+            persona= control.buscarLicencia(txt_rfc.getText());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            if (persona != null) {
+            if (persona!=null) {
                 txt_nombres.setText(persona.getNombres());
                 txt_fecha_nacimiento.setText(sdf.format(persona.getFechaNacimiento().getTime()));
                 txt_apellido_paterno.setText(persona.getApellidoPaterno());
                 txt_apellido_materno.setText(persona.getApellidoMaterno());
                 txt_telefono.setText(persona.getTelefono());
-
+                
             }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -321,6 +320,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
 //    public String rfc() {
 //        return txt_rfc.getText();
 //    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brn_regresar;

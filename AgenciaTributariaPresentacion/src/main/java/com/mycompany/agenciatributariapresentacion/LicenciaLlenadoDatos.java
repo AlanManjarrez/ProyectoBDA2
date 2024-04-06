@@ -317,11 +317,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
 //    public String rfc() {
 //        return txt_rfc.getText();
 //    }
-    public boolean cambioBoton() {
-        boolean b = !txt_rfc.getText().isEmpty();
-        return b;
-
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brn_regresar;

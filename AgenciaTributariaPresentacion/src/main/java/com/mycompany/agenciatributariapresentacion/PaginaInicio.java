@@ -30,6 +30,7 @@ public class PaginaInicio extends javax.swing.JFrame {
         btn_placas = new javax.swing.JButton();
         lbl_tramites = new javax.swing.JLabel();
         btnAgregarPersonas = new javax.swing.JButton();
+        btnConsultas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,6 +55,13 @@ public class PaginaInicio extends javax.swing.JFrame {
             }
         });
 
+        btnConsultas.setText("Consultas");
+        btnConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -65,7 +73,8 @@ public class PaginaInicio extends javax.swing.JFrame {
                     .addComponent(lbl_tramites, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_reportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_placas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_licencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_licencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(273, 273, 273))
         );
         layout.setVerticalGroup(
@@ -80,8 +89,10 @@ public class PaginaInicio extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btn_reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(btnConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(btnAgregarPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120))
+                .addGap(77, 77, 77))
         );
 
         pack();
@@ -96,6 +107,12 @@ public class PaginaInicio extends javax.swing.JFrame {
     private void btnAgregarPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPersonasActionPerformed
         control.agregaPersonas();
     }//GEN-LAST:event_btnAgregarPersonasActionPerformed
+
+    private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
+        Consultar frmConsultar= new Consultar();
+        frmConsultar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnConsultasActionPerformed
 
     
 //    public static void main(String args[]) {
@@ -132,6 +149,7 @@ public class PaginaInicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarPersonas;
+    private javax.swing.JButton btnConsultas;
     private javax.swing.JButton btn_licencia;
     private javax.swing.JButton btn_placas;
     private javax.swing.JButton btn_reportes;

@@ -31,6 +31,7 @@
                   <Component id="btn_reportes" alignment="1" max="32767" attributes="0"/>
                   <Component id="btn_placas" alignment="1" max="32767" attributes="0"/>
                   <Component id="btn_licencia" alignment="1" max="32767" attributes="0"/>
+                  <Component id="btnConsultas" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
           </Group>
@@ -48,8 +49,10 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btn_reportes" min="-2" pref="31" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnConsultas" min="-2" pref="31" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="btnAgregarPersonas" min="-2" pref="31" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,6 +90,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarPersonasActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnConsultas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Consultas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsultasActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

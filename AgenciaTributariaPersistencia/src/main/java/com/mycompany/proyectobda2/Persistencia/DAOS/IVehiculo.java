@@ -3,15 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.mycompany.proyectobda2.Persistencia.DAOS;
-import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 
 /**
  *
- * @author uirtis
+ * @author JESUS
  */
-public interface ITramiteDAO {
-
-    public void agregarTramite(TramiteDTO tramite);
+public interface IVehiculo {
     
-    public boolean verificarLicencia(String RFC);
 }

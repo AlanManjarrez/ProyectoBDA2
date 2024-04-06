@@ -21,4 +21,6 @@ public interface Icontrol {
     public PersonaDTO buscarLicencia(String rfc);
     
     public void altaLicencia(PersonaDTO persona,Float costo,Calendar vigencia);
+    
+    public boolean verificarLicencia(String rfc);
 }

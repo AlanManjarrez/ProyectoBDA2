@@ -75,6 +75,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Placas"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_placasActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_tramites">
       <Properties>

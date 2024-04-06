@@ -44,6 +44,11 @@ public class PaginaInicio extends javax.swing.JFrame {
         btn_reportes.setText("Reportes");
 
         btn_placas.setText("Placas");
+        btn_placas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_placasActionPerformed(evt);
+            }
+        });
 
         lbl_tramites.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lbl_tramites.setText("Tramites");
@@ -113,6 +118,12 @@ public class PaginaInicio extends javax.swing.JFrame {
         frmConsultar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnConsultasActionPerformed
+
+    private void btn_placasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_placasActionPerformed
+        Placas frmPlacas=new Placas(control);
+        frmPlacas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_placasActionPerformed
 
     
 //    public static void main(String args[]) {

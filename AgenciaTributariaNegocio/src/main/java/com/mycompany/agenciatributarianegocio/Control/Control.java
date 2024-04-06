@@ -26,10 +26,10 @@ public class Control implements Icontrol{
             frmInicio.setVisible(true);
             JOptionPane.showMessageDialog(frmInicio, "Inicio de sesion exitoso", "!! EXITOSO ¡¡", JOptionPane.INFORMATION_MESSAGE);
             return true;
-        } else if (!usuario.equalsIgnoreCase("admin")) {
+        } else if (!usuario.equals("admin")) {
             JOptionPane.showMessageDialog(null, "El usuario es incorrecta", "!! ALERTA ¡¡", JOptionPane.ERROR_MESSAGE);
             return false;
-        } else if (!contraseña.equalsIgnoreCase("1234")) {
+        } else if (!contraseña.equals("1234")) {
             JOptionPane.showMessageDialog(null, "La contraseña es incorrecta", "!! ALERTA ¡¡", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -66,9 +66,25 @@ public class Control implements Icontrol{
             tramiteD.agregarTramite(licencia);
             JOptionPane.showMessageDialog(null, "Se ha dado de alta la licencia");
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public boolean verificarLicencia(String rfc) {
+        try {
+            if (tramiteD.verificarLicencia(rfc)) {
+                JOptionPane.showMessageDialog(null, "Esta persona ya cuenta con licencia","!! ADVERTENCIA ¡¡",JOptionPane.WARNING_MESSAGE);
+                return true;
+            }
+        } catch (Exception e) {
+            System.err.println("Error al verificar la licencia: " + e.getMessage());
+        }
+        return false;
+        
+    }
+    
+    
     
     
     

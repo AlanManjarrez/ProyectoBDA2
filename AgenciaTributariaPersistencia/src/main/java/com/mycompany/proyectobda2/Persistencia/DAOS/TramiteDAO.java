@@ -18,6 +18,8 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Placa;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
+import java.util.Calendar;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -56,5 +58,42 @@ public class TramiteDAO implements ITramiteDAO {
         }
         entityManager.close();
         entityManagerFactory.close();
+    }
+
+    @Override
+    public boolean verificarLicencia(String RFC) {
+        Calendar hoy= Calendar.getInstance();
+        
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        
+        try {
+            entityManager.getTransaction().begin();
+            
+            Long cantidadLicenciasVigentes = entityManager.createQuery("SELECT COUNT(t) FROM tramites t WHERE t.personas.RFC = :RFC AND t.vigencia >= :fechaActual", Long.class)
+                    .setParameter("RFC", RFC)
+                    .setParameter("fechaActual", hoy)
+                    .getSingleResult();
+            
+            
+            entityManager.getTransaction().commit();
+
+            // Si la cantidad de licencias vigentes es mayor a cero, significa que la persona tiene una licencia vigente
+            return cantidadLicenciasVigentes > 0;
+        } catch (NoResultException e) {
+            // Aquí manejamos la excepción y devolvemos false, ya que no se encontró ninguna licencia vigente
+            System.out.println("No se encontró ninguna licencia vigente para la persona con el ID proporcionado.");
+            return false;
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+        
     }
 }

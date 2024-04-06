@@ -13,6 +13,7 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -29,8 +30,9 @@ public class ProyectoBDA2 {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
-        
-        
+        TramiteDAO t=new TramiteDAO();
+        System.out.println(t.verificarLicencia("RFC6"));
+        /*
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
         Calendar fechaEmision = Calendar.getInstance();
@@ -63,7 +65,7 @@ public class ProyectoBDA2 {
 
         entityManager.close();
         entityManagerFactory.close();
-
+*/
 /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU"); // Reemplaza "tu_unidad_de_persistencia" por el nombre de tu unidad de persistencia
         EntityManager em = emf.createEntityManager();

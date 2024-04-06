@@ -233,16 +233,18 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
         } else if (txt_rfc.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No has realizado busqueda de la persona", "!! ALERTA ¡¡", JOptionPane.WARNING_MESSAGE);
         }else{
-            if (persona.isDiscapacidad()) {
-                
-                LicenciaCostoDiscapacitado frmLicencia=new LicenciaCostoDiscapacitado(control, persona);
-                frmLicencia.setVisible(true);
-                this.dispose();
-            }else{
-                LicenciaCostoNormal frmLicenciac=new LicenciaCostoNormal(control, persona);
-                frmLicenciac.setVisible(true);
-                this.dispose();
+            if (!control.verificarLicencia(txt_rfc.getText())) {
+                if (persona.isDiscapacidad()) {                
+                    LicenciaCostoDiscapacitado frmLicencia=new LicenciaCostoDiscapacitado(control, persona);
+                    frmLicencia.setVisible(true);
+                    this.dispose();
+                }else{
+                    LicenciaCostoNormal frmLicenciac=new LicenciaCostoNormal(control, persona);
+                    frmLicenciac.setVisible(true);
+                    this.dispose();
+                }
             }
+            
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
@@ -272,6 +274,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
                 txt_apellido_paterno.setText(persona.getApellidoPaterno());
                 txt_apellido_materno.setText(persona.getApellidoMaterno());
                 txt_telefono.setText(persona.getTelefono());
+                
             }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed

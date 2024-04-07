@@ -18,7 +18,9 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Placa;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -44,8 +46,36 @@ public class TramiteDAO implements ITramiteDAO {
                 PlacaDTO pla=(PlacaDTO)tramite;
                 Persona persona = entityManager.find(Persona.class, pla.getPersona().getId());
                 Vehiculo vehiculo= entityManager.find(Vehiculo.class, pla.getVehiculo().getId());
-                Placa placa=new Placa(pla.getFechaEmision(), pla.getSeriePlacas(), EstadoPlaca.valueOf(pla.getEstadoPlacas()), vehiculo, pla.getFechaEmision(), pla.getCosto(), pla.getVigencia(), persona);
-                tramityEntity=placa;
+                
+                // Buscar la placa asociada al vehículo
+                Placa placa = null;
+                Query query = entityManager.createQuery("SELECT p FROM Placa p WHERE p.vehiculo = :vehiculo");
+                query.setParameter("vehiculo", vehiculo);
+                List<Placa> placas = query.getResultList();
+                if (!placas.isEmpty()) {
+                    placa = placas.get(0);
+                }
+
+                // Verificar si se encontró una placa asociada al vehículo
+                if (placa == null) {
+                    // Si no se encontró, crear una nueva placa
+                    placa = new Placa(pla.getFechaEmision(), pla.getSeriePlacas(), EstadoPlaca.valueOf(pla.getEstadoPlacas()), vehiculo, pla.getFechaEmision(), pla.getCosto(), pla.getVigencia(), persona);
+                    tramityEntity = placa;
+                } else {
+                    // Si se encontró una placa, verificar si su estado es activo
+                    if (placa.getEstadoPlaca() == EstadoPlaca.ACTIVO) {
+                        // Cambiar el estado de la placa a no activo
+                        placa.setEstadoPlaca(EstadoPlaca.NO_ACTIVO);
+                        entityManager.merge(placa);
+
+                        // Crear una nueva placa
+                        Placa nuevaPlaca = new Placa(pla.getFechaEmision(), pla.getSeriePlacas(), EstadoPlaca.ACTIVO, vehiculo, pla.getFechaEmision(), pla.getCosto(), pla.getVigencia(), persona);
+                        tramityEntity = nuevaPlaca;
+                    } else {
+                        // Manejar el caso en que el vehículo ya tiene una placa asociada pero no está activa
+                        System.out.println("El vehículo ya tiene una placa asociada pero no está activa.");
+                    }
+                }
             }
             entityManager.persist(tramityEntity);      
             entityManager.getTransaction().commit();

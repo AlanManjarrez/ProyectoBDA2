@@ -2,6 +2,11 @@
 package com.mycompany.agenciatributariapresentacion;
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 /**
  *
@@ -10,6 +15,8 @@ import javax.swing.JOptionPane;
 public class PlacaLlenadoDatos extends javax.swing.JFrame {
     Icontrol control;
     PersonaDTO persona=null;
+    List<VehiculoDTO> vehiculoDTO=new ArrayList<>();
+    VehiculoDTO vehiculoSeleccionado;
     /**
      * Creates new form PlacasLlenadoDatos
      */
@@ -39,7 +46,7 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txt_linea = new javax.swing.JTextField();
-        txt_rojo = new javax.swing.JTextField();
+        txt_color = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txt_rfc = new javax.swing.JTextField();
         btn_siguiente = new javax.swing.JButton();
@@ -77,11 +84,16 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
 
         txt_linea.setEditable(false);
 
-        txt_rojo.setEditable(false);
+        txt_color.setEditable(false);
 
         jLabel8.setText("Ingrese el RFC de la persona");
 
         btn_siguiente.setText("Siguiente");
+        btn_siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_siguienteActionPerformed(evt);
+            }
+        });
 
         btn_regresar.setText("Regresar");
 
@@ -132,7 +144,7 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txt_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(43, 43, 43)
-                                        .addComponent(txt_rojo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txt_color, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txt_serie_vehicular, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,7 +211,7 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_rojo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_color, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_linea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
@@ -242,8 +254,9 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         }else{
             persona=control.buscarLicencia(txt_rfc.getText());
             if (persona!=null && consultarLicencia()) {
-                JOptionPane.showMessageDialog(null, "Se ha encontrado a la persona con licencia");
-                
+                JOptionPane.showMessageDialog(null, "Se ha encontrado a la persona con licencia");     
+                vehiculoDTO=control.obtenerVehiculos(persona);
+                llenarCombo(cbVehiculos, vehiculoDTO);
             }else if (!consultarLicencia()) {
                 JOptionPane.showMessageDialog(null, "La persona no tiene una licencia vigente");
             }
@@ -267,8 +280,35 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void cbVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbVehiculosActionPerformed
+        JComboBox<String> comboBox = (JComboBox<String>) evt.getSource(); // Obtén el JComboBox que disparó el evento
+        String idSeleccionado = (String) comboBox.getSelectedItem(); // Obten el ID seleccionado como String
         
+        vehiculoSeleccionado = null;
+        for (VehiculoDTO vehiculoDTO : vehiculoDTO) {
+            if (String.valueOf(vehiculoDTO.getId()).equals(idSeleccionado)) {
+                vehiculoSeleccionado = vehiculoDTO;
+                break;
+            }
+        }
+        
+        // Llena los campos de texto con los detalles del VehiculoDTO seleccionado
+        if (vehiculoSeleccionado != null) {
+            txt_serie_vehicular.setText(vehiculoSeleccionado.getSerieVehiculo());
+            txt_marca.setText(vehiculoSeleccionado.getMarca());
+            txt_modelo.setText(vehiculoSeleccionado.getModelo());
+            txt_color.setText(vehiculoSeleccionado.getColor());       
+            txt_linea.setText(vehiculoSeleccionado.getLinea());
+        }
     }//GEN-LAST:event_cbVehiculosActionPerformed
+
+    private void btn_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_siguienteActionPerformed
+        if (vehiculoSeleccionado!=null) {
+            PlacasCosto frmCosto=new PlacasCosto(control, vehiculoSeleccionado, 1000f);
+            frmCosto.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado un vehiculo");
+        }
+    }//GEN-LAST:event_btn_siguienteActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -312,6 +352,16 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         }
         return false;
     }
+    
+    private void llenarCombo(JComboBox<String> comboBox, List<VehiculoDTO> vehiculosDTO){
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (VehiculoDTO vehiculoDTO : vehiculosDTO) {
+            model.addElement(String.valueOf(vehiculoDTO.getId()));
+        }
+        comboBox.setModel(model);
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -330,11 +380,11 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField txt_color;
     private javax.swing.JTextField txt_linea;
     private javax.swing.JTextField txt_marca;
     private javax.swing.JTextField txt_modelo;
     private javax.swing.JTextField txt_rfc;
-    private javax.swing.JTextField txt_rojo;
     private javax.swing.JTextField txt_serie_vehicular;
     // End of variables declaration//GEN-END:variables
 }

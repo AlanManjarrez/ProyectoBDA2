@@ -12,6 +12,7 @@ import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
 import java.util.Calendar;
+import java.util.List;
 import javax.swing.JOptionPane;
 /**
  *
@@ -81,7 +82,7 @@ public class Control implements Icontrol{
                 return true;
             }
         } catch (Exception e) {
-            System.err.println("Error al verificar la licencia: " + e.getMessage());
+            System.out.println("Error al verificar la licencia: " + e.getMessage());
         }
         return false;
         
@@ -93,7 +94,19 @@ public class Control implements Icontrol{
             vehiculoD.agregarVehiculo(vehiculo);
             JOptionPane.showMessageDialog(null, "Se ha agregado el vehiculo");
         } catch (Exception e) {
+            System.out.println("Error al agregar vehiculo: "+ e.getMessage());
         }
+    }
+
+    @Override
+    public List<VehiculoDTO> obtenerVehiculos(PersonaDTO persona) {
+        try {
+            List<VehiculoDTO> vehiculos=vehiculoD.consultarTodoVehiculo(persona); 
+            return vehiculos;
+        } catch (Exception e) {
+            System.out.println("Error al regresar lista de vehiculos: "+e.getMessage());
+        }
+        return null;
     }
     
     

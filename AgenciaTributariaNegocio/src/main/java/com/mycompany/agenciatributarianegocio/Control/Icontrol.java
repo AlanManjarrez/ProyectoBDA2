@@ -7,6 +7,7 @@ package com.mycompany.agenciatributarianegocio.Control;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -26,4 +27,6 @@ public interface Icontrol {
     public boolean verificarLicencia(String rfc);
     
     public void agregaVehiculo(VehiculoDTO vehiculo);
+    
+    public List<VehiculoDTO> obtenerVehiculos(PersonaDTO persona);
 }

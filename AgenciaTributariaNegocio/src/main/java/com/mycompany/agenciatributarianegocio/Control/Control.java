@@ -3,11 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.agenciatributarianegocio.Control;
+import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
 import com.mycompany.agenciatributarianegocio.DTO.LicenciaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import com.mycompany.agenciatributariapresentacion.*;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
+import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 /**
@@ -17,6 +20,7 @@ import javax.swing.JOptionPane;
 public class Control implements Icontrol{
     PersonaDAO personaD=new PersonaDAO();
     TramiteDAO tramiteD=new TramiteDAO();
+    VehiculoDAO vehiculoD=new VehiculoDAO();
     PersonaDTO per;
     
     @Override
@@ -74,7 +78,6 @@ public class Control implements Icontrol{
     public boolean verificarLicencia(String rfc) {
         try {
             if (tramiteD.verificarLicencia(rfc)) {
-                JOptionPane.showMessageDialog(null, "Esta persona ya cuenta con licencia","!! ADVERTENCIA ¡¡",JOptionPane.WARNING_MESSAGE);
                 return true;
             }
         } catch (Exception e) {
@@ -83,6 +86,16 @@ public class Control implements Icontrol{
         return false;
         
     }
+
+    @Override
+    public void agregaVehiculo(VehiculoDTO vehiculo) {
+        try {
+            vehiculoD.agregarVehiculo(vehiculo);
+            JOptionPane.showMessageDialog(null, "Se ha agregado el vehiculo");
+        } catch (Exception e) {
+        }
+    }
+    
     
     
     

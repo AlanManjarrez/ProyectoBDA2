@@ -243,6 +243,8 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
                     frmLicenciac.setVisible(true);
                     this.dispose();
                 }
+            }else{
+                JOptionPane.showMessageDialog(null, "Esta persona ya cuenta con licencia","!! ADVERTENCIA ¡¡",JOptionPane.WARNING_MESSAGE);
             }
             
         }

@@ -1,18 +1,16 @@
 package com.mycompany.proyectobda2.Persistencia.EntidadesJPA;
 
-import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoVehiculo;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import javax.annotation.processing.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2024-04-06T00:45:52", comments="EclipseLink-2.7.12.v20230209-rNA")
+@Generated(value="org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor", date="2024-04-06T16:44:39", comments="EclipseLink-2.7.12.v20230209-rNA")
 @StaticMetamodel(Vehiculo.class)
 public class Vehiculo_ { 
 
     public static volatile SingularAttribute<Vehiculo, String> serieVehiculo;
     public static volatile SingularAttribute<Vehiculo, String> marca;
-    public static volatile SingularAttribute<Vehiculo, EstadoVehiculo> estadoVehiculo;
     public static volatile SingularAttribute<Vehiculo, Persona> persona;
     public static volatile SingularAttribute<Vehiculo, String> color;
     public static volatile SingularAttribute<Vehiculo, Long> id;

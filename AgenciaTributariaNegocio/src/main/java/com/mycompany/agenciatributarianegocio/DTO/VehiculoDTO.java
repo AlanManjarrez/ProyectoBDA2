@@ -15,30 +15,27 @@ public class VehiculoDTO {
     private String modelo;
     private String linea;
     private String color;
-    private String estadoVehiculo;
     private PersonaDTO persona;
 
     public VehiculoDTO() {
     }
 
-    public VehiculoDTO(String serieVehiculo, String marca, String modelo, String linea, String color, String estadoVehiculo, PersonaDTO persona) {
+    public VehiculoDTO(String serieVehiculo, String marca, String modelo, String linea, String color, PersonaDTO persona) {
         this.serieVehiculo = serieVehiculo;
         this.marca = marca;
         this.modelo = modelo;
         this.linea = linea;
         this.color = color;
-        this.estadoVehiculo = estadoVehiculo;
         this.persona = persona;
     }
 
-    public VehiculoDTO(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, String estadoVehiculo, PersonaDTO persona) {
+    public VehiculoDTO(Long id, String serieVehiculo, String marca, String modelo, String linea, String color,  PersonaDTO persona) {
         this.id = id;
         this.serieVehiculo = serieVehiculo;
         this.marca = marca;
         this.modelo = modelo;
         this.linea = linea;
         this.color = color;
-        this.estadoVehiculo = estadoVehiculo;
         this.persona = persona;
     }
 
@@ -88,14 +85,6 @@ public class VehiculoDTO {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public String getEstadoVehiculo() {
-        return estadoVehiculo;
-    }
-
-    public void setEstadoVehiculo(String estadoVehiculo) {
-        this.estadoVehiculo = estadoVehiculo;
     }
 
     public PersonaDTO getPersona() {

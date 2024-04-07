@@ -15,12 +15,12 @@ public class AutomovilDTO extends VehiculoDTO{
         super();
     }
 
-    public AutomovilDTO(String serieVehiculo, String marca, String modelo, String linea, String color, String estadoVehiculo, PersonaDTO persona) {
-        super(serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
+    public AutomovilDTO(String serieVehiculo, String marca, String modelo, String linea, String color, PersonaDTO persona) {
+        super(serieVehiculo, marca, modelo, linea, color, persona);
     }
 
-    public AutomovilDTO(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, String estadoVehiculo, PersonaDTO persona) {
-        super(id, serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
+    public AutomovilDTO(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, PersonaDTO persona) {
+        super(id, serieVehiculo, marca, modelo, linea, color, persona);
         this.id = id;
     }
 

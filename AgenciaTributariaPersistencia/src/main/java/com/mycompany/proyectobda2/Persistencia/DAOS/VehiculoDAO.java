@@ -6,9 +6,11 @@ package com.mycompany.proyectobda2.Persistencia.DAOS;
 
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -29,11 +31,21 @@ public class VehiculoDAO implements IVehiculo{
             Vehiculo vehiculoEntity=null;
             if (vehiculo instanceof AutomovilDTO) {
                 Persona per=entityManager.find(Persona.class, vehiculo.getPersona().getId());
-                Automovil auto=new Automovil(vehiculo.getSerieVehiculo(), vehiculo.getMarca(), vehiculo.getModelo(), vehiculo.getLinea(), vehiculo.getColor(), per);
-                vehiculoEntity=auto;
+                
+                if (per != null) {
+                AutomovilDTO automovilDTO = (AutomovilDTO) vehiculo;
+                Automovil automovil = new Automovil(automovilDTO.getSerieVehiculo(), automovilDTO.getMarca(),automovilDTO.getModelo(), automovilDTO.getLinea(), automovilDTO.getColor(), per);
+                vehiculoEntity = automovil;
+            } else {
+                System.out.println("La persona asociada al vehículo no existe en la base de datos.");
             }
-            entityManager.persist(vehiculoEntity);
-            entityManager.getTransaction().commit();
+            }
+            if (vehiculoEntity != null) {
+                entityManager.persist(vehiculoEntity);
+                entityManager.getTransaction().commit();
+            } else {
+                System.out.println("No se pudo persistir el vehículo debido a problemas de datos.");
+            }
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
@@ -43,7 +55,12 @@ public class VehiculoDAO implements IVehiculo{
         entityManager.close();
         entityManagerFactory.close();
     }
+
+    @Override
+    public List<VehiculoDTO> consultarTodoVehiculo(PersonaDTO persona) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
-   
+    
             
 }

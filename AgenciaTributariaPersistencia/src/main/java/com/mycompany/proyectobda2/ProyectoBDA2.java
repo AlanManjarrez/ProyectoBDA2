@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyectobda2;
 
+import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoPlaca;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
@@ -13,6 +14,7 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
+import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,8 +30,14 @@ public class ProyectoBDA2 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        VehiculoDAO v=new VehiculoDAO();
+        Calendar fechaNacimiento = Calendar.getInstance();
         
+        PersonaDTO per=new PersonaDTO(1L,"ABCD123456XYZ", "Juan", "Pérez", "González", fechaNacimiento, "1234567890", true, "ABCX123456XYZ789");
         
+        AutomovilDTO automovil = new AutomovilDTO("V123456789", "Toyota", "Corolla", "Sedán", "Blanco", per);
+        v.agregarVehiculo(automovil);
+        /*
         
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
@@ -63,7 +71,7 @@ public class ProyectoBDA2 {
 
         entityManager.close();
         entityManagerFactory.close();
-
+*/
 /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU"); // Reemplaza "tu_unidad_de_persistencia" por el nombre de tu unidad de persistencia
         EntityManager em = emf.createEntityManager();

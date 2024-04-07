@@ -1,12 +1,15 @@
 
 package com.mycompany.agenciatributariapresentacion;
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import javax.swing.JOptionPane;
 /**
  *
  * @author TeLesheo
  */
 public class PlacaLlenadoDatos extends javax.swing.JFrame {
     Icontrol control;
+    PersonaDTO persona=null;
     /**
      * Creates new form PlacasLlenadoDatos
      */
@@ -42,8 +45,10 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         btn_siguiente = new javax.swing.JButton();
         btn_regresar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbVehiculos = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        btnNuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,9 +65,19 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
 
         jLabel5.setText("Modelo");
 
+        txt_serie_vehicular.setEditable(false);
+
+        txt_marca.setEditable(false);
+
+        txt_modelo.setEditable(false);
+
         jLabel6.setText("Linea");
 
         jLabel7.setText("Color");
+
+        txt_linea.setEditable(false);
+
+        txt_rojo.setEditable(false);
 
         jLabel8.setText("Ingrese el RFC de la persona");
 
@@ -71,10 +86,29 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         btn_regresar.setText("Regresar");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbVehiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbVehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbVehiculosActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Seleccione el vehiculo");
+
+        jLabel9.setText("¿Registra un vehiculo nuevo?");
+
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -88,26 +122,6 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel5)
-                                .addGap(85, 85, 85)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_rfc, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(121, 121, 121)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(82, 82, 82)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(btnBuscar))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -128,7 +142,34 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_siguiente)
                             .addComponent(txt_linea, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(63, 63, 63))))
+                        .addGap(63, 63, 63))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel5)
+                                .addGap(85, 85, 85)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_rfc, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(121, 121, 121)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(82, 82, 82)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnBuscar)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(9, 9, 9)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNuevo)
+                .addGap(143, 143, 143))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,10 +181,14 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_rfc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
-                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNuevo)
+                .addGap(7, 7, 7)
                 .addComponent(jLabel2)
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -191,6 +236,40 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (txt_rfc.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No has ingresado ninguna rfc","",JOptionPane.WARNING_MESSAGE);
+        }else{
+            persona=control.buscarLicencia(txt_rfc.getText());
+            if (persona!=null && consultarLicencia()) {
+                JOptionPane.showMessageDialog(null, "Se ha encontrado a la persona con licencia");
+                
+            }else if (!consultarLicencia()) {
+                JOptionPane.showMessageDialog(null, "La persona no tiene una licencia vigente");
+            }
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        if (!txt_rfc.getText().isEmpty()) {  
+            if (persona!=null && consultarLicencia()) {
+                AltaVehiculo frmAlta=new AltaVehiculo(control, persona);
+                frmAlta.setVisible(true);
+                this.dispose();
+            }else if(persona==null){
+                JOptionPane.showMessageDialog(null, "No hay una persona con ese RFC, no puede continuar");
+            }else if (!consultarLicencia()) {
+                JOptionPane.showMessageDialog(null, "La persona no tiene una licencia vigente no puede continuar");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No ha realizado la busqueda de la persona");
+        }
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void cbVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbVehiculosActionPerformed
+        
+    }//GEN-LAST:event_cbVehiculosActionPerformed
+
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -226,12 +305,20 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
 //            }
 //        });
 //    }
+    
+    private boolean consultarLicencia(){
+        if (control.verificarLicencia(txt_rfc.getText())) {
+            return true;
+        }
+        return false;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btn_regresar;
     private javax.swing.JButton btn_siguiente;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cbVehiculos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -241,6 +328,7 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txt_linea;
     private javax.swing.JTextField txt_marca;

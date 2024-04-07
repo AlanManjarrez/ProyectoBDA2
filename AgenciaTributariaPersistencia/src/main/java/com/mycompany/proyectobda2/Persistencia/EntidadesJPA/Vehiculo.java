@@ -127,4 +127,11 @@ public class Vehiculo implements Serializable {
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{" + "id=" + id + ", serieVehiculo=" + serieVehiculo + ", marca=" + marca + ", modelo=" + modelo + ", linea=" + linea + ", color=" + color + ", persona=" + persona + '}';
+    }
+    
+    
 }

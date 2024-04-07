@@ -10,10 +10,12 @@ import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -58,8 +60,46 @@ public class VehiculoDAO implements IVehiculo{
 
     @Override
     public List<VehiculoDTO> consultarTodoVehiculo(PersonaDTO persona) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        List<VehiculoDTO> vehiculosDTO = new ArrayList<>();
+
+        try {
+            entityManager.getTransaction().begin();
+
+            // Consulta JPQL para obtener los vehículos de una persona específica
+            List<Vehiculo> vehiculos = entityManager.createQuery("SELECT v FROM vehiculos v WHERE v.persona.id = :personaId", Vehiculo.class)
+                .setParameter("personaId", persona.getId())
+                .getResultList();
+
+            for (Vehiculo vehiculo : vehiculos) {
+                VehiculoDTO vehiculoDTO = new VehiculoDTO();
+                vehiculoDTO.setId(vehiculo.getId());
+                vehiculoDTO.setSerieVehiculo(vehiculo.getSerieVehiculo());
+                vehiculoDTO.setMarca(vehiculo.getMarca());
+                vehiculoDTO.setModelo(vehiculo.getModelo());
+                vehiculoDTO.setLinea(vehiculo.getLinea());
+                vehiculoDTO.setColor(vehiculo.getColor());
+
+                vehiculosDTO.add(vehiculoDTO);
+            }
+
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+
+        return vehiculosDTO;
     }
+
+    
     
     
             

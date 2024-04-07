@@ -5,6 +5,7 @@
 package com.mycompany.proyectobda2.Persistencia.DAOS;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
+import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
 import java.util.List;
 /**
  *
@@ -15,4 +16,6 @@ public interface IVehiculo {
     public void agregarVehiculo(VehiculoDTO vehiculo);
     
     public List<VehiculoDTO> consultarTodoVehiculo(PersonaDTO persona);
+    
+     
 }

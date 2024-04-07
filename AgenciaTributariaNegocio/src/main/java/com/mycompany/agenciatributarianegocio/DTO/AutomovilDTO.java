@@ -31,4 +31,11 @@ public class AutomovilDTO extends VehiculoDTO{
     public void setId(Long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "AutomovilDTO{" + "id=" + id + '}';
+    }
+    
+    
 }

@@ -13,6 +13,7 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
 import java.util.Calendar;
@@ -30,14 +31,33 @@ public class ProyectoBDA2 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        /*
         VehiculoDAO v=new VehiculoDAO();
         Calendar fechaNacimiento = Calendar.getInstance();
         
         PersonaDTO per=new PersonaDTO(1L,"ABCD123456XYZ", "Juan", "Pérez", "González", fechaNacimiento, "1234567890", true, "ABCX123456XYZ789");
+        List<VehiculoDTO> vehiculos = v.consultarTodoVehiculo(per);
+
         
-        AutomovilDTO automovil = new AutomovilDTO("V123456789", "Toyota", "Corolla", "Sedán", "Blanco", per);
-        v.agregarVehiculo(automovil);
-        /*
+        for (VehiculoDTO vehiculo : vehiculos) {
+            System.out.println("ID: " + vehiculo.getId());
+            System.out.println("Serie de Vehículo: " + vehiculo.getSerieVehiculo());
+            System.out.println("Marca: " + vehiculo.getMarca());
+            System.out.println("Modelo: " + vehiculo.getModelo());
+            System.out.println("Línea: " + vehiculo.getLinea());
+            System.out.println("Color: " + vehiculo.getColor());
+            
+
+            System.out.println(); 
+        }
+        
+        
+        List<Vehiculo> veh = v.obtenerTodosLosVehiculos();
+        for (Vehiculo vehiculo : veh) {
+            System.out.println(vehiculo.toString());
+        }
+        
+        */
         
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
@@ -71,7 +91,7 @@ public class ProyectoBDA2 {
 
         entityManager.close();
         entityManagerFactory.close();
-*/
+
 /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU"); // Reemplaza "tu_unidad_de_persistencia" por el nombre de tu unidad de persistencia
         EntityManager em = emf.createEntityManager();

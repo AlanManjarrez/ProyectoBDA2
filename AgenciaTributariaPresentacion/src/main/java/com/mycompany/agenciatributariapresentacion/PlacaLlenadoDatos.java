@@ -96,6 +96,11 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         });
 
         btn_regresar.setText("Regresar");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -303,12 +308,18 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
 
     private void btn_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_siguienteActionPerformed
         if (vehiculoSeleccionado!=null) {
-            PlacasCosto frmCosto=new PlacasCosto(control, vehiculoSeleccionado, 1000f);
+            PlacasCosto frmCosto=new PlacasCosto(control, vehiculoSeleccionado, 1000f,persona);
             frmCosto.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "No se ha seleccionado un vehiculo");
         }
     }//GEN-LAST:event_btn_siguienteActionPerformed
+
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        Placas frmPlaca=new Placas(control);
+        frmPlaca.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_regresarActionPerformed
 
 //    /**
 //     * @param args the command line arguments

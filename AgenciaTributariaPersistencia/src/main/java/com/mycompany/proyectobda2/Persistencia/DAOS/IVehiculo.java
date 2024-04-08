@@ -17,5 +17,5 @@ public interface IVehiculo {
     
     public List<VehiculoDTO> consultarTodoVehiculo(PersonaDTO persona);
     
-     
+    
 }

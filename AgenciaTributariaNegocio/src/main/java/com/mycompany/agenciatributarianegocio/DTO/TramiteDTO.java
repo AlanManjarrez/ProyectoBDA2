@@ -14,24 +14,22 @@ public class TramiteDTO {
     private Long id;
     private Calendar fechaEmision;
     private Float costo;
-    private Calendar vigencia;
     private PersonaDTO persona;
 
     public TramiteDTO() {
     }
 
-    public TramiteDTO(Calendar fechaEmision, Float costo, Calendar vigencia, PersonaDTO persona) {
+    public TramiteDTO(Calendar fechaEmision, Float costo, PersonaDTO persona) {
         this.fechaEmision = fechaEmision;
         this.costo = costo;
-        this.vigencia = vigencia;
+        
         this.persona = persona;
     }
 
-    public TramiteDTO(Long id, Calendar fechaEmision, Float costo, Calendar vigencia, PersonaDTO persona) {
+    public TramiteDTO(Long id, Calendar fechaEmision, Float costo, PersonaDTO persona) {
         this.id = id;
         this.fechaEmision = fechaEmision;
         this.costo = costo;
-        this.vigencia = vigencia;
         this.persona = persona;
     }
 
@@ -57,14 +55,6 @@ public class TramiteDTO {
 
     public void setCosto(Float costo) {
         this.costo = costo;
-    }
-
-    public Calendar getVigencia() {
-        return vigencia;
-    }
-
-    public void setVigencia(Calendar vigencia) {
-        this.vigencia = vigencia;
     }
 
     public PersonaDTO getPersona() {

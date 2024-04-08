@@ -21,16 +21,16 @@ public class PlacaDTO extends TramiteDTO{
         super();
     }
 
-    public PlacaDTO(Calendar fechaRecepcion, String seriePlacas, String estadoPlacas, VehiculoDTO vehiculo, Calendar fechaEmision, Float costo, Calendar vigencia, PersonaDTO persona) {
-        super(fechaEmision, costo, vigencia, persona);
+    public PlacaDTO(Calendar fechaRecepcion, String seriePlacas, String estadoPlacas, VehiculoDTO vehiculo, Calendar fechaEmision, Float costo, PersonaDTO persona) {
+        super(fechaEmision, costo, persona);
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;
         this.estadoPlacas = estadoPlacas;
         this.vehiculo = vehiculo;
     }
 
-    public PlacaDTO(Long id,Calendar fechaRecepcion, String seriePlacas, String estadoPlacas, VehiculoDTO vehiculo, Calendar fechaEmision, Float costo, Calendar vigencia, PersonaDTO persona) {
-        super(id, fechaEmision, costo, vigencia, persona);
+    public PlacaDTO(Long id,Calendar fechaRecepcion, String seriePlacas, String estadoPlacas, VehiculoDTO vehiculo, Calendar fechaEmision, Float costo,  PersonaDTO persona) {
+        super(id, fechaEmision, costo, persona);
         this.id = id;
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;

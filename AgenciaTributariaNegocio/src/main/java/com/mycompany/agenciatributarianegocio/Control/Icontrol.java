@@ -29,4 +29,6 @@ public interface Icontrol {
     public void agregaVehiculo(VehiculoDTO vehiculo);
     
     public List<VehiculoDTO> obtenerVehiculos(PersonaDTO persona);
+    
+    public void altaPlaca(PersonaDTO persona,Float costo,Calendar recepcion,VehiculoDTO vehiculo);
 }

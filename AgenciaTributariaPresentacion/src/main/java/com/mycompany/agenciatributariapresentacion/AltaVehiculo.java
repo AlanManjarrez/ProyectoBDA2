@@ -180,7 +180,10 @@ public class AltaVehiculo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Falta agregar un dato");
         }else{
             VehiculoDTO vehiculo=new AutomovilDTO(txt_serie.getText(), txt_marca.getText(), txt_modelo.getText(), txtLinea.getText(), txt_color.getText(), persona);
-            control.agregaVehiculo(vehiculo);       
+            control.agregaVehiculo(vehiculo);
+            PlacasCosto frmPlaca=new PlacasCosto(control, vehiculo,1500f,persona);
+            frmPlaca.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 

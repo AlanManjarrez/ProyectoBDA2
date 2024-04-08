@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyectobda2.Persistencia.DAOS;
 import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -14,4 +15,10 @@ public interface ITramiteDAO {
     public void agregarTramite(TramiteDTO tramite);
     
     public boolean verificarLicencia(String RFC);
+    
+    public String generarSerie();
+    
+    public String generaSerieAleatori();
+    
+    public boolean verificarExistenciaSerie(String serie,EntityManager entity);
 }

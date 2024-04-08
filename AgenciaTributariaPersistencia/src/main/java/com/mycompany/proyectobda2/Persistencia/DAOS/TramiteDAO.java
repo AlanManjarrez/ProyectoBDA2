@@ -19,6 +19,7 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -59,7 +60,7 @@ public class TramiteDAO implements ITramiteDAO {
                 // Verificar si se encontró una placa asociada al vehículo
                 if (placa == null) {
                     // Si no se encontró, crear una nueva placa
-                    placa = new Placa(pla.getFechaEmision(), pla.getSeriePlacas(), EstadoPlaca.valueOf(pla.getEstadoPlacas()), vehiculo, pla.getFechaEmision(), pla.getCosto(), pla.getVigencia(), persona);
+                    placa = new Placa(pla.getFechaEmision(), pla.getSeriePlacas(), EstadoPlaca.valueOf(pla.getEstadoPlacas()), vehiculo, pla.getFechaEmision(), pla.getCosto(), persona);
                     tramityEntity = placa;
                 } else {
                     // Si se encontró una placa, verificar si su estado es activo
@@ -69,7 +70,7 @@ public class TramiteDAO implements ITramiteDAO {
                         entityManager.merge(placa);
 
                         // Crear una nueva placa
-                        Placa nuevaPlaca = new Placa(pla.getFechaEmision(), pla.getSeriePlacas(), EstadoPlaca.ACTIVO, vehiculo, pla.getFechaEmision(), pla.getCosto(), pla.getVigencia(), persona);
+                        Placa nuevaPlaca = new Placa(pla.getFechaEmision(), pla.getSeriePlacas(), EstadoPlaca.ACTIVO, vehiculo, pla.getFechaEmision(), pla.getCosto(), persona);
                         tramityEntity = nuevaPlaca;
                     } else {
                         // Manejar el caso en que el vehículo ya tiene una placa asociada pero no está activa
@@ -99,19 +100,18 @@ public class TramiteDAO implements ITramiteDAO {
         try {
             entityManager.getTransaction().begin();
             
-            Long cantidadLicenciasVigentes = entityManager.createQuery("SELECT COUNT(t) FROM tramites t WHERE t.personas.RFC = :RFC AND t.vigencia >= :fechaActual", Long.class)
-                    .setParameter("RFC", RFC)
-                    .setParameter("fechaActual", hoy)
-                    .getSingleResult();
-            
-            
+             Long cantidadLicenciasVigentes = entityManager.createQuery("SELECT COUNT(l) FROM Licencia l JOIN l.personas p WHERE p.RFC = :RFC AND l.vigencia >= :fechaActual", Long.class)
+                .setParameter("RFC", RFC)
+                .setParameter("fechaActual", hoy)
+                .getSingleResult();
+
             entityManager.getTransaction().commit();
 
             // Si la cantidad de licencias vigentes es mayor a cero, significa que la persona tiene una licencia vigente
             return cantidadLicenciasVigentes > 0;
         } catch (NoResultException e) {
             // Aquí manejamos la excepción y devolvemos false, ya que no se encontró ninguna licencia vigente
-            System.out.println("No se encontró ninguna licencia vigente para la persona con el ID proporcionado.");
+            System.out.println("No se encontró ninguna licencia vigente para la persona con el RFC proporcionado.");
             return false;
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
@@ -125,4 +125,63 @@ public class TramiteDAO implements ITramiteDAO {
         }
         
     }
+
+    @Override
+    public String generarSerie() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            entityManager.getTransaction().begin();
+
+            String serie;
+            boolean serieExistente;
+
+            do {
+                serie = generaSerieAleatori();
+                serieExistente = verificarExistenciaSerie(serie, entityManager);
+            } while (serieExistente);
+
+            entityManager.getTransaction().commit();
+
+            return serie;
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return null; // Manejo de error, puedes devolver un valor predeterminado o lanzar una excepción.
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+    }
+    }
+
+    @Override
+    public String generaSerieAleatori() {
+        // Generar tres letras aleatorias
+        String letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            sb.append(letras.charAt(random.nextInt(letras.length())));
+        }
+
+        // Generar tres dígitos aleatorios
+        int numero = random.nextInt(1000);
+        String numeroFormateado = String.format("%03d", numero);
+
+        // Combinar letras y dígitos con un guión en el medio
+        return sb.toString() + "-" + numeroFormateado;
+    }
+
+    @Override
+    public boolean verificarExistenciaSerie(String serie, EntityManager entity) {
+        Query query = entity.createQuery("SELECT COUNT(p) FROM Placa p WHERE p.seriePlacas = :serie");
+        query.setParameter("serie", serie);
+        Long count = (Long) query.getSingleResult();
+        return count > 0;
+    }
+    
+    
 }

@@ -19,6 +19,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 /**
  *
  * @author uirtis
@@ -35,8 +36,8 @@ public class Placa extends Tramite implements Serializable {
     @Column(name = "fecha_recepcion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar fechaRecepcion;
-
-    @Column(name = "serie_placas", nullable = false)
+    
+    @Column(name = "serie_placas", nullable = false,unique = true)
     private String seriePlacas;
 
     @Column(name = "estado_placa", nullable = false)
@@ -50,16 +51,16 @@ public class Placa extends Tramite implements Serializable {
         super();
     }
 
-    public Placa(Calendar fechaRecepcion, String seriePlacas, EstadoPlaca estadoPlaca, Vehiculo vehiculo, Calendar fechaEmision, Float costo, Calendar vigencia, Persona personas) {
-        super(fechaEmision, costo, vigencia, personas);
+    public Placa(Calendar fechaRecepcion, String seriePlacas, EstadoPlaca estadoPlaca, Vehiculo vehiculo, Calendar fechaEmision, Float costo,  Persona personas) {
+        super(fechaEmision, costo, personas);
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;
         this.estadoPlaca = estadoPlaca;
         this.vehiculo = vehiculo;
     }
 
-    public Placa(Long id, Calendar fechaRecepcion, String seriePlacas, Vehiculo vehiculo, EstadoPlaca estadoPlaca, Calendar fechaEmision, Float costo, Calendar vigencia, Persona personas) {
-        super(fechaEmision, costo, vigencia, personas);
+    public Placa(Long id, Calendar fechaRecepcion, String seriePlacas, Vehiculo vehiculo, EstadoPlaca estadoPlaca, Calendar fechaEmision, Float costo, Persona personas) {
+        super(fechaEmision, costo,  personas);
         this.id = id;
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;

@@ -13,6 +13,7 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.PlacaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
@@ -31,6 +32,9 @@ public class ProyectoBDA2 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        TramiteDAO t=new TramiteDAO();
+        System.out.println(t.verificarLicencia("ABCD123456XYZ"));
+        
         /*
         VehiculoDAO v=new VehiculoDAO();
         Calendar fechaNacimiento = Calendar.getInstance();
@@ -59,6 +63,7 @@ public class ProyectoBDA2 {
         
         */
         
+        /*
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
         Calendar fechaEmision = Calendar.getInstance();
@@ -74,7 +79,7 @@ public class ProyectoBDA2 {
         Automovil automovil = new Automovil("V123456789", "Toyota", "Corolla", "Sedán", "Blanco", persona);
         
         
-        Placa placa = new Placa(fechaRecepcion, "ABC123",EstadoPlaca.ACTIVO, automovil, fechaEmision, 300.00f, vigencia, persona);
+        Placa placa = new Placa(fechaRecepcion, "ABC123",EstadoPlaca.ACTIVO, automovil, fechaEmision, 300.00f, persona);
         
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
@@ -91,7 +96,7 @@ public class ProyectoBDA2 {
 
         entityManager.close();
         entityManagerFactory.close();
-
+*/
 /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU"); // Reemplaza "tu_unidad_de_persistencia" por el nombre de tu unidad de persistencia
         EntityManager em = emf.createEntityManager();

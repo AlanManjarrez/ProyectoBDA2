@@ -6,6 +6,7 @@ package com.mycompany.agenciatributarianegocio.Control;
 import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
 import com.mycompany.agenciatributarianegocio.DTO.LicenciaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.PlacaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import com.mycompany.agenciatributariapresentacion.*;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
@@ -71,7 +72,7 @@ public class Control implements Icontrol{
             tramiteD.agregarTramite(licencia);
             JOptionPane.showMessageDialog(null, "Se ha dado de alta la licencia");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error al generar licencia"+e.getMessage());
         }
     }
 
@@ -107,6 +108,19 @@ public class Control implements Icontrol{
             System.out.println("Error al regresar lista de vehiculos: "+e.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public void altaPlaca(PersonaDTO persona, Float costo, Calendar recepcion, VehiculoDTO vehiculo) {
+        try {
+            Calendar recepci=recepcion;
+            String serie=tramiteD.generarSerie();
+            PlacaDTO placa=new PlacaDTO(recepcion,serie , "ACTIVO", vehiculo, recepcion, costo, persona);
+            tramiteD.agregarTramite(placa);
+            JOptionPane.showMessageDialog(null, "Se ha dado de alta la placa con numero de serie "+serie);
+        } catch (Exception e) {
+            System.out.println("Error al generar la placa"+e.getMessage());
+        }
     }
     
     

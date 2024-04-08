@@ -41,10 +41,6 @@ public class Tramite implements Serializable {
     @Column (name = "costo", nullable = false) 
     private Float costo;
     
-    @Column (name = "vigencia", nullable = false)
-    @Temporal (TemporalType.DATE)
-    private Calendar vigencia;
-    
     @ManyToOne (cascade ={CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn (name = "id_persona", referencedColumnName = "id") 
     private Persona personas;
@@ -52,18 +48,16 @@ public class Tramite implements Serializable {
     public Tramite() {
     }
 
-    public Tramite(Calendar fechaEmision, Float costo, Calendar vigencia, Persona personas) {
+    public Tramite(Calendar fechaEmision, Float costo,  Persona personas) {
         this.fechaEmision = fechaEmision;
         this.costo = costo;
-        this.vigencia = vigencia;
         this.personas = personas;
     }
 
-    public Tramite(Long id, Calendar fechaEmision, Float costo, Calendar vigencia, Persona personas) {
+    public Tramite(Long id, Calendar fechaEmision, Float costo,  Persona personas) {
         this.id = id;
         this.fechaEmision = fechaEmision;
         this.costo = costo;
-        this.vigencia = vigencia;
         this.personas = personas;
     }
 
@@ -91,14 +85,6 @@ public class Tramite implements Serializable {
         this.costo = Costo;
     }
 
-    public Calendar getVigencia() {
-        return vigencia;
-    }
-
-    public void setVigencia(Calendar vigencia) {
-        this.vigencia = vigencia;
-    }
-
     public Persona getPersonas() {
         return personas;
     }
@@ -109,6 +95,6 @@ public class Tramite implements Serializable {
 
     @Override
     public String toString() {
-        return "Tramite{" + "id=" + id + ", fechaEmision=" + fechaEmision + ", Costo=" + costo + ", vigencia=" + vigencia + ", personas=" + personas + '}';
+        return "Tramite{" + "id=" + id + ", fechaEmision=" + fechaEmision + ", Costo=" + costo  + ", personas=" + personas + '}';
     }
 }

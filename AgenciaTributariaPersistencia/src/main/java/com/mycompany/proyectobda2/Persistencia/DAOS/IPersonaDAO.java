@@ -17,4 +17,8 @@ public interface IPersonaDAO {
     public void insercionPersonas();
     
     public List<PersonaDTO> consultaPersonas();
+    
+    public List<PersonaDTO> consultaPersonaAño(String año);
+    
+    public List<PersonaDTO> consultaPersonaNombre(String nombre);
 }

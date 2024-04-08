@@ -5,6 +5,7 @@
 package com.mycompany.proyectobda2.Persistencia.DAOS;
 
 import com.mycompany.agenciatributarianegocio.DTO.LicenciaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.PlacaDTO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -211,7 +212,7 @@ public class TramiteDAO implements ITramiteDAO {
                 tramiteDTO.setId(tramite.getId()); // Asigna el ID del trámite al DTO
                 tramiteDTO.setFechaEmision(tramite.getFechaEmision());
                 tramiteDTO.setCosto(tramite.getCosto());
-
+                tramiteDTO.setTipo(tramite.getTipo());
                 tramitesDTO.add(tramiteDTO);
             }
 
@@ -233,9 +234,52 @@ public class TramiteDAO implements ITramiteDAO {
     }
 
     @Override
-    public List<TramiteDTO> buscarPorAño(String año) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<TramiteDTO> buscarPorNombreAño(PersonaDTO persona) {
+        List<TramiteDTO> tramitesDTO = new ArrayList<>();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            // Iniciar una transacción
+            entityManager.getTransaction().begin();
+
+            // Consulta para obtener la persona con el ID especificado en el DTO
+            Persona personaEncontrada = entityManager.find(Persona.class, persona.getId());
+
+            // Verificar si se encontró la persona
+            if (personaEncontrada != null) {
+                // Consulta para obtener todos los trámites asociados a la persona encontrada
+                Query query = entityManager.createQuery("SELECT t FROM tramites t WHERE t.personas = :persona");
+                query.setParameter("persona", personaEncontrada);
+                List<Tramite> tramites = query.getResultList();
+
+                // Convertir trámites a DTOs
+                for (Tramite tramite : tramites) {
+                    TramiteDTO tramiteDTO = new TramiteDTO();
+                    tramiteDTO.setId(tramite.getId());
+                    tramiteDTO.setFechaEmision(tramite.getFechaEmision());
+                    tramiteDTO.setCosto(tramite.getCosto());
+                    tramiteDTO.setTipo(tramite.getTipo());
+                    tramitesDTO.add(tramiteDTO);
+                }
+            } else {
+                System.out.println("No se encontró ninguna persona con el ID especificado.");
+            }
+
+            // Completar la transacción
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error al buscar los trámites por ID de persona: " + e.getMessage());
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+
+        return tramitesDTO;
     }
+
+    
     
     
 }

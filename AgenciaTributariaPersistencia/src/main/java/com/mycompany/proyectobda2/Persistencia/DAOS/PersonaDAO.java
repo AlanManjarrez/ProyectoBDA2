@@ -137,6 +137,122 @@ public class PersonaDAO implements IPersonaDAO {
             entityManagerFactory.close();
         }
     }
+
+    @Override
+    public List<PersonaDTO> consultaPersonaAño(String año) {
+        List<PersonaDTO> personasAño = new ArrayList<>();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            int year = Integer.parseInt(año);
+
+            // Crear una instancia de Calendar para el año proporcionado
+            Calendar calendarInicio = Calendar.getInstance();
+            calendarInicio.set(Calendar.YEAR, year);
+            calendarInicio.set(Calendar.MONTH, Calendar.JANUARY);
+            calendarInicio.set(Calendar.DAY_OF_MONTH, 1);
+
+            Calendar calendarFin = Calendar.getInstance();
+            calendarFin.set(Calendar.YEAR, year);
+            calendarFin.set(Calendar.MONTH, Calendar.DECEMBER);
+            calendarFin.set(Calendar.DAY_OF_MONTH, 31);
+
+            // Iniciar una transacción
+            entityManager.getTransaction().begin();
+
+            // Consultar personas por año de nacimiento
+            Query query = entityManager.createQuery("SELECT p FROM personas p WHERE p.fechaNacimiento BETWEEN :fechaInicio AND :fechaFin");
+            query.setParameter("fechaInicio", calendarInicio);
+            query.setParameter("fechaFin", calendarFin);
+
+            // Obtener el resultado de la consulta
+            List<Persona> personas = query.getResultList();
+
+            // Completar la transacción
+            entityManager.getTransaction().commit();
+
+            // Convertir la lista de Personas a una lista de PersonaDTOs
+            for (Persona persona : personas) {
+                PersonaDTO personaDTO = new PersonaDTO();
+                personaDTO.setId(persona.getId());
+                personaDTO.setRfc(persona.getRFC());
+                personaDTO.setCurp(persona.getCURP());
+                personaDTO.setFechaNacimiento(persona.getFechaNacimiento());
+                personaDTO.setTelefono(persona.getTelefono());
+                personaDTO.setNombres(persona.getNombre());
+                personaDTO.setApellidoPaterno(persona.getApellidoPaterno());
+                personaDTO.setApellidoMaterno(persona.getApellidoMaterno());
+                personaDTO.setDiscapacidad(persona.getDiscapacidad());
+                personasAño.add(personaDTO);
+            }
+
+        } catch (NumberFormatException e) {
+            // Manejar el error si el año no es un número válido
+            e.printStackTrace();
+        } catch (Exception e) {
+            // Manejar otros errores
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+        return personasAño;
+    }
+
+    @Override
+    public List<PersonaDTO> consultaPersonaNombre(String nombreCompleto) {
+        List<PersonaDTO> personasNombre = new ArrayList<>();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            // Dividir el nombre completo en nombre, apellido paterno y apellido materno
+            String[] partesNombre = nombreCompleto.split(" ");
+            String nombre = partesNombre[0];
+            String apellidoPaterno = partesNombre[1];
+            String apellidoMaterno = partesNombre[2];
+
+            // Iniciar una transacción
+            entityManager.getTransaction().begin();
+
+            // Consultar personas por nombre completo
+            Query query = entityManager.createQuery("SELECT p FROM personas p WHERE p.nombre = :nombre AND p.apellidoPaterno = :apellidoPaterno AND p.apellidoMaterno = :apellidoMaterno");
+            query.setParameter("nombre", nombre);
+            query.setParameter("apellidoPaterno", apellidoPaterno);
+            query.setParameter("apellidoMaterno", apellidoMaterno);
+
+            // Obtener el resultado de la consulta
+            List<Persona> personas = query.getResultList();
+
+            // Completar la transacción
+            entityManager.getTransaction().commit();
+
+            // Convertir la lista de Personas a una lista de PersonaDTOs
+            for (Persona persona : personas) {
+                PersonaDTO personaDTO = new PersonaDTO();
+                personaDTO.setId(persona.getId());
+                personaDTO.setRfc(persona.getRFC());
+                personaDTO.setCurp(persona.getCURP());
+                personaDTO.setFechaNacimiento(persona.getFechaNacimiento());
+                personaDTO.setTelefono(persona.getTelefono());
+                personaDTO.setNombres(persona.getNombre());
+                personaDTO.setApellidoPaterno(persona.getApellidoPaterno());
+                personaDTO.setApellidoMaterno(persona.getApellidoMaterno());
+                personaDTO.setDiscapacidad(persona.getDiscapacidad());
+                personasNombre.add(personaDTO);
+            }
+
+        } catch (Exception e) {
+            // Manejar errores
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+        return personasNombre;
+    }
+    
     
     
     

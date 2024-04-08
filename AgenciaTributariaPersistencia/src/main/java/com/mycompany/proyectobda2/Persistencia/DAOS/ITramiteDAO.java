@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.mycompany.proyectobda2.Persistencia.DAOS;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -25,5 +26,6 @@ public interface ITramiteDAO {
     
     public List<TramiteDTO> buscarPorCurp(String curp);
     
-    public List<TramiteDTO> buscarPorAño(String año);
+    public List<TramiteDTO> buscarPorNombreAño(PersonaDTO persona);
+    
 }

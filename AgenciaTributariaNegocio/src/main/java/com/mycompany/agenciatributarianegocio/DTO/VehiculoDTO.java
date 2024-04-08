@@ -16,6 +16,7 @@ public class VehiculoDTO {
     private String linea;
     private String color;
     private PersonaDTO persona;
+    
 
     public VehiculoDTO() {
     }

@@ -10,22 +10,27 @@ import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 /**
  *
  * @author TeLesheo
  */
 public class Consultar extends javax.swing.JFrame {
     Icontrol control;
+    PersonaDTO persona=null;
     /**
      * Creates new form Consultar
      */
     public Consultar(Icontrol control) {
-        this.control=control;
+        this.control=control; 
         initComponents();
-        
+        ocultarBotonesExtra();
         
     }
 
@@ -48,7 +53,10 @@ public class Consultar extends javax.swing.JFrame {
         radio3 = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtable = new javax.swing.JTable();
-        cbPersonas = new javax.swing.JComboBox<>();
+        txtBusqueda = new javax.swing.JTextField();
+        labelReferencia = new javax.swing.JLabel();
+        btnAceptar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -109,32 +117,58 @@ public class Consultar extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jtable);
 
-        cbPersonas.setEditable(true);
+        labelReferencia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelReferencia.setText("Seleciona una persona y acepta para continuar");
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(radio1)
-                            .addComponent(radio3)
-                            .addComponent(radio2))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radio1)
+                                    .addComponent(radio3)
+                                    .addComponent(radio2))
                                 .addGap(108, 108, 108)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(64, 64, 64)
-                                .addComponent(btnRegresar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(96, 96, 96)
-                                .addComponent(cbPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(133, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
+                                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(55, 55, 55)
+                                        .addComponent(btnRegresar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(labelReferencia))))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnAceptar)
+                .addGap(51, 51, 51)
+                .addComponent(btnCancelar)
+                .addGap(100, 100, 100))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,19 +176,30 @@ public class Consultar extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radio1)
-                    .addComponent(cbPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(radio2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radio3)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnRegresar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(radio1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radio2))
+                    .addComponent(txtBusqueda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBuscar)
+                            .addComponent(btnRegresar)
+                            .addComponent(labelReferencia)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(radio3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar))
+                .addGap(37, 37, 37))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
@@ -167,12 +212,12 @@ public class Consultar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,32 +226,58 @@ public class Consultar extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(37, 37, 37)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void radio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio1ActionPerformed
-        CargarSugerencias();
-        cargarTipo(1);     
+        limpiarTabla();
+        desactivarDecoradorAutocompletado();
+        txtBusqueda.setText("");
+        cargarTipo(1);  
+        activarDecoradorAutocompletado(); 
+        ocultarBotonesExtra();
     }//GEN-LAST:event_radio1ActionPerformed
 
     private void radio2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio2ActionPerformed
-        CargarSugerencias();
-        cargarTipo(2);
+        limpiarTabla();
+        desactivarDecoradorAutocompletado();
+        txtBusqueda.setText("");
+        cargarTipo(2);  
+        activarDecoradorAutocompletado();
+        ocultarBotonesExtra();
     }//GEN-LAST:event_radio2ActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (radio1.isSelected()) {
-            String textoSeleccionado = (String) cbPersonas.getSelectedItem();
-            llenarTabla(control.consultarTramites(textoSeleccionado, 1));
+            String textoSeleccionado = txtBusqueda.getText();
+            llenarTablaTramites(control.consultarTramites(textoSeleccionado, 1,persona));
+        }else if (radio2.isSelected()) {
+            String textoSeleccionado = txtBusqueda.getText();
+            llenarTablaPersonas(control.consultaEspecificaPersonas(textoSeleccionado, 2));
+            btnAceptar.setVisible(true);
+            btnCancelar.setVisible(true);
+            labelReferencia.setVisible(true);
+        }   else if (radio3.isSelected()) {
+            String textoSeleccionado = txtBusqueda.getText();
+            llenarTablaPersonas(control.consultaEspecificaPersonas(textoSeleccionado, 3));
+            btnAceptar.setVisible(true);
+            btnCancelar.setVisible(true);
+            labelReferencia.setVisible(true);
         }
+            
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void radio3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio3ActionPerformed
-        CargarSugerencias();
-        cargarTipo(3);
+        limpiarTabla();
+        desactivarDecoradorAutocompletado();
+        txtBusqueda.setText("");
+        cargarTipo(3);  
+        activarDecoradorAutocompletado();
+        ocultarBotonesExtra();
     }//GEN-LAST:event_radio3ActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -215,25 +286,69 @@ public class Consultar extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarTabla();
+        ocultarBotonesExtra();
+        txtBusqueda.setText("");
+        // Deseleccionar los radio botones si alguno está seleccionado
+        if (radio1.isSelected()) {
+            radio1.setSelected(false);
+        }
+        if (radio2.isSelected()) {
+            radio2.setSelected(false);
+        }
+        if (radio3.isSelected()) {
+            radio3.setSelected(false);
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        // Obtener la fila seleccionada
+        int filaSeleccionada = jtable.getSelectedRow();
+
+        // Verificar si se seleccionó alguna fila
+        if (filaSeleccionada != -1) {
+            obtenerPersonaTabla(filaSeleccionada);
+            limpiarTabla();
+            llenarTablaTramites(control.consultarTramites("", 2, persona));
+        }else{
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado una fila");
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    
+    
+    
+    
+    //Metodos propios
+    
+    private void desactivarDecoradorAutocompletado() {
+        txtBusqueda.setDocument(new javax.swing.text.PlainDocument());
+    }
+    
+    private void activarDecoradorAutocompletado() {
+        cargarTipo(buttonGroup1.getSelection().getMnemonic());
+    }
+    
     private void cargarTipo(int tipo){
+        
         if (tipo==1) {
-            cbPersonas.setModel(new DefaultComboBoxModel<>(control.consultaPersonas(1)));
+            JList listaSugerencia= new JList(control.obtenerPersonas(1));
+            AutoCompleteDecorator.decorate(listaSugerencia, txtBusqueda, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
         }else if (tipo==2) {
-            cbPersonas.setModel(new DefaultComboBoxModel<>(control.consultaPersonas(2)));
+            JList listaSugerencia= new JList(control.obtenerPersonas(2));
+            AutoCompleteDecorator.decorate(listaSugerencia, txtBusqueda, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
         }else if (tipo==3) {
-            cbPersonas.setModel(new DefaultComboBoxModel<>(control.consultaPersonas(3)));
+            JList listaSugerencia= new JList(control.obtenerPersonas(3));
+            AutoCompleteDecorator.decorate(listaSugerencia, txtBusqueda, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
         }
         
     }
     
-    private void CargarSugerencias(){
-        AutoCompleteDecorator.decorate(cbPersonas);
-    }
-    
-    private void llenarTabla(List<TramiteDTO> tramitesDTOList){
+    private void llenarTablaTramites(List<TramiteDTO> tramitesDTOList){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // Definir las columnas de la tabla
-        String[] columnas = {"ID", "Fecha Emisión", "Costo"};
+        String[] columnas = {"ID","Tipo" ,"Fecha Emisión", "Costo"};
 
         // Crear un DefaultTableModel con las columnas
         DefaultTableModel model = new DefaultTableModel(columnas, 0);
@@ -242,16 +357,77 @@ public class Consultar extends javax.swing.JFrame {
         for (TramiteDTO tramiteDTO : tramitesDTOList) {
             Object[] fila = {
                 tramiteDTO.getId(),
+                tramiteDTO.getTipo(),
                 dateFormat.format(tramiteDTO.getFechaEmision().getTime()),
                 tramiteDTO.getCosto()
             };
             model.addRow(fila);
+            
         }
 
         // Establecer el modelo de la tabla
         jtable.setModel(model);
     }
     
+    private void llenarTablaPersonas(List<PersonaDTO> personasDTOList){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String [] columnas = {"ID","Nombre","Apellido Paterno","Apellido Materno","CURP","RFC","FechaNac","Telefono"};
+        
+        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+        
+        for (PersonaDTO personaDTO:personasDTOList) {
+            Object[] fila = {
+                personaDTO.getId(),
+                personaDTO.getNombres(),
+                personaDTO.getApellidoPaterno(),
+                personaDTO.getApellidoMaterno(),
+                personaDTO.getCurp(),
+                personaDTO.getRfc(),
+                personaDTO.getFechaNacimiento(),
+                personaDTO.getTelefono()
+            };
+            model.addRow(fila);
+        }
+        
+        jtable.setModel(model);
+    }
+   
+    private void limpiarTabla() {
+        DefaultTableModel model = new DefaultTableModel();
+        jtable.setModel(model);
+    }
+
+    private void ocultarBotonesExtra(){
+        btnAceptar.setVisible(false);
+        btnCancelar.setVisible(false);
+        labelReferencia.setVisible(false);
+    }
+
+    private void obtenerPersonaTabla(int filaSeleccionada){
+        
+            // Obtener los datos de la fila seleccionada
+            Long id = Long.parseLong(jtable.getValueAt(filaSeleccionada, 0).toString());
+            String nombres = jtable.getValueAt(filaSeleccionada, 1).toString();
+            String apellidoPaterno = jtable.getValueAt(filaSeleccionada, 2).toString();
+            String apellidoMaterno = jtable.getValueAt(filaSeleccionada, 3).toString();
+            String curp = jtable.getValueAt(filaSeleccionada, 4).toString();
+            String rfc = jtable.getValueAt(filaSeleccionada, 5).toString();
+            Calendar fechaNacimiento = (Calendar) jtable.getValueAt(filaSeleccionada, 6); 
+            String telefono = jtable.getValueAt(filaSeleccionada, 7).toString();
+
+            
+            persona=new PersonaDTO();
+            persona.setId(id);
+            persona.setNombres(nombres);
+            persona.setApellidoPaterno(apellidoPaterno);
+            persona.setApellidoMaterno(apellidoMaterno);
+            persona.setCurp(curp);
+            persona.setRfc(rfc);
+            persona.setFechaNacimiento(fechaNacimiento);
+            persona.setTelefono(telefono);
+            
+    }
+
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -288,17 +464,20 @@ public class Consultar extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cbPersonas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtable;
+    private javax.swing.JLabel labelReferencia;
     private javax.swing.JRadioButton radio1;
     private javax.swing.JRadioButton radio2;
     private javax.swing.JRadioButton radio3;
+    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

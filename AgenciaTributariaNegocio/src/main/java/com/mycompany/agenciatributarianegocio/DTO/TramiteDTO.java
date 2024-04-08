@@ -15,7 +15,8 @@ public class TramiteDTO {
     private Calendar fechaEmision;
     private Float costo;
     private PersonaDTO persona;
-
+    private String tipo;
+    
     public TramiteDTO() {
     }
 
@@ -65,6 +66,14 @@ public class TramiteDTO {
         this.persona = persona;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
     @Override
     public String toString() {
         return "TramiteDTO{" + "id=" + id + ", fechaEmision=" + fechaEmision + ", costo=" + costo + ", persona=" + persona + '}';

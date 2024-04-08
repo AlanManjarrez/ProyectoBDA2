@@ -4,7 +4,7 @@
  */
 package com.mycompany.proyectobda2;
 
-import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
+//import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoPlaca;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
@@ -34,53 +34,47 @@ public class ProyectoBDA2 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        
         PersonaDAO p= new PersonaDAO();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         
-        
-        TramiteDAO t=new TramiteDAO();
-        String curp = "ABCX123456XYZ789";
-        List<TramiteDTO> tramitesDTO = t.buscarPorCurp(curp);
-        
-        // Verificar si se encontraron trámites y mostrarlos si es así
-        if (tramitesDTO != null && !tramitesDTO.isEmpty()) {
-            System.out.println("Trámites encontrados:");
-            for (TramiteDTO tramiteDTO : tramitesDTO) {
-                System.out.println(tramiteDTO.getId());
-                System.out.println(dateFormat.format(tramiteDTO.getFechaEmision().getTime()));
-                System.out.println(tramiteDTO.getCosto());
-            }
-        } else {
-            System.out.println("No se encontraron trámites para la CURP especificada.");
-        }
-        
-        /*
-        VehiculoDAO v=new VehiculoDAO();
-        Calendar fechaNacimiento = Calendar.getInstance();
-        
-        PersonaDTO per=new PersonaDTO(1L,"ABCD123456XYZ", "Juan", "Pérez", "González", fechaNacimiento, "1234567890", true, "ABCX123456XYZ789");
-        List<VehiculoDTO> vehiculos = v.consultarTodoVehiculo(per);
+        String año = "2001"; // Año de ejemplo
+        List<PersonaDTO> persona = p.consultaPersonaAño(año);
 
-        
-        for (VehiculoDTO vehiculo : vehiculos) {
-            System.out.println("ID: " + vehiculo.getId());
-            System.out.println("Serie de Vehículo: " + vehiculo.getSerieVehiculo());
-            System.out.println("Marca: " + vehiculo.getMarca());
-            System.out.println("Modelo: " + vehiculo.getModelo());
-            System.out.println("Línea: " + vehiculo.getLinea());
-            System.out.println("Color: " + vehiculo.getColor());
-            
-
-            System.out.println(); 
+        // Itera sobre la lista de PersonaDTO y muestra los detalles de cada persona
+        for (PersonaDTO personaDTO : persona) {
+            System.out.println("ID: " + personaDTO.getId());
+            System.out.println("RFC: " + personaDTO.getRfc());
+            System.out.println("CURP: " + personaDTO.getCurp());
+            System.out.println("Fecha de Nacimiento: " + dateFormat.format(personaDTO.getFechaNacimiento().getTime()));
+            System.out.println("Teléfono: " + personaDTO.getTelefono());
+            System.out.println("Nombres: " + personaDTO.getNombres());
+            System.out.println("Apellido Paterno: " + personaDTO.getApellidoPaterno());
+            System.out.println("Apellido Materno: " + personaDTO.getApellidoMaterno());
+            System.out.println("Discapacidad: " + personaDTO.isDiscapacidad());
+            System.out.println("------------------------------------");
         }
         
         
-        List<Vehiculo> veh = v.obtenerTodosLosVehiculos();
-        for (Vehiculo vehiculo : veh) {
-            System.out.println(vehiculo.toString());
-        }
         
-        */
+//        TramiteDAO t=new TramiteDAO();
+//        String curp = "ABCX123456XYZ789";
+//        List<TramiteDTO> tramitesDTO = t.buscarPorCurp(curp);
+//        
+//        // Verificar si se encontraron trámites y mostrarlos si es así
+//        if (tramitesDTO != null && !tramitesDTO.isEmpty()) {
+//            System.out.println("Trámites encontrados:");
+//            for (TramiteDTO tramiteDTO : tramitesDTO) {
+//                System.out.println(tramiteDTO.getId());
+//                System.out.println(dateFormat.format(tramiteDTO.getFechaEmision().getTime()));
+//                System.out.println(tramiteDTO.getCosto());
+//                System.out.println(tramiteDTO.getTipo());
+//            }
+//        } else {
+//            System.out.println("No se encontraron trámites para la CURP especificada.");
+//        }
+        
+        
         
         /*
         Calendar fechaNacimiento = Calendar.getInstance();

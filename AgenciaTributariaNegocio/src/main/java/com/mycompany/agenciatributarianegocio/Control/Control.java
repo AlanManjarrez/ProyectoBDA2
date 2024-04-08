@@ -27,7 +27,6 @@ public class Control implements Icontrol{
     TramiteDAO tramiteD=new TramiteDAO();
     VehiculoDAO vehiculoD=new VehiculoDAO();
     PersonaDTO per;
-    String[] listas;
     
     @Override
     public boolean inicioSesion(String usuario, String contraseña, Icontrol control) {
@@ -128,25 +127,23 @@ public class Control implements Icontrol{
     }
 
     @Override
-    public String[] consultaPersonas(int tipo) {
+    public String[] obtenerPersonas(int tipo) {
         
         try {
             
             List<PersonaDTO> personas = personaD.consultaPersonas();
             String[] lista = new String[personas.size()];
-            listas = new String[personas.size()];
+            
             
             if (tipo==1) {
                 for (int i = 0; i < personas.size(); i++) {
                     PersonaDTO persona= personas.get(i);
-                    listas[i] = persona.getId()+ " " + persona.getCurp();
                     lista[i]=persona.getCurp();
                 }
             }else if (tipo==2) {
                 for (int i = 0; i < personas.size(); i++) {
                     PersonaDTO persona = personas.get(i);
                     String nombreCompleto = persona.getNombres() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
-                    listas[i] = persona.getId()+ " " + nombreCompleto;
                     lista[i]=nombreCompleto;
                 }
             }else if (tipo==3) {
@@ -154,7 +151,6 @@ public class Control implements Icontrol{
                     PersonaDTO persona = personas.get(i);
                     Calendar fechaNacimiento = persona.getFechaNacimiento();
                     int año = fechaNacimiento.get(Calendar.YEAR);
-                    listas[i] = persona.getId() + " " + año;
                     lista[i] = String.valueOf(año);
                 }
             }
@@ -168,19 +164,33 @@ public class Control implements Icontrol{
     }
 
     @Override
-    public List<TramiteDTO> consultarTramites(String opcion, int tipo) {
+    public List<TramiteDTO> consultarTramites(String opcion, int tipo,PersonaDTO persona) {
         try {
             List<TramiteDTO> tramites=new ArrayList<>();
             if (tipo==1) {
                 tramites= tramiteD.buscarPorCurp(opcion);
             }else if (tipo==2) {
-                
-            }else if (tipo==3) {
-                
+                tramites=tramiteD.buscarPorNombreAño(persona);
             }
             return tramites;
         } catch (Exception e) {
             System.out.println("Error al consultar los tramites");
+        }
+        return null;
+    }
+
+    @Override
+    public List<PersonaDTO> consultaEspecificaPersonas(String opcion,int tipo) {
+        try {
+            List<PersonaDTO> personas=new ArrayList<>();
+            if (tipo==2) {
+                personas=personaD.consultaPersonaNombre(opcion);
+            }else if (tipo==3) {
+                personas=personaD.consultaPersonaAño(opcion);
+            }
+            return personas;
+        } catch (Exception e) {
+            System.out.println("Error al obtener todas las personas");
         }
         return null;
     }

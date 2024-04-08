@@ -41,6 +41,8 @@ public class Tramite implements Serializable {
     @Column (name = "costo", nullable = false) 
     private Float costo;
     
+    private String tipo;
+    
     @ManyToOne (cascade ={CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn (name = "id_persona", referencedColumnName = "id") 
     private Persona personas;
@@ -91,6 +93,14 @@ public class Tramite implements Serializable {
 
     public void setPersonas(Persona personas) {
         this.personas = personas;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override

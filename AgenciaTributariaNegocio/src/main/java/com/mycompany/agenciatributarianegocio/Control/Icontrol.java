@@ -33,7 +33,9 @@ public interface Icontrol {
     
     public void altaPlaca(PersonaDTO persona,Float costo,Calendar recepcion,VehiculoDTO vehiculo);
     
-    public String[] consultaPersonas(int tipo);
+    public String[] obtenerPersonas(int tipo);
         
-    public List<TramiteDTO> consultarTramites(String opcion,int tipo);    
+    public List<TramiteDTO> consultarTramites(String opcion,int tipo,PersonaDTO persona);
+
+    public List<PersonaDTO> consultaEspecificaPersonas(String opcion,int tipo);
 }

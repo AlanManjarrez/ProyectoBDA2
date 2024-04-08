@@ -7,11 +7,14 @@ import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
 import com.mycompany.agenciatributarianegocio.DTO.LicenciaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.PlacaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import com.mycompany.agenciatributariapresentacion.*;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -24,6 +27,7 @@ public class Control implements Icontrol{
     TramiteDAO tramiteD=new TramiteDAO();
     VehiculoDAO vehiculoD=new VehiculoDAO();
     PersonaDTO per;
+    String[] listas;
     
     @Override
     public boolean inicioSesion(String usuario, String contraseña, Icontrol control) {
@@ -122,6 +126,66 @@ public class Control implements Icontrol{
             System.out.println("Error al generar la placa"+e.getMessage());
         }
     }
+
+    @Override
+    public String[] consultaPersonas(int tipo) {
+        
+        try {
+            
+            List<PersonaDTO> personas = personaD.consultaPersonas();
+            String[] lista = new String[personas.size()];
+            listas = new String[personas.size()];
+            
+            if (tipo==1) {
+                for (int i = 0; i < personas.size(); i++) {
+                    PersonaDTO persona= personas.get(i);
+                    listas[i] = persona.getId()+ " " + persona.getCurp();
+                    lista[i]=persona.getCurp();
+                }
+            }else if (tipo==2) {
+                for (int i = 0; i < personas.size(); i++) {
+                    PersonaDTO persona = personas.get(i);
+                    String nombreCompleto = persona.getNombres() + " " + persona.getApellidoPaterno() + " " + persona.getApellidoMaterno();
+                    listas[i] = persona.getId()+ " " + nombreCompleto;
+                    lista[i]=nombreCompleto;
+                }
+            }else if (tipo==3) {
+                for (int i = 0; i < personas.size(); i++) {
+                    PersonaDTO persona = personas.get(i);
+                    Calendar fechaNacimiento = persona.getFechaNacimiento();
+                    int año = fechaNacimiento.get(Calendar.YEAR);
+                    listas[i] = persona.getId() + " " + año;
+                    lista[i] = String.valueOf(año);
+                }
+            }
+            
+            
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error al consultar todas las personas"+ e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public List<TramiteDTO> consultarTramites(String opcion, int tipo) {
+        try {
+            List<TramiteDTO> tramites=new ArrayList<>();
+            if (tipo==1) {
+                tramites= tramiteD.buscarPorCurp(opcion);
+            }else if (tipo==2) {
+                
+            }else if (tipo==3) {
+                
+            }
+            return tramites;
+        } catch (Exception e) {
+            System.out.println("Error al consultar los tramites");
+        }
+        return null;
+    }
+    
+    
     
     
     

@@ -114,7 +114,7 @@ public class PaginaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarPersonasActionPerformed
 
     private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
-        Consultar frmConsultar= new Consultar();
+        Consultar frmConsultar= new Consultar(control);
         frmConsultar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnConsultasActionPerformed

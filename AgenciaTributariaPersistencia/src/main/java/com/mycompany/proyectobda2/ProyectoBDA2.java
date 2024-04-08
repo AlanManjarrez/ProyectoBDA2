@@ -14,9 +14,11 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.PlacaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -32,8 +34,25 @@ public class ProyectoBDA2 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
+        PersonaDAO p= new PersonaDAO();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        
+        
         TramiteDAO t=new TramiteDAO();
-        System.out.println(t.verificarLicencia("ABCD123456XYZ"));
+        String curp = "ABCX123456XYZ789";
+        List<TramiteDTO> tramitesDTO = t.buscarPorCurp(curp);
+        
+        // Verificar si se encontraron trámites y mostrarlos si es así
+        if (tramitesDTO != null && !tramitesDTO.isEmpty()) {
+            System.out.println("Trámites encontrados:");
+            for (TramiteDTO tramiteDTO : tramitesDTO) {
+                System.out.println(tramiteDTO.getId());
+                System.out.println(dateFormat.format(tramiteDTO.getFechaEmision().getTime()));
+                System.out.println(tramiteDTO.getCosto());
+            }
+        } else {
+            System.out.println("No se encontraron trámites para la CURP especificada.");
+        }
         
         /*
         VehiculoDAO v=new VehiculoDAO();

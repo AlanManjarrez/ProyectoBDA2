@@ -17,6 +17,7 @@ import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Placa;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Vehiculo;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -181,6 +182,59 @@ public class TramiteDAO implements ITramiteDAO {
         query.setParameter("serie", serie);
         Long count = (Long) query.getSingleResult();
         return count > 0;
+    }
+
+    @Override
+    public List<TramiteDTO> buscarPorCurp(String curp) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            // Iniciar una transacción
+            entityManager.getTransaction().begin();
+
+            // Consulta para obtener la persona con la CURP especificada
+            Query query = entityManager.createQuery("SELECT p FROM personas p WHERE p.CURP = :curp");
+            query.setParameter("curp", curp);
+            Persona persona = (Persona) query.getSingleResult();
+
+            // Consulta para obtener todos los trámites asociados a la persona encontrada
+            query = entityManager.createQuery("SELECT t FROM tramites t WHERE t.personas = :persona");
+            query.setParameter("persona", persona);
+            List<Tramite> tramites = query.getResultList();
+            
+            
+            // Convertir trámites a DTOs
+            List<TramiteDTO> tramitesDTO = new ArrayList<>();
+            for (Tramite tramite : tramites) {
+                TramiteDTO tramiteDTO = new TramiteDTO();
+                tramiteDTO.setId(tramite.getId()); // Asigna el ID del trámite al DTO
+                tramiteDTO.setFechaEmision(tramite.getFechaEmision());
+                tramiteDTO.setCosto(tramite.getCosto());
+
+                tramitesDTO.add(tramiteDTO);
+            }
+
+            // Completar la transacción
+            entityManager.getTransaction().commit();
+
+            return tramitesDTO;
+        } catch (NoResultException e) {
+            System.out.println("No se encontró ninguna persona con la CURP especificada.");
+        } catch (Exception e) {
+            System.out.println("Error al buscar los trámites por CURP: " + e.getMessage());
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<TramiteDTO> buscarPorAño(String año) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

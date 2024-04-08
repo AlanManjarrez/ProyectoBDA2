@@ -13,6 +13,7 @@ import javax.persistence.Persistence;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -91,4 +92,52 @@ public class PersonaDAO implements IPersonaDAO {
             entityManagerFactory.close(); 
         }
     }
+
+    
+    @Override
+    public List<PersonaDTO> consultaPersonas() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            // Iniciar una transacción
+            entityManager.getTransaction().begin();
+
+            // Consulta para obtener todas las personas
+            Query query = entityManager.createQuery("SELECT p FROM personas p");
+
+            // Obtener la lista de personas
+            List<Persona> personas = query.getResultList();
+
+            // Completar la transacción
+            entityManager.getTransaction().commit();
+            
+            // Convertir la lista de Personas a una lista de PersonaDTOs
+            List<PersonaDTO> personasDTO = new ArrayList<>();
+            for (Persona persona : personas) {
+                PersonaDTO personaDTO = new PersonaDTO();
+                personaDTO.setId(persona.getId());
+                personaDTO.setRfc(persona.getRFC());
+                personaDTO.setCurp(persona.getCURP());
+                personaDTO.setFechaNacimiento(persona.getFechaNacimiento());
+                personaDTO.setTelefono(persona.getTelefono());
+                personaDTO.setNombres(persona.getNombre());
+                personaDTO.setApellidoPaterno(persona.getApellidoPaterno());
+                personaDTO.setApellidoMaterno(persona.getApellidoMaterno());
+                personaDTO.setDiscapacidad(persona.getDiscapacidad());
+                personasDTO.add(personaDTO);
+            }
+            return personasDTO;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            entityManager.getTransaction().rollback();
+            return null; // O manejar el error de otra manera
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+    }
+    
+    
+    
 }

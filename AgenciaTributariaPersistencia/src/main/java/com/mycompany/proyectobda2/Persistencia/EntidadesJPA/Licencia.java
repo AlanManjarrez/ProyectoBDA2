@@ -25,10 +25,6 @@ import javax.persistence.TemporalType;
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Licencia extends Tramite implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     @Column (name = "vigencia", nullable = false)
     @Temporal (TemporalType.DATE)
     private Calendar vigencia;
@@ -38,24 +34,13 @@ public class Licencia extends Tramite implements Serializable {
     }
 
     public Licencia(Long id, Calendar fechaEmision, Float costo, Calendar vigencia, Persona personas) {
-        super(fechaEmision, costo, personas);
-        this.id = id;
+        super(id,fechaEmision, costo, personas);
         this.vigencia=vigencia;
     }
 
     public Licencia(Calendar fechaEmision, Float costo, Calendar vigencia, Persona personas) {
         super(fechaEmision, costo, personas);
         this.vigencia=vigencia;
-    }
-    
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Calendar getVigencia() {
@@ -66,10 +51,4 @@ public class Licencia extends Tramite implements Serializable {
         this.vigencia = vigencia;
     }
 
-    
-    
-    @Override
-    public String toString() {
-        return "Licencia{" + "id=" + id + '}';
-    }
 }

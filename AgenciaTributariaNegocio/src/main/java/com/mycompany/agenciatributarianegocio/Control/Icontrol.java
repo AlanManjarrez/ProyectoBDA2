@@ -5,6 +5,7 @@
 package com.mycompany.agenciatributarianegocio.Control;
 
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import java.util.Calendar;
 import java.util.List;
@@ -31,4 +32,8 @@ public interface Icontrol {
     public List<VehiculoDTO> obtenerVehiculos(PersonaDTO persona);
     
     public void altaPlaca(PersonaDTO persona,Float costo,Calendar recepcion,VehiculoDTO vehiculo);
+    
+    public String[] consultaPersonas(int tipo);
+        
+    public List<TramiteDTO> consultarTramites(String opcion,int tipo);    
 }

@@ -64,6 +64,11 @@ public class TramiteDTO {
     public void setPersona(PersonaDTO persona) {
         this.persona = persona;
     }
+
+    @Override
+    public String toString() {
+        return "TramiteDTO{" + "id=" + id + ", fechaEmision=" + fechaEmision + ", costo=" + costo + ", persona=" + persona + '}';
+    }
     
     
     

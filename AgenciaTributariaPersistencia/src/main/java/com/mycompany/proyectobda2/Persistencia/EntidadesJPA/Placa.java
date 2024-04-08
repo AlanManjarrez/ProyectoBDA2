@@ -29,10 +29,6 @@ import javax.persistence.TemporalType;
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Placa extends Tramite implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "fecha_recepcion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar fechaRecepcion;
@@ -60,23 +56,13 @@ public class Placa extends Tramite implements Serializable {
     }
 
     public Placa(Long id, Calendar fechaRecepcion, String seriePlacas, Vehiculo vehiculo, EstadoPlaca estadoPlaca, Calendar fechaEmision, Float costo, Persona personas) {
-        super(fechaEmision, costo,  personas);
-        this.id = id;
+        super(id,fechaEmision, costo,  personas);
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;
         this.estadoPlaca = estadoPlaca;
         this.vehiculo = vehiculo;
     }
     
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Calendar getFechaRecepcion() {
         return fechaRecepcion;
@@ -112,6 +98,6 @@ public class Placa extends Tramite implements Serializable {
 
     @Override
     public String toString() {
-        return "Placa{" + "id=" + id + ", fechaRecepcion=" + fechaRecepcion + ", seriePlacas=" + seriePlacas + ", estadoPlaca=" + estadoPlaca + ", vehiculo=" + vehiculo + '}';
+        return " fechaRecepcion=" + fechaRecepcion + ", seriePlacas=" + seriePlacas + ", estadoPlaca=" + estadoPlaca + ", vehiculo=" + vehiculo + '}';
     }
 }

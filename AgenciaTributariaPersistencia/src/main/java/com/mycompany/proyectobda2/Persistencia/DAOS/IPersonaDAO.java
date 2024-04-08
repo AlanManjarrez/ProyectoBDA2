@@ -16,5 +16,5 @@ public interface IPersonaDAO {
     
     public void insercionPersonas();
     
-    
+    public List<PersonaDTO> consultaPersonas();
 }

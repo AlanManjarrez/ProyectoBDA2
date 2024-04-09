@@ -194,6 +194,22 @@ public class Control implements Icontrol{
         }
         return null;
     }
+
+    @Override
+    public List<TramiteDTO> consultaEspecificasTipoPeriodo(String tipoT, int tipo, Calendar fechaI, Calendar fechaF) {
+        try {
+            List<TramiteDTO> tramites=new ArrayList<>();
+            if (tipo==1) {
+                tramites=tramiteD.buscarPorTipo(tipoT);
+            }else if (tipo==2) {
+                tramites=tramiteD.buscarPorPeriodo(fechaI, fechaF);
+            }
+            return tramites;
+        } catch (Exception e) {
+            System.out.println("Error al consultar por periodo o tipo");
+        }
+        return null;
+    }
     
     
     

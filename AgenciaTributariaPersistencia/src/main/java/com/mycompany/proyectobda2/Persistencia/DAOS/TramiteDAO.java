@@ -279,6 +279,96 @@ public class TramiteDAO implements ITramiteDAO {
         return tramitesDTO;
     }
 
+    @Override
+    public List<TramiteDTO> buscarPorPeriodo(Calendar inicio, Calendar fin) {
+        List<TramiteDTO> tramitesDTO = new ArrayList<>();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            // Iniciar una transacción
+            entityManager.getTransaction().begin();
+            
+            // Consulta para obtener todos los trámites dentro del periodo especificado
+            Query query = entityManager.createQuery("SELECT t FROM tramites t WHERE t.fechaEmision BETWEEN :inicio AND :fin");
+            query.setParameter("inicio",inicio );
+            query.setParameter("fin", fin);
+            List<Tramite> tramites = query.getResultList();
+
+            // Convertir trámites a DTOs
+            for (Tramite tramite : tramites) {
+                TramiteDTO tramiteDTO = new TramiteDTO();
+                tramiteDTO.setId(tramite.getId());
+                tramiteDTO.setFechaEmision(tramite.getFechaEmision());
+                tramiteDTO.setCosto(tramite.getCosto());
+                tramiteDTO.setTipo(tramite.getTipo());
+                
+                PersonaDTO persona=new PersonaDTO();
+                persona.setNombres(tramite.getPersonas().getNombre());
+                persona.setApellidoMaterno(tramite.getPersonas().getApellidoMaterno());
+                persona.setApellidoPaterno(tramite.getPersonas().getApellidoPaterno());
+                tramiteDTO.setPersona(persona);
+                tramitesDTO.add(tramiteDTO);
+            }
+
+            // Completar la transacción
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error al buscar los trámites por periodo: " + e.getMessage());
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+
+        return tramitesDTO;
+    }
+
+    @Override
+    public List<TramiteDTO> buscarPorTipo(String tipo) {
+        List<TramiteDTO> tramitesDTO = new ArrayList<>();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            // Iniciar una transacción
+            entityManager.getTransaction().begin();
+
+            // Consulta para obtener todos los trámites del tipo especificado
+            Query query = entityManager.createQuery("SELECT t FROM tramites t WHERE t.tipo = :tipo");
+            query.setParameter("tipo", tipo);
+            List<Tramite> tramites = query.getResultList();
+
+            // Convertir trámites a DTOs
+            for (Tramite tramite : tramites) {
+                TramiteDTO tramiteDTO = new TramiteDTO();
+                tramiteDTO.setId(tramite.getId());
+                tramiteDTO.setFechaEmision(tramite.getFechaEmision());
+                tramiteDTO.setCosto(tramite.getCosto());
+                tramiteDTO.setTipo(tramite.getTipo());
+
+                PersonaDTO persona=new PersonaDTO();
+                persona.setNombres(tramite.getPersonas().getNombre());
+                persona.setApellidoMaterno(tramite.getPersonas().getApellidoMaterno());
+                persona.setApellidoPaterno(tramite.getPersonas().getApellidoPaterno());
+                tramiteDTO.setPersona(persona);
+
+                tramitesDTO.add(tramiteDTO);
+            }
+
+            // Completar la transacción
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("Error al buscar los trámites por tipo: " + e.getMessage());
+            entityManager.getTransaction().rollback();
+        } finally {
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+
+        return tramitesDTO;
+    }
+
     
     
     

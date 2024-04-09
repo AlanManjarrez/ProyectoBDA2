@@ -35,25 +35,29 @@ public class ProyectoBDA2 {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         
-        PersonaDAO p= new PersonaDAO();
+        TramiteDAO t= new TramiteDAO();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fechaInicio = Calendar.getInstance();
+        Calendar fechaFin = Calendar.getInstance();
         
-        String año = "2001"; // Año de ejemplo
-        List<PersonaDTO> persona = p.consultaPersonaAño(año);
+        // Configurar las fechas de inicio y fin (por ejemplo, establecer la fecha de inicio como hoy y la fecha de fin como mañana)
+        // Aquí se está configurando la fecha de fin como un día después de la fecha de inicio para la prueba
+        
+         fechaInicio.set(2022, Calendar.MARCH, 30);
+        // Llamar al método buscarPorPeriodo para obtener la lista de trámites dentro del período especificado
+        List<TramiteDTO> tramitesEnPeriodo = t.buscarPorPeriodo(fechaInicio, fechaFin);
 
-        // Itera sobre la lista de PersonaDTO y muestra los detalles de cada persona
-        for (PersonaDTO personaDTO : persona) {
-            System.out.println("ID: " + personaDTO.getId());
-            System.out.println("RFC: " + personaDTO.getRfc());
-            System.out.println("CURP: " + personaDTO.getCurp());
-            System.out.println("Fecha de Nacimiento: " + dateFormat.format(personaDTO.getFechaNacimiento().getTime()));
-            System.out.println("Teléfono: " + personaDTO.getTelefono());
-            System.out.println("Nombres: " + personaDTO.getNombres());
-            System.out.println("Apellido Paterno: " + personaDTO.getApellidoPaterno());
-            System.out.println("Apellido Materno: " + personaDTO.getApellidoMaterno());
-            System.out.println("Discapacidad: " + personaDTO.isDiscapacidad());
-            System.out.println("------------------------------------");
+        // Imprimir los trámites obtenidos
+        for (TramiteDTO tramiteDTO : tramitesEnPeriodo) {
+            System.out.println("ID: " + tramiteDTO.getId());
+            System.out.println("Fecha de Emisión: " + tramiteDTO.getFechaEmision());
+            System.out.println("Costo: " + tramiteDTO.getCosto());
+            System.out.println("Tipo: " + tramiteDTO.getTipo());
+            System.out.println("Persona: " + tramiteDTO.getPersona().getNombres() + " " +
+                    tramiteDTO.getPersona().getApellidoPaterno() + " " + tramiteDTO.getPersona().getApellidoMaterno());
+            System.out.println();
         }
+        
         
         
         

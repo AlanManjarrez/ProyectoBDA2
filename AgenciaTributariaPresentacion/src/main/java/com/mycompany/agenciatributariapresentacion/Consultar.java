@@ -383,7 +383,7 @@ public class Consultar extends javax.swing.JFrame {
                 personaDTO.getApellidoMaterno(),
                 personaDTO.getCurp(),
                 personaDTO.getRfc(),
-                personaDTO.getFechaNacimiento(),
+                dateFormat.format(personaDTO.getFechaNacimiento()),
                 personaDTO.getTelefono()
             };
             model.addRow(fila);

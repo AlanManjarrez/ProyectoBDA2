@@ -38,4 +38,6 @@ public interface Icontrol {
     public List<TramiteDTO> consultarTramites(String opcion,int tipo,PersonaDTO persona);
 
     public List<PersonaDTO> consultaEspecificaPersonas(String opcion,int tipo);
+    
+    public List<TramiteDTO> consultaEspecificasTipoPeriodo(String tipoT,int tipo,Calendar fechaI,Calendar fechaF);
 }

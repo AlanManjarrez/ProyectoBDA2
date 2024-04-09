@@ -42,6 +42,11 @@ public class PaginaInicio extends javax.swing.JFrame {
         });
 
         btn_reportes.setText("Reportes");
+        btn_reportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reportesActionPerformed(evt);
+            }
+        });
 
         btn_placas.setText("Placas");
         btn_placas.addActionListener(new java.awt.event.ActionListener() {
@@ -124,6 +129,12 @@ public class PaginaInicio extends javax.swing.JFrame {
         frmPlacas.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_placasActionPerformed
+
+    private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
+        BuscarReporte buscar=new BuscarReporte(control);
+        buscar.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_reportesActionPerformed
 
     
 //    public static void main(String args[]) {

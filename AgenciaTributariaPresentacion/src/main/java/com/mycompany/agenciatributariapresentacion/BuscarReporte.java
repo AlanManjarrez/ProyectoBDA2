@@ -6,6 +6,7 @@ import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
+import com.mycompany.agenciatributariapresentacion.reporte.reporte;
 /**
  *
  * @author TeLesheo
@@ -106,6 +108,11 @@ public class BuscarReporte extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jtable);
 
         jButton1.setText("Generar PDF");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         btnAtras.setText("Cancelar");
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
@@ -357,6 +364,10 @@ public class BuscarReporte extends javax.swing.JFrame {
         txtNombre.setText("");
         
     }//GEN-LAST:event_radio1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     private void cargarTipo(int tipo){

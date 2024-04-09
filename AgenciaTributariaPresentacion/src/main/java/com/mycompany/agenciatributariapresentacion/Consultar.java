@@ -9,8 +9,10 @@ import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -383,7 +385,7 @@ public class Consultar extends javax.swing.JFrame {
                 personaDTO.getApellidoMaterno(),
                 personaDTO.getCurp(),
                 personaDTO.getRfc(),
-                dateFormat.format(personaDTO.getFechaNacimiento()),
+                dateFormat.format(personaDTO.getFechaNacimiento().getTime()),
                 personaDTO.getTelefono()
             };
             model.addRow(fila);
@@ -412,7 +414,19 @@ public class Consultar extends javax.swing.JFrame {
             String apellidoMaterno = jtable.getValueAt(filaSeleccionada, 3).toString();
             String curp = jtable.getValueAt(filaSeleccionada, 4).toString();
             String rfc = jtable.getValueAt(filaSeleccionada, 5).toString();
-            Calendar fechaNacimiento = (Calendar) jtable.getValueAt(filaSeleccionada, 6); 
+            String fechaNacimientoStr = jtable.getValueAt(filaSeleccionada, 6).toString();
+
+            // Crear un objeto Calendar
+            Calendar fechaNacimiento = Calendar.getInstance();
+
+            try {
+                // Parsear la cadena de fecha y establecerla en el objeto Calendar
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date fecha = dateFormat.parse(fechaNacimientoStr);
+                fechaNacimiento.setTime(fecha);
+            } catch (ParseException e) {
+                e.printStackTrace(); // Manejo adecuado del error
+            }
             String telefono = jtable.getValueAt(filaSeleccionada, 7).toString();
 
             

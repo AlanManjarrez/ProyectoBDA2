@@ -37,24 +37,20 @@ public class ProyectoBDA2 {
         
         TramiteDAO t= new TramiteDAO();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar fechaInicio = Calendar.getInstance();
-        Calendar fechaFin = Calendar.getInstance();
+        PersonaDTO persona = new PersonaDTO();
+        persona.setId(1L);
         
-        // Configurar las fechas de inicio y fin (por ejemplo, establecer la fecha de inicio como hoy y la fecha de fin como mañana)
-        // Aquí se está configurando la fecha de fin como un día después de la fecha de inicio para la prueba
-        
-         fechaInicio.set(2022, Calendar.MARCH, 30);
-        // Llamar al método buscarPorPeriodo para obtener la lista de trámites dentro del período especificado
-        List<TramiteDTO> tramitesEnPeriodo = t.buscarPorPeriodo(fechaInicio, fechaFin);
+        List<TramiteDTO> resultado = t.buscarPorNombreAño(persona);
 
-        // Imprimir los trámites obtenidos
-        for (TramiteDTO tramiteDTO : tramitesEnPeriodo) {
+        // Imprimir el resultado
+        for (TramiteDTO tramiteDTO : resultado) {
             System.out.println("ID: " + tramiteDTO.getId());
-            System.out.println("Fecha de Emisión: " + tramiteDTO.getFechaEmision());
+            System.out.println("Fecha de Emisión: " + dateFormat.format(tramiteDTO.getFechaEmision().getTime()));
             System.out.println("Costo: " + tramiteDTO.getCosto());
             System.out.println("Tipo: " + tramiteDTO.getTipo());
-            System.out.println("Persona: " + tramiteDTO.getPersona().getNombres() + " " +
-                    tramiteDTO.getPersona().getApellidoPaterno() + " " + tramiteDTO.getPersona().getApellidoMaterno());
+            System.out.println("Nombre: " + tramiteDTO.getPersona().getNombres());
+            System.out.println("Apellido Paterno: " + tramiteDTO.getPersona().getApellidoPaterno());
+            System.out.println("Apellido Materno: " + tramiteDTO.getPersona().getApellidoMaterno());
             System.out.println();
         }
         

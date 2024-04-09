@@ -260,6 +260,13 @@ public class TramiteDAO implements ITramiteDAO {
                     tramiteDTO.setFechaEmision(tramite.getFechaEmision());
                     tramiteDTO.setCosto(tramite.getCosto());
                     tramiteDTO.setTipo(tramite.getTipo());
+                    
+                    PersonaDTO personas=new PersonaDTO();
+                    personas.setNombres(tramite.getPersonas().getNombre());
+                    personas.setApellidoMaterno(tramite.getPersonas().getApellidoMaterno());
+                    personas.setApellidoPaterno(tramite.getPersonas().getApellidoPaterno());
+                    tramiteDTO.setPersona(personas);
+                    
                     tramitesDTO.add(tramiteDTO);
                 }
             } else {

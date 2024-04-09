@@ -40,6 +40,12 @@
             <version>1.6.4</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>jasper</groupId>
+            <artifactId>jasper</artifactId>
+            <version>6.21.2</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>  
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

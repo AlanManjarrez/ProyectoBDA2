@@ -1,12 +1,11 @@
 package com.mycompany.agenciatributariapresentacion;
+
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
-import com.mycompany.agenciatributarianegocio.DTO.PlacaDTO;
-import com.mycompany.agenciatributarianegocio.DTO.LicenciaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +14,23 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
-import com.mycompany.agenciatributariapresentacion.reporte.reporte;
+//import net.sf.jasperreports.engine.JRException;
+//import net.sf.jasperreports.engine.JasperCompileManager;
+//import net.sf.jasperreports.engine.JasperExportManager;
+//import net.sf.jasperreports.engine.JasperFillManager;
+//import net.sf.jasperreports.engine.JasperPrint;
+//import net.sf.jasperreports.engine.JasperReport;
+//import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+//import net.sf.jasperreports.view.JasperViewer;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
+
 /**
  *
  * @author TeLesheo
@@ -56,7 +71,7 @@ public class BuscarReporte extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnGenerarPDF = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
         radio3 = new javax.swing.JRadioButton();
         radio2 = new javax.swing.JRadioButton();
@@ -107,10 +122,10 @@ public class BuscarReporte extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jtable);
 
-        jButton1.setText("Generar PDF");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerarPDF.setText("Generar PDF");
+        btnGenerarPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGenerarPDFActionPerformed(evt);
             }
         });
 
@@ -194,8 +209,7 @@ public class BuscarReporte extends javax.swing.JFrame {
                                         .addGap(83, 83, 83)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtFechafinal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtFechaIncio, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(173, 173, 173))
+                                            .addComponent(txtFechaIncio, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
@@ -215,7 +229,7 @@ public class BuscarReporte extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAtras)
                         .addGap(56, 56, 56)
-                        .addComponent(jButton1)
+                        .addComponent(btnGenerarPDF)
                         .addGap(54, 54, 54))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -259,7 +273,7 @@ public class BuscarReporte extends javax.swing.JFrame {
                     .addComponent(btnCancelar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnGenerarPDF)
                     .addComponent(btnAtras))
                 .addGap(35, 35, 35))
         );
@@ -332,7 +346,7 @@ public class BuscarReporte extends javax.swing.JFrame {
         if (filaSeleccionada != -1) {
             obtenerPersonaTabla(filaSeleccionada);
             limpiarTabla();
-            llenarTablaTramites(control.consultarTramites("", 2, persona));
+            llenarTablaTramitesMejorado(control.consultarTramites("", 2, persona));
         }else{
             JOptionPane.showMessageDialog(null, "No se ha seleccionado una fila");
         }
@@ -365,9 +379,72 @@ public class BuscarReporte extends javax.swing.JFrame {
         
     }//GEN-LAST:event_radio1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDFActionPerformed
+        if (tablaEstaVacia(jtable)) {
+            JOptionPane.showConfirmDialog(null, "No se ha realizado ninguna consulta");
+            return;
+        }else{
+            String outputFile = System.getProperty("user.home") + "\\Downloads\\" + "Reporte.pdf";
+            List<reporte> pdf=new ArrayList<reporte>();
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            for (int i = 0; i < jtable.getRowCount(); i++) {
+                String tipo = jtable.getValueAt(i, 1).toString();
+                String fechaEmisionString = jtable.getValueAt(i, 2).toString();
+                 Date fechaEmision = null;
+                try {
+                    fechaEmision = formato.parse(fechaEmisionString);
+                } catch (ParseException ex) {
+                    Logger.getLogger(BuscarReporte.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                float costo = Float.parseFloat(jtable.getValueAt(i, 3).toString());
+                String nombre = jtable.getValueAt(i, 4).toString();
+                String apellidoPaterno = jtable.getValueAt(i, 5).toString();
+                String apellidoMaterno = jtable.getValueAt(i, 6).toString();
+
+                // Concatenar los nombres y apellidos para obtener el nombre completo
+                String nombreCompleto = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+
+                // Verificar el valor del tipo y asignar el texto correspondiente
+                String tipoExpedicion;
+                if (tipo.equals("placas")) {
+                    tipoExpedicion = "Expedición de placas";
+                } else {
+                    tipoExpedicion = "Expedición de Licencia";
+                }
+
+                // Crear un objeto reporte con los datos obtenidos y añadirlo a la lista
+                reporte reporteActual = new reporte(tipoExpedicion, nombreCompleto, fechaEmision, costo);
+                pdf.add(reporteActual);
+            }        
+            /*
+            try {
+                Map<String, Object> parameters = new HashMap<String, Object>();
+                
+                // Cargar los datos en un JRBeanCollectionDataSource
+                JRBeanCollectionDataSource beanColData = new JRBeanCollectionDataSource(pdf);
+
+                // Cargar el archivo JRXML del reporte
+                InputStream reportFile = getClass().getResourceAsStream("/com/mycompany/agenciatributariapresentacion/reporte/Tramitereporte.jrxml");
+
+                // Compilar el reporte
+                JasperReport jasperReport = JasperCompileManager.compileReport(reportFile);
+
+                // Llenar el reporte con los datos
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, beanColData);
+
+                // Exportar el reporte a un archivo PDF
+                JasperExportManager.exportReportToPdfFile(jasperPrint, outputFile);
+
+                // Visualizar el reporte en el visor Jasper
+                JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+                jasperViewer.setVisible(true);
+
+            } catch (JRException ex) {
+                Logger.getLogger(BuscarReporte.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            */
+        }
+    }//GEN-LAST:event_btnGenerarPDFActionPerformed
 
     
     private void cargarTipo(int tipo){
@@ -389,30 +466,6 @@ public class BuscarReporte extends javax.swing.JFrame {
     
     private void limpiarTabla() {
         DefaultTableModel model = new DefaultTableModel();
-        jtable.setModel(model);
-    }
-    
-    private void llenarTablaTramites(List<TramiteDTO> tramitesDTOList){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        // Definir las columnas de la tabla
-        String[] columnas = {"ID","Tipo" ,"Fecha Emisión", "Costo"};
-
-        // Crear un DefaultTableModel con las columnas
-        DefaultTableModel model = new DefaultTableModel(columnas, 0);
-
-        // Recorrer la lista de TramiteDTO y agregar cada objeto como una fila en el modelo de la tabla
-        for (TramiteDTO tramiteDTO : tramitesDTOList) {
-            Object[] fila = {
-                tramiteDTO.getId(),
-                tramiteDTO.getTipo(),
-                dateFormat.format(tramiteDTO.getFechaEmision().getTime()),
-                tramiteDTO.getCosto()
-            };
-            model.addRow(fila);
-            
-        }
-
-        // Establecer el modelo de la tabla
         jtable.setModel(model);
     }
     
@@ -509,6 +562,9 @@ public class BuscarReporte extends javax.swing.JFrame {
         }
 }
     
+    private boolean tablaEstaVacia(JTable tabla) {
+        return tabla.getRowCount() == 0;
+    }
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -549,9 +605,9 @@ public class BuscarReporte extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnElegir;
+    private javax.swing.JButton btnGenerarPDF;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbTipo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

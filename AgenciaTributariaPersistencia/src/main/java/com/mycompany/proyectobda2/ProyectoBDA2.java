@@ -4,7 +4,7 @@
  */
 package com.mycompany.proyectobda2;
 
-//import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
+import com.mycompany.agenciatributarianegocio.DTO.AutomovilDTO;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoPlaca;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
@@ -34,7 +34,7 @@ public class ProyectoBDA2 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-        
+        /*
         TramiteDAO t= new TramiteDAO();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         PersonaDTO persona = new PersonaDTO();
@@ -55,7 +55,7 @@ public class ProyectoBDA2 {
         }
         
         
-        
+        */
         
 //        TramiteDAO t=new TramiteDAO();
 //        String curp = "ABCX123456XYZ789";
@@ -76,7 +76,7 @@ public class ProyectoBDA2 {
         
         
         
-        /*
+        
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
         Calendar fechaEmision = Calendar.getInstance();
@@ -109,7 +109,7 @@ public class ProyectoBDA2 {
 
         entityManager.close();
         entityManagerFactory.close();
-*/
+
 /*
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("conexionPU"); // Reemplaza "tu_unidad_de_persistencia" por el nombre de tu unidad de persistencia
         EntityManager em = emf.createEntityManager();

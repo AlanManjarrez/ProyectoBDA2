@@ -6,9 +6,12 @@ package com.mycompany.agenciatributariapresentacion;
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JFrame;
 /**
  *
  * @author TeLesheo
@@ -30,6 +33,7 @@ public class PlacasCosto extends javax.swing.JFrame {
         
         initComponents();
         rellenarTxt(vehiculo,costo);
+        centrarFormulario(this);
     }
 
     /**
@@ -160,6 +164,9 @@ public class PlacasCosto extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (fecha!=null) {
             control.altaPlaca(persona, costo, fecha, vehiculo);
+            Placas frmPlaca=new Placas(control);
+            frmPlaca.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -214,6 +221,19 @@ public class PlacasCosto extends javax.swing.JFrame {
 //        });
 //    }
 
+    public static void centrarFormulario(JFrame frame) {
+        // Obtener el tamaño de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        // Obtener el tamaño del formulario
+        Dimension frameSize = frame.getSize();
+        // Calcular la posición x para centrar el formulario
+        int x = (screenSize.width - frameSize.width) / 2;
+        // Calcular la posición y para centrar el formulario
+        int y = (screenSize.height - frameSize.height) / 2;
+        // Establecer la posición del formulario
+        frame.setLocation(x, y);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JCalendar Jcalendar;
     private javax.swing.JButton btnAceptar;

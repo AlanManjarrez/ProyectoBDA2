@@ -13,7 +13,6 @@ import com.mycompany.agenciatributariapresentacion.*;
 import com.mycompany.proyectobda2.Persistencia.DAOS.PersonaDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

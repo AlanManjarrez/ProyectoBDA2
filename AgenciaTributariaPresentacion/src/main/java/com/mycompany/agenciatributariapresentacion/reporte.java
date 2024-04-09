@@ -13,13 +13,29 @@ import java.util.Date;
 public class reporte {
     private String tipo;
     private String nombre;
-    private Date fechaEmision;
-    private float costo;
+    private String fechaEmision;
+    private String costo;
+
+    public void setFechaEmision(String fechaEmision) {
+        this.fechaEmision = fechaEmision;
+    }
+
+    public String getFechaEmision() {
+        return fechaEmision;
+    }
+
+    public void setCosto(String costo) {
+        this.costo = costo;
+    }
+
+    public String getCosto() {
+        return costo;
+    }
 
     public reporte() {
     }
 
-    public reporte(String tipo, String nombre, Date fechaEmision, float costo) {
+    public reporte(String tipo, String nombre, String fechaEmision, String costo) {
         this.tipo = tipo;
         this.nombre = nombre;
         this.fechaEmision = fechaEmision;
@@ -43,22 +59,5 @@ public class reporte {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public Date getFechaEmision() {
-        return fechaEmision;
-    }
-
-    public void setFechaEmision(Date fechaEmision) {
-        this.fechaEmision = fechaEmision;
-    }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-    
-    
+  
 }

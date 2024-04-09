@@ -3,6 +3,8 @@ package com.mycompany.agenciatributariapresentacion;
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,21 +16,21 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
-//import net.sf.jasperreports.engine.JRException;
-//import net.sf.jasperreports.engine.JasperCompileManager;
-//import net.sf.jasperreports.engine.JasperExportManager;
-//import net.sf.jasperreports.engine.JasperFillManager;
-//import net.sf.jasperreports.engine.JasperPrint;
-//import net.sf.jasperreports.engine.JasperReport;
-//import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-//import net.sf.jasperreports.view.JasperViewer;
-
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 
 /**
@@ -46,6 +48,7 @@ public class BuscarReporte extends javax.swing.JFrame {
         this.control=control;
         initComponents();
         ocultarBotonesExtra();
+        centrarFormulario(this);
     }
 
     /**
@@ -385,7 +388,7 @@ public class BuscarReporte extends javax.swing.JFrame {
             return;
         }else{
             String outputFile = System.getProperty("user.home") + "\\Downloads\\" + "Reporte.pdf";
-            List<reporte> pdf=new ArrayList<reporte>();
+            List<reporte> pdf=new ArrayList<>();
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             for (int i = 0; i < jtable.getRowCount(); i++) {
                 String tipo = jtable.getValueAt(i, 1).toString();
@@ -413,36 +416,36 @@ public class BuscarReporte extends javax.swing.JFrame {
                 }
 
                 // Crear un objeto reporte con los datos obtenidos y añadirlo a la lista
-                reporte reporteActual = new reporte(tipoExpedicion, nombreCompleto, fechaEmision, costo);
+                reporte reporteActual = new reporte(tipoExpedicion, nombreCompleto, fechaEmision.toString(), String.valueOf(costo));
                 pdf.add(reporteActual);
             }        
-            /*
+            System.out.println(pdf.size());
             try {
                 Map<String, Object> parameters = new HashMap<String, Object>();
                 
-                // Cargar los datos en un JRBeanCollectionDataSource
+//                 Cargar los datos en un JRBeanCollectionDataSource
                 JRBeanCollectionDataSource beanColData = new JRBeanCollectionDataSource(pdf);
 
-                // Cargar el archivo JRXML del reporte
-                InputStream reportFile = getClass().getResourceAsStream("/com/mycompany/agenciatributariapresentacion/reporte/Tramitereporte.jrxml");
+//                 Cargar el archivo JRXML del reporte
+                InputStream reportFile = getClass().getResourceAsStream("/Tramitereporte.jrxml");
 
-                // Compilar el reporte
+//                 Compilar el reporte
                 JasperReport jasperReport = JasperCompileManager.compileReport(reportFile);
 
-                // Llenar el reporte con los datos
+//                 Llenar el reporte con los datos
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, beanColData);
 
-                // Exportar el reporte a un archivo PDF
+//                 Exportar el reporte a un archivo PDF
                 JasperExportManager.exportReportToPdfFile(jasperPrint, outputFile);
 
-                // Visualizar el reporte en el visor Jasper
+//                 Visualizar el reporte en el visor Jasper
                 JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
                 jasperViewer.setVisible(true);
 
             } catch (JRException ex) {
                 Logger.getLogger(BuscarReporte.class.getName()).log(Level.SEVERE, null, ex);
             }
-            */
+            
         }
     }//GEN-LAST:event_btnGenerarPDFActionPerformed
 
@@ -600,6 +603,19 @@ public class BuscarReporte extends javax.swing.JFrame {
 //        });
 //    }
 
+    public static void centrarFormulario(JFrame frame) {
+        // Obtener el tamaño de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        // Obtener el tamaño del formulario
+        Dimension frameSize = frame.getSize();
+        // Calcular la posición x para centrar el formulario
+        int x = (screenSize.width - frameSize.width) / 2;
+        // Calcular la posición y para centrar el formulario
+        int y = (screenSize.height - frameSize.height) / 2;
+        // Establecer la posición del formulario
+        frame.setLocation(x, y);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnBuscar;

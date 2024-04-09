@@ -3,10 +3,13 @@ package com.mycompany.agenciatributariapresentacion;
 import com.mycompany.agenciatributarianegocio.Control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 /**
  *
@@ -23,6 +26,7 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
     public PlacaLlenadoDatos(Icontrol control) {
         this.control=control;
         initComponents();
+        centrarFormulario(this);
     }
 
     /**
@@ -310,6 +314,7 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         if (vehiculoSeleccionado!=null) {
             PlacasCosto frmCosto=new PlacasCosto(control, vehiculoSeleccionado, 1000f,persona);
             frmCosto.setVisible(true);
+            this.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "No se ha seleccionado un vehiculo");
         }
@@ -372,7 +377,18 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         comboBox.setModel(model);
     }
     
-    
+    public static void centrarFormulario(JFrame frame) {
+        // Obtener el tamaño de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        // Obtener el tamaño del formulario
+        Dimension frameSize = frame.getSize();
+        // Calcular la posición x para centrar el formulario
+        int x = (screenSize.width - frameSize.width) / 2;
+        // Calcular la posición y para centrar el formulario
+        int y = (screenSize.height - frameSize.height) / 2;
+        // Establecer la posición del formulario
+        frame.setLocation(x, y);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

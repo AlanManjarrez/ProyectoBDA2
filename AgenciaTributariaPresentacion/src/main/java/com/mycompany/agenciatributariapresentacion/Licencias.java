@@ -1,18 +1,18 @@
 package com.mycompany.agenciatributariapresentacion;
 
-import com.mycompany.agenciatributarianegocio.control.Icontrol;
+
 
 /**
  *
  * @author TeLesheo
  */
 public class Licencias extends javax.swing.JFrame {
-    Icontrol control;
+   
     /**
      * Creates new form Licencias
      */
-    public Licencias(Icontrol control) {
-        this.control=control;
+    public Licencias() {
+        
         initComponents();
     }
 
@@ -81,16 +81,12 @@ public class Licencias extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bnt_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_registrarActionPerformed
-        LicenciaLlenadoDatos frmLicenciaLlenadoDatos = new LicenciaLlenadoDatos();
-        frmLicenciaLlenadoDatos.setVisible(true);
-        this.dispose();
+        
        
     }//GEN-LAST:event_bnt_registrarActionPerformed
 
     private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
-        PaginaInicio frmInicio=new PaginaInicio(control);
-        frmInicio.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_btn_regresarActionPerformed
 
 //    /**

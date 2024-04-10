@@ -1,6 +1,6 @@
 package com.mycompany.agenciatributariapresentacion;
 
-import com.mycompany.agenciatributarianegocio.control.Icontrol;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -210,11 +210,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        if (txt_nombres.getText().isEmpty() || txt_apellido_paterno.getText().isEmpty() || txt_apellido_materno.getText().isEmpty() || jTextField1.getText().isEmpty() || txt_fecha_nacimiento.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No esta autorizado para sacar una licencia", "!! BLOQUEADO ¡¡", JOptionPane.INFORMATION_MESSAGE);
-        } else if (txt_rfc.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No has realizado busqueda de la persona", "!! ALERTA ¡¡", JOptionPane.WARNING_MESSAGE);
-        }
+        
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void brn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brn_regresarActionPerformed

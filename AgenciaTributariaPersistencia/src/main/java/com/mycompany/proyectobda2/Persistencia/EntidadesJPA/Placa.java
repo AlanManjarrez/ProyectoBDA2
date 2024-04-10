@@ -10,9 +10,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -23,20 +20,16 @@ import javax.persistence.TemporalType;
  *
  * @author uirtis
  */
-@Entity(name = "placas")
+@Entity
 @DiscriminatorValue("placa")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Placa extends Tramite implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "fecha_recepcion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar fechaRecepcion;
-
-    @Column(name = "serie_placas", nullable = false)
+    
+    @Column(name = "serie_placas", nullable = false,unique = true)
     private String seriePlacas;
 
     @Column(name = "estado_placa", nullable = false)
@@ -50,32 +43,22 @@ public class Placa extends Tramite implements Serializable {
         super();
     }
 
-    public Placa(Calendar fechaRecepcion, String seriePlacas, EstadoPlaca estadoPlaca, Vehiculo vehiculo, Calendar fechaEmision, Float costo, Calendar vigencia, Persona personas) {
-        super(fechaEmision, costo, vigencia, personas);
+    public Placa(Calendar fechaRecepcion, String seriePlacas, EstadoPlaca estadoPlaca, Vehiculo vehiculo, Calendar fechaEmision, Float costo,  Persona personas) {
+        super(fechaEmision, costo, personas);
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;
         this.estadoPlaca = estadoPlaca;
         this.vehiculo = vehiculo;
     }
 
-    public Placa(Long id, Calendar fechaRecepcion, String seriePlacas, Vehiculo vehiculo, EstadoPlaca estadoPlaca, Calendar fechaEmision, Float costo, Calendar vigencia, Persona personas) {
-        super(fechaEmision, costo, vigencia, personas);
-        this.id = id;
+    public Placa(Long id, Calendar fechaRecepcion, String seriePlacas, Vehiculo vehiculo, EstadoPlaca estadoPlaca, Calendar fechaEmision, Float costo, Persona personas) {
+        super(id,fechaEmision, costo,  personas);
         this.fechaRecepcion = fechaRecepcion;
         this.seriePlacas = seriePlacas;
         this.estadoPlaca = estadoPlaca;
         this.vehiculo = vehiculo;
     }
     
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Calendar getFechaRecepcion() {
         return fechaRecepcion;
@@ -111,6 +94,6 @@ public class Placa extends Tramite implements Serializable {
 
     @Override
     public String toString() {
-        return "Placa{" + "id=" + id + ", fechaRecepcion=" + fechaRecepcion + ", seriePlacas=" + seriePlacas + ", estadoPlaca=" + estadoPlaca + ", vehiculo=" + vehiculo + '}';
+        return " fechaRecepcion=" + fechaRecepcion + ", seriePlacas=" + seriePlacas + ", estadoPlaca=" + estadoPlaca + ", vehiculo=" + vehiculo + '}';
     }
 }

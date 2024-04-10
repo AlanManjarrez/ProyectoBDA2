@@ -1,18 +1,17 @@
 package com.mycompany.agenciatributariapresentacion;
 
-import com.mycompany.agenciatributarianegocio.control.Icontrol;
 
 /**
  *
  * @author TeLesheo
  */
 public class PaginaInicio extends javax.swing.JFrame {
-    Icontrol control;
+    
     /**
      * Creates new form PaginaInicio
      */
-    public PaginaInicio(Icontrol control) {
-        this.control = control;
+    public PaginaInicio() {
+        
         initComponents();
     }
 
@@ -88,13 +87,11 @@ public class PaginaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_licenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_licenciaActionPerformed
-        Licencias frmLicencia=new Licencias(control);
-        frmLicencia.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_btn_licenciaActionPerformed
 
     private void btnAgregarPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPersonasActionPerformed
-        control.agregaPersonas();
+       
     }//GEN-LAST:event_btnAgregarPersonasActionPerformed
 
     

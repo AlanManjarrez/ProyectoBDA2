@@ -7,33 +7,60 @@ package com.mycompany.proyectobda2.Persistencia.EntidadesJPA;
 import java.io.Serializable;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
- *
+ * Clase JPA para automoviles
  * @author uirtis
  */
 @Entity
 @DiscriminatorValue("automovil")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Automovil extends Vehiculo implements Serializable {
-
     
-
+    /**
+     * Constructor por omision
+     */
     public Automovil() {
         super();
     }
-
-    public Automovil(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, EstadoVehiculo estadoVehiculo, Persona persona) {
-        super(id,serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
+    
+    /**
+     * Constructor con todos los parámetros
+     * 
+     * @param id Identificador del automóvil
+     * @param serieVehiculo Serie del vehículo
+     * @param marca Marca del automóvil
+     * @param modelo Modelo del automóvil
+     * @param linea Línea del automóvil
+     * @param color Color del automóvil
+     * @param persona Persona asociada al automóvil
+     */
+    public Automovil(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, Persona persona) {
+        super(id,serieVehiculo, marca, modelo, linea, color,  persona);// Llama al constructor de la clase base (Vehiculo)
 
     }
-
-    public Automovil(String serieVehiculo, String marca, String modelo, String linea, String color, EstadoVehiculo estadoVehiculo, Persona persona) {
-        super(serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
+    
+    /**
+     * Constructor sin el parámetro "id"
+     * 
+     * @param serieVehiculo Serie del vehículo
+     * @param marca Marca del automóvil
+     * @param modelo Modelo del automóvil
+     * @param linea Línea del automóvil
+     * @param color Color del automóvil
+     * @param persona Persona asociada al automóvil
+     */
+    public Automovil(String serieVehiculo, String marca, String modelo, String linea, String color, Persona persona) {
+        super(serieVehiculo, marca, modelo, linea, color, persona);// Llama al constructor de la clase base (Vehiculo)
     }
- 
+    
+    /**
+     * Método para obtener una representación de cadena del objeto Automovil
+     */
+    @Override
+    public String toString() {
+        return "Automovil{" + "id=" + getId() + '}';
+    }
+    
 }

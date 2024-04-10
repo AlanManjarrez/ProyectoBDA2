@@ -5,7 +5,7 @@
 package com.mycompany.proyectobda2.Persistencia.EntidadesJPA;
 
 /**
- *
+ *  Clase para el estado de las placas
  * @author uirtis
  */
 public enum EstadoPlaca {

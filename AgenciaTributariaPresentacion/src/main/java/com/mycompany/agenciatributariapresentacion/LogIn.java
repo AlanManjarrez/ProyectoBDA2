@@ -3,7 +3,9 @@ package com.mycompany.agenciatributariapresentacion;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-
+import com.mycompany.agenciatributarianegocio.control.Icontrol;
+import com.mycompany.agenciatributarianegocio.control.control;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -11,14 +13,14 @@ import javax.swing.JFrame;
  * @author TeLesheo
  */
 public class LogIn extends javax.swing.JFrame {
-
+    Icontrol control;
     
 
     /**
      * Creates new form LogIn
      */
     public LogIn() {
-        
+        control=new control();
         initComponents();
         centrarFormulario(this);
     }
@@ -63,21 +65,26 @@ public class LogIn extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(285, Short.MAX_VALUE)
+                .addContainerGap(248, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(lbl_login, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(205, 205, 205))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(btn_ingresar)
-                            .addGap(280, 280, 280))
-                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lbl_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(288, 288, 288))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lbl_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(304, 304, 304))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap()))
-                    .addComponent(txt_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(241, 241, 241)))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(289, 289, 289)
+                .addComponent(btn_ingresar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,19 +99,30 @@ public class LogIn extends javax.swing.JFrame {
                 .addComponent(lbl_contraseña)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addGap(82, 82, 82)
                 .addComponent(btn_ingresar)
-                .addGap(48, 48, 48))
+                .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
-
+        if (txt_usuario.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el usuario");
+        }else if (txt_contraseña.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese la contraseña");
+        }else{
+            if (control.iniciarSesion(txt_usuario.getText(), txt_contraseña.getText())) {
+                PaginaInicio frmInicio=new PaginaInicio(control);
+                frmInicio.setVisible(true);
+                this.dispose();
+            }
+        }
         
     }//GEN-LAST:event_btn_ingresarActionPerformed
-
+    
+    
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

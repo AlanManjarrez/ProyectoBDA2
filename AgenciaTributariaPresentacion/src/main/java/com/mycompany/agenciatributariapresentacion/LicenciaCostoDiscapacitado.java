@@ -1,5 +1,6 @@
 package com.mycompany.agenciatributariapresentacion;
-
+import com.mycompany.agenciatributarianegocio.control.Icontrol;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -9,11 +10,14 @@ import javax.swing.JFrame;
  * @author TeLesheo
  */
 public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
-
+    Icontrol control;
+    PersonaDTO persona;
     /**
      * Creates new form LicenciaCostoDiscapacitado
      */
-    public LicenciaCostoDiscapacitado() {
+    public LicenciaCostoDiscapacitado(Icontrol control,PersonaDTO persona) {
+        this.control=control;
+        this.persona=persona;
         initComponents();
         centrarFormulario(this);
     }

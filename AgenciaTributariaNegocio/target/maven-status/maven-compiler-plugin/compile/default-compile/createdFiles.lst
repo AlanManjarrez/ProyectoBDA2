@@ -1,0 +1,9 @@
+com\mycompany\agenciatributarianegocio\DTO\PlacaDTO.class
+com\mycompany\agenciatributarianegocio\DTO\VehiculoDTO.class
+com\mycompany\agenciatributarianegocio\DTO\AutomovilDTO.class
+com\mycompany\agenciatributarianegocio\DTO\TramiteDTO.class
+com\mycompany\agenciatributarianegocio\control\control.class
+com\mycompany\agenciatributarianegocio\DTO\PersonaDTO.class
+com\mycompany\agenciatributarianegocio\AgenciaTributariaNegocio.class
+com\mycompany\agenciatributarianegocio\control\Icontrol.class
+com\mycompany\agenciatributarianegocio\DTO\LicenciaDTO.class

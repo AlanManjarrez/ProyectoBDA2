@@ -3,19 +3,19 @@ package com.mycompany.agenciatributariapresentacion;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-
+import com.mycompany.agenciatributarianegocio.control.Icontrol;
 
 /**
  *
  * @author TeLesheo
  */
 public class PaginaInicio extends javax.swing.JFrame {
-    
+    Icontrol control;
     /**
      * Creates new form PaginaInicio
      */
-    public PaginaInicio() {
-        
+    public PaginaInicio(Icontrol control) {
+        this.control=control;
         initComponents();
         centrarFormulario(this);
     }
@@ -98,11 +98,13 @@ public class PaginaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_licenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_licenciaActionPerformed
-        
+       Licencias frmLicencias=new Licencias(control);
+       frmLicencias.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_btn_licenciaActionPerformed
 
     private void btnAgregarPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPersonasActionPerformed
-       
+       control.agregarPersonas();
     }//GEN-LAST:event_btnAgregarPersonasActionPerformed
 
     public static void centrarFormulario(JFrame frame) {

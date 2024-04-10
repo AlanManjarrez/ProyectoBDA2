@@ -1,5 +1,9 @@
 package com.mycompany.agenciatributariapresentacion;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+
 
 /**
  *
@@ -13,6 +17,7 @@ public class PaginaInicio extends javax.swing.JFrame {
     public PaginaInicio() {
         
         initComponents();
+        centrarFormulario(this);
     }
 
     /**
@@ -29,6 +34,7 @@ public class PaginaInicio extends javax.swing.JFrame {
         btn_placas = new javax.swing.JButton();
         lbl_tramites = new javax.swing.JLabel();
         btnAgregarPersonas = new javax.swing.JButton();
+        btnConsultas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,12 +52,14 @@ public class PaginaInicio extends javax.swing.JFrame {
         lbl_tramites.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lbl_tramites.setText("Tramites");
 
-        btnAgregarPersonas.setText("20 changos");
+        btnAgregarPersonas.setText("Agregar personas");
         btnAgregarPersonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarPersonasActionPerformed(evt);
             }
         });
+
+        btnConsultas.setText("Consultas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,7 +72,8 @@ public class PaginaInicio extends javax.swing.JFrame {
                     .addComponent(lbl_tramites, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_reportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_placas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_licencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_licencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConsultas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(273, 273, 273))
         );
         layout.setVerticalGroup(
@@ -79,8 +88,10 @@ public class PaginaInicio extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btn_reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(btnConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnAgregarPersonas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120))
+                .addGap(71, 71, 71))
         );
 
         pack();
@@ -94,7 +105,18 @@ public class PaginaInicio extends javax.swing.JFrame {
        
     }//GEN-LAST:event_btnAgregarPersonasActionPerformed
 
-    
+    public static void centrarFormulario(JFrame frame) {
+        // Obtener el tamaño de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        // Obtener el tamaño del formulario
+        Dimension frameSize = frame.getSize();
+        // Calcular la posición x para centrar el formulario
+        int x = (screenSize.width - frameSize.width) / 2;
+        // Calcular la posición y para centrar el formulario
+        int y = (screenSize.height - frameSize.height) / 2;
+        // Establecer la posición del formulario
+        frame.setLocation(x, y);
+    }
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -129,6 +151,7 @@ public class PaginaInicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarPersonas;
+    private javax.swing.JButton btnConsultas;
     private javax.swing.JButton btn_licencia;
     private javax.swing.JButton btn_placas;
     private javax.swing.JButton btn_reportes;

@@ -1,5 +1,9 @@
 package com.mycompany.agenciatributariapresentacion;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+
 /**
  *
  * @author TeLesheo
@@ -11,6 +15,7 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
      */
     public LicenciaCostoDiscapacitado() {
         initComponents();
+        centrarFormulario(this);
     }
 
     /**
@@ -36,7 +41,7 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
         radio_3 = new javax.swing.JRadioButton();
         radio_1 = new javax.swing.JRadioButton();
         radio_2 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        btnConfirmar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,10 +81,10 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
 
         buttonGroup1.add(radio_2);
 
-        jButton1.setText("Confirmar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnConfirmarActionPerformed(evt);
             }
         });
 
@@ -123,7 +128,7 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
                             .addComponent(btnCancelar)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnConfirmar)
                         .addGap(24, 24, 24))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -156,7 +161,7 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnConfirmar))
                 .addGap(19, 19, 19))
         );
 
@@ -187,10 +192,22 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
+    public static void centrarFormulario(JFrame frame) {
+        // Obtener el tamaño de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        // Obtener el tamaño del formulario
+        Dimension frameSize = frame.getSize();
+        // Calcular la posición x para centrar el formulario
+        int x = (screenSize.width - frameSize.width) / 2;
+        // Calcular la posición y para centrar el formulario
+        int y = (screenSize.height - frameSize.height) / 2;
+        // Establecer la posición del formulario
+        frame.setLocation(x, y);
+    }
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -228,8 +245,8 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnConfirmar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

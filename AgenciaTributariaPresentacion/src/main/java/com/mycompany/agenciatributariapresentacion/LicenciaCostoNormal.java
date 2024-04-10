@@ -1,5 +1,9 @@
 package com.mycompany.agenciatributariapresentacion;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+
 /**
  *
  * @author TeLesheo
@@ -11,6 +15,7 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
      */
     public LicenciaCostoNormal() {
         initComponents();
+        centrarFormulario(this);
     }
 
     /**
@@ -206,6 +211,18 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
+    public static void centrarFormulario(JFrame frame) {
+        // Obtener el tamaño de la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        // Obtener el tamaño del formulario
+        Dimension frameSize = frame.getSize();
+        // Calcular la posición x para centrar el formulario
+        int x = (screenSize.width - frameSize.width) / 2;
+        // Calcular la posición y para centrar el formulario
+        int y = (screenSize.height - frameSize.height) / 2;
+        // Establecer la posición del formulario
+        frame.setLocation(x, y);
+    }
 //    /**
 //     * @param args the command line arguments
 //     */

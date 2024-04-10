@@ -16,41 +16,24 @@ import javax.persistence.PrimaryKeyJoinColumn;
  *
  * @author uirtis
  */
-@Entity(name = "automoviles")
+@Entity
 @DiscriminatorValue("automovil")
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Automovil extends Vehiculo implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    
 
     public Automovil() {
         super();
     }
 
     public Automovil(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, EstadoVehiculo estadoVehiculo, Persona persona) {
-        super(serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
-        this.id = id;
+        super(id,serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
 
     }
 
     public Automovil(String serieVehiculo, String marca, String modelo, String linea, String color, EstadoVehiculo estadoVehiculo, Persona persona) {
         super(serieVehiculo, marca, modelo, linea, color, estadoVehiculo, persona);
     }
-    
-    @Override
-    public Long getId() {
-        return id;
-    }
-    
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Automovil{" + "id=" + id + '}';
-    }
+ 
 }

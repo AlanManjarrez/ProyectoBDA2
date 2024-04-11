@@ -75,5 +75,5 @@ public interface ITramiteDAO {
      * @param TIPO tipo de tramite a buscar
      * @return lista de tramites
      */
-    public List<Tramite> buscarPorTipo(Tramite TIPO);
+    public List<Tramite> buscarPorTipo(String tipo);
 }

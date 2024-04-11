@@ -9,6 +9,7 @@ import com.mycompany.proyectobda2.Persistencia.DAOS.TramiteDAO;
 import com.mycompany.proyectobda2.Persistencia.DAOS.VehiculoDAO;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Automovil;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.EstadoPlaca;
+import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Licencia;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Persona;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Placa;
 import com.mycompany.proyectobda2.Persistencia.EntidadesJPA.Tramite;
@@ -30,7 +31,6 @@ public class ProyectoBDA2 {
         System.out.println("Hello World!");
         
         
-        
         /*
         Calendar fechaNacimiento = Calendar.getInstance();
         Calendar fechaRecepcion = Calendar.getInstance();
@@ -43,7 +43,7 @@ public class ProyectoBDA2 {
         
         
 
-        Persona persona = new Persona("ABCD123456XYZ", "ABCX123456XYZ789", fechaNacimiento, "1234567890", "Juan", "Pérez", "González", false);
+        Persona persona = new Persona(1L,"ABCD123456XYZ", "ABCX123456XYZ789", fechaNacimiento, "1234567890", "Juan", "Pérez", "González", false);
         Automovil automovil = new Automovil("V123456789", "Toyota", "Corolla", "Sedán", "Blanco", persona);
         
         

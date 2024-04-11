@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class LogIn extends javax.swing.JFrame {
     Icontrol control;
-    
+    validadores vali=new validadores();
 
     /**
      * Creates new form LogIn
@@ -113,16 +113,24 @@ public class LogIn extends javax.swing.JFrame {
         }else if (txt_contraseña.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese la contraseña");
         }else{
-            if (control.iniciarSesion(txt_usuario.getText(), txt_contraseña.getText())) {
-                PaginaInicio frmInicio=new PaginaInicio(control);
-                frmInicio.setVisible(true);
-                this.dispose();
+            if (vali.validarLetras(txt_usuario.getText()) && vali.validarLetras(txt_contraseña.getText())) {
+                if (control.iniciarSesion(txt_usuario.getText(), txt_contraseña.getText())) {
+                    PaginaInicio frmInicio=new PaginaInicio(control);
+                    frmInicio.setVisible(true);
+                    this.dispose();
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Formato incorrecto");
             }
+            
         }
         
     }//GEN-LAST:event_btn_ingresarActionPerformed
     
-    
+    /**
+     * Metodo para centrar frame
+     * @param frame frame que se quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

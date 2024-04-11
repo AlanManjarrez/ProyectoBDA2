@@ -49,12 +49,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>AgenciaTributariaNegocio</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.mycompany</groupId>
-                    <artifactId>AgenciaTributariaPersistencia</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
     <properties>

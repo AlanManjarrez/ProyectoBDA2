@@ -3,17 +3,18 @@ package com.mycompany.agenciatributariapresentacion;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-
+import com.mycompany.agenciatributarianegocio.control.Icontrol;
 /**
  *
  * @author TeLesheo
  */
 public class Placas extends javax.swing.JFrame {
-
+    Icontrol control;
     /**
      * Creates new form Placas
      */
-    public Placas() {
+    public Placas(Icontrol control) {
+        this.control=control;
         initComponents();
         centrarFormulario(this);
     }
@@ -39,8 +40,18 @@ public class Placas extends javax.swing.JFrame {
 
         btn_registrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn_registrar.setText("Registrar");
+        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarActionPerformed(evt);
+            }
+        });
 
         btn_regresar.setText("Regresar");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,6 +97,22 @@ public class Placas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        PaginaInicio frmPagina=new PaginaInicio(control);
+        frmPagina.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_regresarActionPerformed
+
+    private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
+        PlacaLlenadoDatos frmPlacasL=new PlacaLlenadoDatos(control);
+        frmPlacasL.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_registrarActionPerformed
+    
+    /**
+     * Metodo para centrar frames
+     * @param frame frame que se quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

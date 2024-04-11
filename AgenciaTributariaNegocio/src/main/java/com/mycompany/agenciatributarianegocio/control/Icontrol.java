@@ -42,7 +42,7 @@ public interface Icontrol {
     public boolean verificarLicencia(String rfc);
     
     
-    public void agregarVehiculo(VehiculoDTO vehiculo);
+    public VehiculoDTO agregarVehiculo(VehiculoDTO vehiculo);
     
     
     public List<VehiculoDTO> obtenerVehiculos(PersonaDTO persona);

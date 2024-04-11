@@ -46,8 +46,18 @@ public class PaginaInicio extends javax.swing.JFrame {
         });
 
         btn_reportes.setText("Reportes");
+        btn_reportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reportesActionPerformed(evt);
+            }
+        });
 
         btn_placas.setText("Placas");
+        btn_placas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_placasActionPerformed(evt);
+            }
+        });
 
         lbl_tramites.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         lbl_tramites.setText("Tramites");
@@ -60,6 +70,11 @@ public class PaginaInicio extends javax.swing.JFrame {
         });
 
         btnConsultas.setText("Consultas");
+        btnConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,6 +122,28 @@ public class PaginaInicio extends javax.swing.JFrame {
        control.agregarPersonas();
     }//GEN-LAST:event_btnAgregarPersonasActionPerformed
 
+    private void btn_placasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_placasActionPerformed
+        Placas frmPlaca=new Placas(control);
+        frmPlaca.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_placasActionPerformed
+
+    private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
+        Consultar frmConsulta=new Consultar(control);
+        frmConsulta.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnConsultasActionPerformed
+
+    private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
+        BuscarReporte frmReporte=new BuscarReporte(control);
+        frmReporte.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_reportesActionPerformed
+    
+    /**
+     * Metodo que centra el frame
+     * @param frame frame que se quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

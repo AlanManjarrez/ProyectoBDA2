@@ -3,9 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.agenciatributariapresentacion;
-
+import com.mycompany.agenciatributarianegocio.control.Icontrol;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Calendar;
 import javax.swing.JFrame;
 
 /**
@@ -13,13 +16,22 @@ import javax.swing.JFrame;
  * @author TeLesheo
  */
 public class PlacasCosto extends javax.swing.JFrame {
-
+    Icontrol control;
+    VehiculoDTO vehiculo;
+    Float costo;
+    Calendar fecha;
+    PersonaDTO persona;
     /**
      * Creates new form PlacasCosto
      */
-    public PlacasCosto() {
+    public PlacasCosto(Icontrol control,VehiculoDTO vehiculo,Float costo,PersonaDTO persona) {
+        this.control=control;
+        this.vehiculo=vehiculo;
+        this.costo=costo;
+        this.persona=persona;
         initComponents();
         centrarFormulario(this);
+        rellenarTxt(vehiculo, costo);
     }
 
     /**
@@ -36,9 +48,9 @@ public class PlacasCosto extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtArea = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jCalendar2 = new com.toedter.calendar.JCalendar();
+        jcalendar = new com.toedter.calendar.JCalendar();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,18 +58,35 @@ public class PlacasCosto extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnCanceñar.setText("Cancelar");
+        btnCanceñar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCanceñarActionPerformed(evt);
+            }
+        });
 
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("El vehiculo que obtendra la placa es:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtArea.setEditable(false);
+        txtArea.setColumns(20);
+        txtArea.setRows(5);
+        jScrollPane1.setViewportView(txtArea);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Seleccione la fecha de recepcion");
+
+        jcalendar.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jcalendarPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -69,7 +98,7 @@ public class PlacasCosto extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
-                    .addComponent(jCalendar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcalendar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(btnCanceñar)
                 .addGap(32, 32, 32)
@@ -94,7 +123,7 @@ public class PlacasCosto extends javax.swing.JFrame {
                         .addGap(16, 16, 16))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(25, Short.MAX_VALUE))))
         );
 
@@ -128,6 +157,37 @@ public class PlacasCosto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        if (fecha!=null) {
+            control.darAltaPlaca(persona, costo, fecha, vehiculo);
+            Placas frmPlaca=new Placas(control);
+            frmPlaca.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnCanceñarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanceñarActionPerformed
+        PlacaLlenadoDatos frmPlaca=new PlacaLlenadoDatos(control);
+        frmPlaca.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCanceñarActionPerformed
+
+    private void jcalendarPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jcalendarPropertyChange
+        if (evt.getOldValue()!=null) {
+            Calendar ca=(Calendar)evt.getNewValue();
+            fecha=ca;
+        }
+    }//GEN-LAST:event_jcalendarPropertyChange
+    
+    
+    private void rellenarTxt(VehiculoDTO vehiculo,Float costo){
+        txtArea.setText(vehiculo.getSerieVehiculo()+" "+vehiculo.getModelo()+" "+vehiculo.getMarca() + " "+vehiculo.getLinea()+" y su costo es de: "+costo);
+    }
+    
+    /**
+     * Metodo para centrar el frames
+     * @param frame frame que quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -178,12 +238,12 @@ public class PlacasCosto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCanceñar;
-    private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private com.toedter.calendar.JCalendar jcalendar;
+    private javax.swing.JTextArea txtArea;
     // End of variables declaration//GEN-END:variables
 }

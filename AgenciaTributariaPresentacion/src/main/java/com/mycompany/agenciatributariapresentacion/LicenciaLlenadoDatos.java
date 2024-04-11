@@ -4,6 +4,7 @@ import com.mycompany.agenciatributarianegocio.control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -54,7 +55,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
         txt_telefono = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txt_rfc = new javax.swing.JTextField();
-        ntmBuscar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         lbl_datos_personales1 = new javax.swing.JLabel();
 
         jMenu1.setText("File");
@@ -105,10 +106,10 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
 
         jLabel6.setText("RFC");
 
-        ntmBuscar.setText("Buscar");
-        ntmBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ntmBuscarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -147,7 +148,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txt_apellido_paterno, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(ntmBuscar)
+                                            .addComponent(btnBuscar)
                                             .addComponent(lbl_apellido_paterno, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addComponent(jLabel5)
                                 .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -163,7 +164,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_rfc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ntmBuscar))
+                    .addComponent(btnBuscar))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_nombres)
@@ -248,10 +249,27 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_brn_regresarActionPerformed
 
-    private void ntmBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ntmBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ntmBuscarActionPerformed
-
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (txt_rfc.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No has ingresado ninguna rfc","",JOptionPane.WARNING_MESSAGE);
+        }else{
+            persona=null;
+            persona=control.buscarLicencia(txt_rfc.getText());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            if (persona!=null) {
+                txt_nombres.setText(persona.getNombres());
+                txt_fecha_nacimiento.setText(sdf.format(persona.getFechaNacimiento().getTime()));
+                txt_apellido_paterno.setText(persona.getApellidoPaterno());
+                txt_apellido_materno.setText(persona.getApellidoMaterno());
+                txt_telefono.setText(persona.getTelefono());
+            }
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+    
+    /**
+     * Metodo para centrar frames
+     * @param frame frame que se quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -309,6 +327,7 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brn_regresar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -325,7 +344,6 @@ public class LicenciaLlenadoDatos extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_datos_personales;
     private javax.swing.JLabel lbl_datos_personales1;
     private javax.swing.JLabel lbl_nombres;
-    private javax.swing.JButton ntmBuscar;
     private javax.swing.JTextField txt_apellido_materno;
     private javax.swing.JTextField txt_apellido_paterno;
     private javax.swing.JTextField txt_fecha_nacimiento;

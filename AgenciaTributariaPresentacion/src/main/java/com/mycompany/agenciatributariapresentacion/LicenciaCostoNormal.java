@@ -4,7 +4,9 @@ import com.mycompany.agenciatributarianegocio.control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Calendar;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,6 +34,7 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -77,11 +80,16 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setText("$900");
 
+        buttonGroup1.add(radio_1);
         radio_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radio_1ActionPerformed(evt);
             }
         });
+
+        buttonGroup1.add(radio_2);
+
+        buttonGroup1.add(radio_3);
 
         btn_confirmar.setText("Confirmar");
         btn_confirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +99,11 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
         });
 
         btn_regresar.setText("Cancelar");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setText("Seleccione su vigencia");
@@ -213,9 +226,39 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
     }//GEN-LAST:event_radio_1ActionPerformed
 
     private void btn_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmarActionPerformed
-        // TODO add your handling code here:
+        if (!radio_1.isSelected() && !radio_2.isSelected() && !radio_3.isSelected()) {
+            JOptionPane.showMessageDialog(null, "No has seleccionado ninguna vigencia","!! ADVERTENCIA ¡¡",JOptionPane.WARNING_MESSAGE);
+        }else{
+            Calendar vigencia= Calendar.getInstance();
+            if (radio_1.isSelected()) {
+                vigencia.add(Calendar.YEAR, 1);
+                control.darAltaLicencia(persona, 600f, vigencia);
+                
+            }else if(radio_2.isSelected()){
+                vigencia.add(Calendar.YEAR, 2);
+                control.darAltaLicencia(persona, 900f, vigencia);
+                
+            }else if(radio_3.isSelected()){
+                vigencia.add(Calendar.YEAR, 3);
+                control.darAltaLicencia(persona, 1100f, vigencia);
+                
+            }
+            Licencias frmInLicencias = new Licencias(control);
+            frmInLicencias.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        LicenciaLlenadoDatos frmLicencia=new LicenciaLlenadoDatos(control);
+        frmLicencia.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_regresarActionPerformed
+    
+    /**
+     * Metodo para centrar frame
+     * @param frame frame que quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -266,6 +309,7 @@ public class LicenciaCostoNormal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_confirmar;
     private javax.swing.JButton btn_regresar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

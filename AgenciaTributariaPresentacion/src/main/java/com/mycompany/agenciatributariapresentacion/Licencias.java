@@ -95,7 +95,11 @@ public class Licencias extends javax.swing.JFrame {
         frmInicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_regresarActionPerformed
-
+    
+    /**
+     * Meotod para centrar frames
+     * @param frame frame que se quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

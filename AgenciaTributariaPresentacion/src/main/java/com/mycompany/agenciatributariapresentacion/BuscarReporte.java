@@ -1,20 +1,54 @@
 package com.mycompany.agenciatributariapresentacion;
-
+import com.mycompany.agenciatributariapresentacion.validadores;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.TramiteDTO;
+import com.mycompany.agenciatributarianegocio.control.Icontrol;
 
 /**
  *
  * @author TeLesheo
  */
 public class BuscarReporte extends javax.swing.JFrame {
-
+    Icontrol control;
+    PersonaDTO persona;
+    Calendar fechaI,fechaF;
+    validadores valida=new validadores();
     /**
      * Creates new form BuscarReporte
      */
-    public BuscarReporte() {
+    public BuscarReporte(Icontrol control) {
+        this.control=control;
         initComponents();
+        ocultarBotonesExtra();
         centrarFormulario(this);
     }
 
@@ -32,9 +66,9 @@ public class BuscarReporte extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        radio1 = new javax.swing.JRadioButton();
+        radio2 = new javax.swing.JRadioButton();
+        radio3 = new javax.swing.JRadioButton();
         cbTipo = new javax.swing.JComboBox<>();
         txtNombre = new javax.swing.JTextField();
         txtFechaI = new javax.swing.JTextField();
@@ -42,11 +76,13 @@ public class BuscarReporte extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtable = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        labelReferencia = new javax.swing.JLabel();
         btnElegir = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         btnPdf = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -60,18 +96,43 @@ public class BuscarReporte extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Filtros de busqueda");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Tipo");
+        buttonGroup1.add(radio1);
+        radio1.setText("Tipo");
+        radio1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio1ActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Nombre");
+        buttonGroup1.add(radio2);
+        radio2.setText("Nombre");
+        radio2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio2ActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Periodo");
+        buttonGroup1.add(radio3);
+        radio3.setText("Periodo");
+        radio3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio3ActionPerformed(evt);
+            }
+        });
 
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Licencia", "PlACA" }));
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Licencia", "Placa" }));
+        cbTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -86,16 +147,40 @@ public class BuscarReporte extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jtable);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Elige a la persona para observa sus tramites");
+        labelReferencia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelReferencia.setText("Elige a la persona para observa sus tramites");
 
         btnElegir.setText("Elegir");
+        btnElegir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElegirActionPerformed(evt);
+            }
+        });
 
         btnAtras.setText("Cancelar");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         btnPdf.setText("Generar PDF");
+        btnPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPdfActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("YYYY-MM-DD");
+
+        jLabel3.setText("Patron para perido");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -109,20 +194,22 @@ public class BuscarReporte extends javax.swing.JFrame {
                             .addComponent(txtFechaF, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
+                                    .addComponent(radio1)
                                     .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnBuscar))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(93, 93, 93)
-                                        .addComponent(jRadioButton2)
+                                        .addComponent(radio2)
                                         .addGap(155, 155, 155)
-                                        .addComponent(jRadioButton3))
+                                        .addComponent(radio3))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(59, 59, 59)
                                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(86, 86, 86)
-                                        .addComponent(txtFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(txtFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jLabel7))
@@ -131,7 +218,7 @@ public class BuscarReporte extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(jLabel2))
+                        .addComponent(labelReferencia))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(btnElegir)
@@ -140,10 +227,15 @@ public class BuscarReporte extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnRegresar)
-                .addGap(18, 18, 18)
-                .addComponent(btnPdf)
-                .addGap(68, 68, 68))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPdf)
+                        .addGap(68, 68, 68))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(141, 141, 141))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,22 +244,28 @@ public class BuscarReporte extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(radio1)
+                    .addComponent(radio2)
+                    .addComponent(radio3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(txtFechaF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addComponent(txtFechaF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(labelReferencia)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnElegir)
@@ -200,12 +298,268 @@ public class BuscarReporte extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+         if (radio1.isSelected()) {
+            String textoSeleccionado = (String)cbTipo.getSelectedItem();
+            llenarTablaTramitesMejorado(control.consultaEspecificaTipoPeriodo(textoSeleccionado, 1, fechaI, fechaF));
+        }else if (radio2.isSelected()) {
+            String textoSeleccionado = txtNombre.getText();
+            llenarTablaPersonas(control.consultaEspecificaPersonas(textoSeleccionado, 2));
+            btnElegir.setVisible(true);
+            btnAtras.setVisible(true);
+            labelReferencia.setVisible(true);
+        }else if (radio3.isSelected()) {
+            if (!txtFechaI.getText().isEmpty() && !txtFechaF.getText().isEmpty() && valida.validarFecha(txtFechaF.getText()) && valida.validarFecha(txtFechaI.getText())) {
+                fechaI=parseCalendar(txtFechaI.getText());
+                fechaF=parseCalendar(txtFechaF.getText());
+                llenarTablaTramitesMejorado(control.consultaEspecificaTipoPeriodo("", 2, fechaI, fechaF));
+            }
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void radio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio1ActionPerformed
+        ocultarBotonesExtra();
+        txtFechaF.setEnabled(false);
+        txtFechaI.setEnabled(false);
+    }//GEN-LAST:event_radio1ActionPerformed
+
+    private void radio2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio2ActionPerformed
+        limpiarTabla();
+        desactivarDecoradorAutocompletado();
+        txtNombre.setText("");
+        txtFechaF.setText("");
+        txtFechaI.setText("");
+        cargarTipo(2);  
+        activarDecoradorAutocompletado();
+    }//GEN-LAST:event_radio2ActionPerformed
+
+    private void radio3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio3ActionPerformed
+        txtFechaF.setEnabled(true);
+        txtFechaI.setEnabled(true);
+    }//GEN-LAST:event_radio3ActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        PaginaInicio frmInicio=new PaginaInicio(control);
+        frmInicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        limpiarTabla();
+        ocultarBotonesExtra();
+        txtNombre.setText("");
+        txtFechaF.setText("");
+        txtFechaI.setText("");
+    }//GEN-LAST:event_btnAtrasActionPerformed
+
+    private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
+        int filaSeleccionada = jtable.getSelectedRow();
+
+        // Verificar si se seleccionó alguna fila
+        if (filaSeleccionada != -1) {
+            obtenerPersonaTabla(filaSeleccionada);
+            limpiarTabla();
+            llenarTablaTramitesMejorado(control.consultarTramites("", 2, persona));
+        }else{
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado una fila");
+        }
+    }//GEN-LAST:event_btnElegirActionPerformed
+
+    private void btnPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPdfActionPerformed
+        if (tablaEstaVacia(jtable)) {
+            JOptionPane.showConfirmDialog(null, "No se ha realizado ninguna consulta");
+            return;
+        }else{
+            String outputFile = System.getProperty("user.home") + "\\Downloads\\" + "Reporte.pdf";
+            List<Reporte> pdf=new ArrayList<>();
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+            for (int i = 0; i < jtable.getRowCount(); i++) {
+                String tipo = jtable.getValueAt(i, 1).toString();
+                String fechaEmisionString = jtable.getValueAt(i, 2).toString();
+                 Date fechaEmision = null;
+                try {
+                    fechaEmision = formato.parse(fechaEmisionString);
+                } catch (ParseException ex) {
+                    Logger.getLogger(BuscarReporte.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                float costo = Float.parseFloat(jtable.getValueAt(i, 3).toString());
+                String nombre = jtable.getValueAt(i, 4).toString();
+                String apellidoPaterno = jtable.getValueAt(i, 5).toString();
+                String apellidoMaterno = jtable.getValueAt(i, 6).toString();
+
+                // Concatenar los nombres y apellidos para obtener el nombre completo
+                String nombreCompleto = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+
+                // Verificar el valor del tipo y asignar el texto correspondiente
+                String tipoExpedicion;
+                if (tipo.equals("placa")) {
+                    tipoExpedicion = "Expedición de placas";
+                } else {
+                    tipoExpedicion = "Expedición de Licencia";
+                }
+
+                // Crear un objeto reporte con los datos obtenidos y añadirlo a la lista
+                Reporte reporteActual = new Reporte(tipoExpedicion, nombreCompleto, fechaEmision.toString(), String.valueOf(costo));
+                pdf.add(reporteActual);
+            }        
+            System.out.println(pdf.size());
+            try {
+                Map<String, Object> parameters = new HashMap<String, Object>();
+                
+                //Cargar los datos en un JRBeanCollectionDataSource
+                JRBeanCollectionDataSource beanColData = new JRBeanCollectionDataSource(pdf);
+
+                //Cargar el archivo JRXML del reporte
+                InputStream reportFile = getClass().getResourceAsStream("/Tramitereporte.jrxml");
+
+                //Compilar el reporte
+                JasperReport jasperReport = JasperCompileManager.compileReport(reportFile);
+
+                //Llenar el reporte con los datos
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, beanColData);
+
+                //Exportar el reporte a un archivo PDF
+                JasperExportManager.exportReportToPdfFile(jasperPrint, outputFile);
+
+                //Visualizar el reporte en el visor Jasper
+                JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+                jasperViewer.setVisible(true);
+
+            } catch (JRException ex) {
+                Logger.getLogger(BuscarReporte.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }//GEN-LAST:event_btnPdfActionPerformed
+
+    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTipoActionPerformed
+
+    
+    
+     private void cargarTipo(int tipo){
+        if (tipo==2) {
+            JList listaSugerencia= new JList(control.obtenerPersonas(2));
+            AutoCompleteDecorator.decorate(listaSugerencia, txtNombre, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
+        }   
+    }
+    
+    private void desactivarDecoradorAutocompletado() {
+        txtNombre.setDocument(new javax.swing.text.PlainDocument());
+    }
+    
+    private void activarDecoradorAutocompletado() {
+        cargarTipo(buttonGroup1.getSelection().getMnemonic());
+    }
+    
+    private void limpiarTabla() {
+        DefaultTableModel model = new DefaultTableModel();
+        jtable.setModel(model);
+    }
+    
+    private void llenarTablaTramitesMejorado(List<TramiteDTO> tramitesDTOList){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // Definir las columnas de la tabla
+        String[] columnas = {"ID", "Tipo", "Fecha Emisión", "Costo", "Nombre", "Apellido Paterno", "Apellido Materno"};
+
+        // Crear un DefaultTableModel con las columnas
+        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+
+        // Recorrer la lista de TramiteDTO y agregar cada objeto como una fila en el modelo de la tabla
+        for (TramiteDTO tramiteDTO : tramitesDTOList) {
+            Object[] fila = {
+                tramiteDTO.getId(),
+                tramiteDTO.getTipo(),
+                dateFormat.format(tramiteDTO.getFechaEmision().getTime()),
+                tramiteDTO.getCosto(),
+                tramiteDTO.getPersona().getNombres(),
+                tramiteDTO.getPersona().getApellidoPaterno(),
+                tramiteDTO.getPersona().getApellidoMaterno()
+            };
+            model.addRow(fila);
+        }
+
+        // Establecer el modelo de la tabla
+        jtable.setModel(model);
+    }
+    
+    private void llenarTablaPersonas(List<PersonaDTO> personasDTOList){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String [] columnas = {"ID","Nombre","Apellido Paterno","Apellido Materno","CURP","RFC","FechaNac","Telefono"};
+        
+        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+        
+        for (PersonaDTO personaDTO:personasDTOList) {
+            Object[] fila = {
+                personaDTO.getId(),
+                personaDTO.getNombres(),
+                personaDTO.getApellidoPaterno(),
+                personaDTO.getApellidoMaterno(),
+                personaDTO.getCurp(),
+                personaDTO.getRfc(),
+                personaDTO.getFechaNacimiento(),
+                personaDTO.getTelefono()
+            };
+            model.addRow(fila);
+        }
+        
+        jtable.setModel(model);
+    }
+    
+    private void ocultarBotonesExtra(){
+        btnElegir.setVisible(false);
+        btnAtras.setVisible(false);
+        labelReferencia.setVisible(false);
+    }
+
+    private void obtenerPersonaTabla(int filaSeleccionada){
+        
+            // Obtener los datos de la fila seleccionada
+            Long id = Long.parseLong(jtable.getValueAt(filaSeleccionada, 0).toString());
+            String nombres = jtable.getValueAt(filaSeleccionada, 1).toString();
+            String apellidoPaterno = jtable.getValueAt(filaSeleccionada, 2).toString();
+            String apellidoMaterno = jtable.getValueAt(filaSeleccionada, 3).toString();
+            String curp = jtable.getValueAt(filaSeleccionada, 4).toString();
+            String rfc = jtable.getValueAt(filaSeleccionada, 5).toString();
+            Calendar fechaNacimiento = (Calendar) jtable.getValueAt(filaSeleccionada, 6); 
+            String telefono = jtable.getValueAt(filaSeleccionada, 7).toString();
+
+            
+            persona=new PersonaDTO();
+            persona.setId(id);
+            persona.setNombres(nombres);
+            persona.setApellidoPaterno(apellidoPaterno);
+            persona.setApellidoMaterno(apellidoMaterno);
+            persona.setCurp(curp);
+            persona.setRfc(rfc);
+            persona.setFechaNacimiento(fechaNacimiento);
+            persona.setTelefono(telefono);
+    }
+    
+    private Calendar parseCalendar(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = dateFormat.parse(dateString);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            return calendar;
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+}
+    
+    private boolean tablaEstaVacia(JTable tabla) {
+        return tabla.getRowCount() == 0;
+    }
+    
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -263,14 +617,16 @@ public class BuscarReporte extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtable;
+    private javax.swing.JLabel labelReferencia;
+    private javax.swing.JRadioButton radio1;
+    private javax.swing.JRadioButton radio2;
+    private javax.swing.JRadioButton radio3;
     private javax.swing.JTextField txtFechaF;
     private javax.swing.JTextField txtFechaI;
     private javax.swing.JTextField txtNombre;

@@ -107,7 +107,7 @@ public class TramiteDAO implements ITramiteDAO {
         try {
             entityManager.getTransaction().begin();
             
-             Long cantidadLicenciasVigentes = entityManager.createQuery("SELECT COUNT(l) FROM licencias l JOIN l.personas p WHERE p.RFC = :RFC AND l.vigencia >= :fechaActual", Long.class)
+             Long cantidadLicenciasVigentes = entityManager.createQuery("SELECT COUNT(l) FROM Licencia l JOIN l.personas p WHERE p.RFC = :RFC AND l.vigencia >= :fechaActual", Long.class)
                 .setParameter("RFC", RFC)
                 .setParameter("fechaActual", hoy)
                 .getSingleResult();
@@ -326,9 +326,8 @@ public class TramiteDAO implements ITramiteDAO {
      * @return lista de tramites
      */
     @Override
-    public List<Tramite> buscarPorTipo(Tramite TIPO) {
+    public List<Tramite> buscarPorTipo(String tipo) {
         List<Tramite> tramites = new ArrayList<>();
-        String tipo=TIPO.getTipo();
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
@@ -340,7 +339,7 @@ public class TramiteDAO implements ITramiteDAO {
             Query query = entityManager.createQuery("SELECT t FROM tramites t WHERE t.tipo = :tipo");
             query.setParameter("tipo", tipo);
             tramites = query.getResultList();
-            
+
             // Completar la transacción
             entityManager.getTransaction().commit();
         } catch (Exception e) {

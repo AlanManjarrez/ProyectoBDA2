@@ -3,7 +3,9 @@ import com.mycompany.agenciatributarianegocio.control.Icontrol;
 import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Calendar;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -93,6 +95,11 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,9 +204,38 @@ public class LicenciaCostoDiscapacitado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        // TODO add your handling code here:
+         if (!radio_1.isSelected() && !radio_2.isSelected() && !radio_3.isSelected()) {
+            JOptionPane.showMessageDialog(null, "No has seleccionado ninguna vigencia","!! ADVERTENCIA ¡¡",JOptionPane.WARNING_MESSAGE);
+        }else{
+            Calendar vigencia= Calendar.getInstance();
+            if (radio_1.isSelected()) {
+                vigencia.add(Calendar.YEAR, 1);
+                control.darAltaLicencia(persona, 200f, vigencia);
+            }else if(radio_2.isSelected()){
+                vigencia.add(Calendar.YEAR, 2);
+                control.darAltaLicencia(persona, 500f, vigencia);
+            }else if(radio_3.isSelected()){
+                vigencia.add(Calendar.YEAR, 3);
+                control.darAltaLicencia(persona, 700f, vigencia);
+            }
+            Licencias frmInLicencias = new Licencias(control);
+            frmInLicencias.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        LicenciaLlenadoDatos frmLicencia=new LicenciaLlenadoDatos(control);
+        frmLicencia.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+    
+    
+    
+    /**
+     * Metodo para centrar frames
+     * @param frame frame que quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

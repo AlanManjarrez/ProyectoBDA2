@@ -1,20 +1,32 @@
 
 package com.mycompany.agenciatributariapresentacion;
 
+import com.mycompany.agenciatributarianegocio.DTO.PersonaDTO;
+import com.mycompany.agenciatributarianegocio.DTO.VehiculoDTO;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-
+import com.mycompany.agenciatributarianegocio.control.Icontrol;
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 /**
  *
  * @author TeLesheo
  */
 public class PlacaLlenadoDatos extends javax.swing.JFrame {
-
+    Icontrol control;
+    PersonaDTO persona=null;
+    List<VehiculoDTO> vehiculoDTO=new ArrayList<>();
+    VehiculoDTO vehiculoSeleccionado;
+    validadores vali=new validadores();
     /**
      * Creates new form PlacasLlenadoDatos
      */
-    public PlacaLlenadoDatos() {
+    public PlacaLlenadoDatos(Icontrol control) {
+        this.control=control;
         initComponents();
         centrarFormulario(this);
     }
@@ -85,10 +97,25 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         jLabel8.setText("Ingrese el RFC de la persona");
 
         btn_siguiente.setText("Siguiente");
+        btn_siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_siguienteActionPerformed(evt);
+            }
+        });
 
         btn_regresar.setText("Regresar");
+        btn_regresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_regresarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Seleccione el vehiculo");
@@ -102,6 +129,11 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
         jLabel10.setText("¿Registrar un vehiculo nuevo?");
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -237,9 +269,105 @@ public class PlacaLlenadoDatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbVehiculosActionPerformed
-        // TODO add your handling code here:
+        JComboBox<String> comboBox = (JComboBox<String>) evt.getSource(); // Obtén el JComboBox que disparó el evento
+        String idSeleccionado = (String) comboBox.getSelectedItem(); // Obten el ID seleccionado como String
+        
+        vehiculoSeleccionado = null;
+        for (VehiculoDTO vehiculoDTO : vehiculoDTO) {
+            if (String.valueOf(vehiculoDTO.getId()).equals(idSeleccionado)) {
+                vehiculoSeleccionado = vehiculoDTO;
+                break;
+            }
+        }
+        
+        // Llena los campos de texto con los detalles del VehiculoDTO seleccionado
+        if (vehiculoSeleccionado != null) {
+            txt_serie_vehicular.setText(vehiculoSeleccionado.getSerieVehiculo());
+            txt_marca.setText(vehiculoSeleccionado.getMarca());
+            txt_modelo.setText(vehiculoSeleccionado.getModelo());
+            txt_rojo.setText(vehiculoSeleccionado.getColor());       
+            txt_linea.setText(vehiculoSeleccionado.getLinea());
+        }
     }//GEN-LAST:event_cbVehiculosActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (txt_rfc.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No has ingresado ninguna rfc","",JOptionPane.WARNING_MESSAGE);
+        }else if (vali.validarRFC(txt_rfc.getText())) {
+            JOptionPane.showMessageDialog(null, "Formato incorrecto de rfc");
+        }else{
+            persona=control.buscarLicencia(txt_rfc.getText());
+            if (persona!=null && consultarLicencia()) {
+                JOptionPane.showMessageDialog(null, "Se ha encontrado a la persona con licencia");     
+                vehiculoDTO=control.obtenerVehiculos(persona);
+                llenarCombo(cbVehiculos, vehiculoDTO);
+            }else if (!consultarLicencia()) {
+                JOptionPane.showMessageDialog(null, "La persona no tiene una licencia vigente");
+            }
+        }
+   
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        if (!txt_rfc.getText().isEmpty()) {  
+            if (persona!=null && consultarLicencia()) {
+                AltaVehiculo frmAlta=new AltaVehiculo(control, persona);
+                frmAlta.setVisible(true);
+                this.dispose();
+            }else if(persona==null){
+                JOptionPane.showMessageDialog(null, "No hay una persona con ese RFC, no puede continuar");
+            }else if (!consultarLicencia()) {
+                JOptionPane.showMessageDialog(null, "La persona no tiene una licencia vigente no puede continuar");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No ha realizado la busqueda de la persona");
+        }
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btn_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_siguienteActionPerformed
+        if (vehiculoSeleccionado!=null) {
+            PlacasCosto frmCosto=new PlacasCosto(control, vehiculoSeleccionado, 1000f,persona);
+            frmCosto.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado un vehiculo");
+        }
+    }//GEN-LAST:event_btn_siguienteActionPerformed
+
+    private void btn_regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_regresarActionPerformed
+        Placas frmPlacas=new Placas(control);
+        frmPlacas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_regresarActionPerformed
+    
+    /**
+     * Metodo para verificar si la persona tiene una licencia
+     * @return si es verdad true sino false
+     */
+    private boolean consultarLicencia(){
+        if (control.verificarLicencia(txt_rfc.getText())) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Metodo para llenar al combobox con los vehiculos de una persona
+     * @param comboBox combobox que quiere llernar
+     * @param vehiculosDTO vehiculos de la persona
+     */
+    private void llenarCombo(JComboBox<String> comboBox,List<VehiculoDTO> vehiculosDTO){
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (VehiculoDTO vehiculoDTO : vehiculosDTO) {
+            model.addElement(String.valueOf(vehiculoDTO.getId()));
+        }
+        comboBox.setModel(model);
+    }
+    
+    /**
+     * Metodo para centrar frames
+     * @param frame frame que se quiere centrar
+     */
     public static void centrarFormulario(JFrame frame) {
         // Obtener el tamaño de la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

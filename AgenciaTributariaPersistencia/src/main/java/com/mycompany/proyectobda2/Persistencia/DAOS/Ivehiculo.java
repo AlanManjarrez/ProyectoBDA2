@@ -17,7 +17,7 @@ public interface Ivehiculo {
      * Metodo que agrega un vehiculo
      * @param vehiculo vehiculo a agregar
      */
-    public void agregarVehiculo(Vehiculo vehiculo);
+    public Vehiculo agregarVehiculo(Vehiculo vehiculo);
     
     /**
      * Metodo que regresa todos los vehiculos de una persona

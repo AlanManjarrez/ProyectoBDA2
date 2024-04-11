@@ -9,7 +9,7 @@ package com.mycompany.agenciatributarianegocio.DTO;
  * @author JESUS
  */
 public class AutomovilDTO extends VehiculoDTO{
-
+    private Long id;
    /**
      * Constructor por omisión.
      */
@@ -29,6 +29,7 @@ public class AutomovilDTO extends VehiculoDTO{
      */
     public AutomovilDTO(String serieVehiculo, String marca, String modelo, String linea, String color, PersonaDTO persona) {
         super(serieVehiculo, marca, modelo, linea, color, persona);
+        
     }
 
     /**
@@ -44,7 +45,17 @@ public class AutomovilDTO extends VehiculoDTO{
      */
     public AutomovilDTO(Long id, String serieVehiculo, String marca, String modelo, String linea, String color, PersonaDTO persona) {
         super(id, serieVehiculo, marca, modelo, linea, color, persona);
+        this.id=id;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     
     
 }

@@ -20,17 +20,18 @@ import javax.persistence.Persistence;
 public class VehiculoDAO implements Ivehiculo{
     
     /**
-     * Metodo que agrega un vehiculo
-     * @param vehiculo vehiculo a agregar
+     * Metodo que agrega el vehiculo y lo regresa 
+     * @param vehiculo
+     * @return 
      */
     @Override
-    public void agregarVehiculo(Vehiculo vehiculo) {
-       EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
-       EntityManager entityManager = entityManagerFactory.createEntityManager();
-        
+    public Vehiculo agregarVehiculo(Vehiculo vehiculo) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Vehiculo vehiculoEntity=null;
         try {
             entityManager.getTransaction().begin();
-            Vehiculo vehiculoEntity=null;
+            
             if (vehiculo instanceof Automovil) {
                 Persona per=entityManager.find(Persona.class, vehiculo.getPersona().getId());
                 
@@ -45,6 +46,7 @@ public class VehiculoDAO implements Ivehiculo{
             if (vehiculoEntity != null) {
                 entityManager.persist(vehiculoEntity);
                 entityManager.getTransaction().commit();
+                
             } else {
                 System.out.println("No se pudo persistir el vehículo debido a problemas de datos.");
             }
@@ -56,6 +58,7 @@ public class VehiculoDAO implements Ivehiculo{
         }
         entityManager.close();
         entityManagerFactory.close();
+       return vehiculoEntity;
     }
     
     /**

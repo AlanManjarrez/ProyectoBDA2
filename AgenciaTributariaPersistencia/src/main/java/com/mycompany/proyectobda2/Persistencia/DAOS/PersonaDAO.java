@@ -54,11 +54,6 @@ public class PersonaDAO implements IPersonaDAO {
         return persona1; 
     }
     
-    
-    
-    
-    
-    
     /**
      * Agrega 20 personas a la base de datos
      */
